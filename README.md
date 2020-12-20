@@ -25,7 +25,7 @@ Final Year Thesis by\
 **Paulson K Antony** - 17BEC1147\
 **Nikshit Narayan Ramesh** - 17BEC1097\
 **Pranav Suryadevara** - 17BEC1073\
-**Prof. Parthibha A** - Project Guide
+**Prof. Prathibha A** - Project Guide
 
 **Vellore Institute of Technology, Chennai Campus,\
 Vandalur-Kelambakkam Road,\

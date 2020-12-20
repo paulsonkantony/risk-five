@@ -69,7 +69,7 @@ module core(clk);
 	(.func(alu_func), .addr_sel(addr_sel), .rd_sel(rd_sel), .alu_a_sel(alu_a_sel), .alu_b_sel(alu_b_sel), 
 	 .pc_alu_sel(pc_alu_sel), .pc_next_sel(pc_next_sel), 
 	 .mem_clk(mem_clk), .rd_clk(rd_clk), .pc_clk(pc_clk), .insn_clk(insn_clk), .sx_size(sx_size), .reset(reset),
-	 .EQ(eq), .a_lt_b(a_lt_b), .a_lt_ub(a_lt_ub), .opcode(opcode), .func3(func3), .func7(func7),.clk(clk));
+	 .EQ(eq), .a_lt_b(a_lt_b), .a_lt_ub(a_lt_ub), .opcode(instruction[6:0]), .func3(instruction[14:12]), .func7(instruction[30]),.clk(clk));
 
 endmodule
 

@@ -11,13 +11,13 @@
     A Verilog based implementation based on RV32I
   </p>
 </p>
+<br/>
+<br/>
 
 
 <!-- ABOUT THE PROJECT -->
-
-
-
 ## About The Project
+\
 A Verilog based implementation based on RV32I RISC-V Architecture.
 A subset of the RV32I Base Module has been implemented. The functions that have not been included are CSR functions, fence, ecall and ebreak.
 

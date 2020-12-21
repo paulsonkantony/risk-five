@@ -26,7 +26,7 @@ module alu(alu_out, eq, a_lt_b, a_lt_ub, func, A, B);
 
 	wire [4:0] shamt = B[4:0];
 	
-	assign a_lt_ub = A==B;
+	assign eq = A==B;
 	assign a_lt_b = $signed(A) < $signed(B);
 	assign a_lt_ub = A<B;
 

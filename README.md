@@ -17,8 +17,8 @@ A subset of the RV32I Base Module has been implemented. The functions that have 
 
 ## Current Design
 - Entirely written in Verilog.
-- Requires 1 clock cycle to complete any instruction (expect LOAD - Requires two instructions).
-- Single RISC-V Hart only
+- Requires 1 clock cycle to complete any instruction (except LOAD - Requires two instructions).
+- Single RISC-V Hart only.
 - The privileged ISA is **not** implemented.
 - FENCE, FENCE.I and CSR instructions are not implemented.
 
@@ -26,7 +26,7 @@ A subset of the RV32I Base Module has been implemented. The functions that have 
 - Implement a classic 5-stage RISC pipeline.
 - Evaluate the implementation of the privileged ISA.
 - Evaluate the implementation of M extension and riscv-crypto extension.
-- GPIO, LED, UART Support
+- GPIO, LED, UART Support.
 
 ## Final Year Thesis 
 **Paulson K Antony** - 17BEC1147\

@@ -22,7 +22,7 @@ A subset of the RV32I Base Module has been implemented. The functions that have 
 - The privileged ISA is **not** implemented.
 - FENCE, FENCE.I and CSR instructions are not implemented.
 
-## To-do List
+## Future Scope
 - Implement a classic 5-stage RISC pipeline.
 - Evaluate the implementation of the privileged ISA.
 - Evaluate the implementation of M extension and riscv-crypto extension.

@@ -18,10 +18,23 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 \
-A Verilog based implementation based on RV32I RISC-V Architecture.
+A Verilog based implementation of the RV32I Unprivileged RISC-V Instruction Set Architecture.
 A subset of the RV32I Base Module has been implemented. The functions that have not been included are CSR functions, fence, ecall and ebreak.
 
-Final Year Thesis by\
+## Current Design
+- Entirely written in Verilog.
+- Requires 1 clock cycle to complete any instruction (expect LOAD - Requires two instructions).
+- Single RISC-V Hart only
+- The privileged ISA is **not** implemented.
+- FENCE, FENCE.I and CSR instructions are not implemented.
+
+## To-do List
+- Implement a classic 5-stage RISC pipeline.
+- Evaluate the implementation of the privileged ISA.
+- Evaluate the implementation of M extension and riscv-crypto extension.
+- GPIO, LED, UART Support
+
+## Final Year Thesis 
 **Paulson K Antony** - 17BEC1147\
 **Nikshit Narayan Ramesh** - 17BEC1097\
 **Pranav Suryadevara** - 17BEC1073\

@@ -17,7 +17,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-\
 A Verilog based implementation of the RV32I Unprivileged RISC-V Instruction Set Architecture.
 A subset of the RV32I Base Module has been implemented. The functions that have not been included are CSR functions, fence, ecall and ebreak.
 

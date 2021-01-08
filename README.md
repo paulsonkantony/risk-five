@@ -4,12 +4,7 @@
   <a href="https://github.com/paulsonkantony/risk-five/">
     <img src="images/logo.png" alt="Logo" width="256" height="80">
   </a>
-
   <h1 align="center">RISK-FIVE</h1>
-
-  <p align="center">
-    A Verilog based implementation based on RV32I
-  </p>
 </p>
 <br/>
 

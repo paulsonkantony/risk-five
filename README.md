@@ -17,7 +17,7 @@ A subset of the RV32I Base Module has been implemented. The functions that have 
 
 ## Current Design
 - Entirely written in Verilog.
-- Requires 1 clock cycle to complete any instruction (except LOAD - Requires two instructions).
+- Requires 1 clock cycle to complete any instruction (except LOAD - Requires two cycles).
 - Single RISC-V Hart only.
 - The privileged ISA is **not** implemented.
 - FENCE, FENCE.I and CSR instructions are not implemented.

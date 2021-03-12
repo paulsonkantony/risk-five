@@ -21,7 +21,7 @@ A subset of the RV32I Base Module has been implemented. The functions that have 
 - Single RISC-V Hart only.
 - The privileged ISA is **not** implemented.
 - FENCE, FENCE.I and CSR instructions are not implemented.
-- K Extenstion - Zkn and Zks - Implemented
+- K Extension - Zkn and Zks - Implemented
 
 ## Future Scope
 - Implement a classic 5-stage RISC pipeline.

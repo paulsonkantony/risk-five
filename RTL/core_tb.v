@@ -4,12 +4,6 @@ module core_tb;
  integer k;
  reg [9:0] cycles;
  core rv32i (clk, reset);
-
- `define SEEK_SET 0
- `define SEEK_CUR 1
- `define SEEK_END 2
-
- integer file_size, file, tmp;
  
  wire [31:0] pc = rv32i.pc;
  wire [31:0] new_pc = rv32i.pc_in;
@@ -65,33 +59,18 @@ module core_tb;
   		end
 
   	/* Data Memory Initialisations HERE */
-  	rv32i.data_memory.mem[65] = 7;
-    rv32i.data_memory.mem[66] = 2;
+  	//rv32i.data_memory.mem[65] = 7;
+    	//rv32i.data_memory.mem[66] = 2;
 
 
 
   	/* Instruction Memory Initialisations HERE */
 
-	/*
+	$readmemh("mem.bin",rv32i.insn_memory.mem);
 
-	file = $fopen("mem.bin","r");
-
-    file_size = $fseek(file, 0, `SEEK_END); // End of file 
-    file_size = $ftell(file);
-    tmp = $fseek(file, 0, `SEEK_SET);
-    tmp = $fread(rv32i.insn_memory.mem, file, 0, file_size);
-
-    $display("file size: %d", file_size);
-
-   	
-
-    */
-
-    $readmemh("mem.bin",rv32i.insn_memory.mem);
-
-    for (k = 0; k < 200; k = k + 1) begin
-        $display ("TEST %d: %x", k, rv32i.insn_memory.mem[k]);
-    end
+	//for (k = 0; k < 200; k = k + 1) begin
+	//    $display ("TEST %d: %x", k, rv32i.insn_memory.mem[k]);
+	//end
  	
  	end
  

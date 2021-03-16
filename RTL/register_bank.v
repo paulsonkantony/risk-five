@@ -32,7 +32,10 @@ module register_bank(
 			begin
 				for (j=0; j < 32; j=j+1) 
 					begin
-						regFile[j] <= 32'b0; //reset array
+						if(j==2)
+							regFile[j] <= 32'hFFFFFFFF; //Descending Stack Pointer - Set to end of memory
+						else
+							regFile[j] <= 32'b0; //reset array
 					end
 			end 
 		// Write Operation (clk=1)

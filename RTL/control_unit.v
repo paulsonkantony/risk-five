@@ -216,22 +216,24 @@ module control_unit
                     (jalr_o|jal_o)  ? 2'b10 :   
                     2'b0;
     
-    always @(posedge load_o or posedge store_o)
+    always @(posedge clk)
         begin
-            sx_size =  mem_byte ? bit8 :   
-                       mem_half ? bit16 :
-                       mem_word ? bit32 :
-                       mem_byte_u ? bit_u8 :   
-                       mem_half_u ? bit_u16 :
-                       3'b0;                        //Memory Formatting
+        if(load_o |store_o)
+            begin
+                sx_size =  mem_byte ? bit8 :   
+                           mem_half ? bit16 :
+                           mem_word ? bit32 :
+                           mem_byte_u ? bit_u8 :   
+                           mem_half_u ? bit_u16 :
+                           3'b0;                        //Memory Formatting
+            end
         end
 
-
-    always @(negedge rst or load_o)
+    always @(negedge rst or posedge clk)
     begin
         if(!rst)
             stall<=1'b0;
-        else
+        if(load_o)
             stall<=load_o;
     end
 

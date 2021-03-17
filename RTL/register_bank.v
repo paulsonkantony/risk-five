@@ -36,7 +36,6 @@ module register_bank(
 							regFile[j] <= 32'hFFFFFFFF; //Descending Stack Pointer - Set to end of memory
 						else
 							regFile[j] <= 32'b0; //reset array
-
 					end
 			end 
 		// Write Operation (clk=1)

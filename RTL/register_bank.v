@@ -41,10 +41,10 @@ module register_bank(
 		// Write Operation (clk=1)
 		else if (clk)
 			begin
-			if(reg_we)
-			begin
-				regFile[rd] <= rd_val;
-			end
+				if(reg_we)
+				begin
+					regFile[rd] <= rd_val;
+				end
 			end
 	end
 	

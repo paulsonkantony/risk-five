@@ -7,7 +7,7 @@ module new_program_counter(D,reset,Q);
 		if (!reset) 
 			Q<=32'b0;
 	end
-	always @(D) 
+	always @(posedge clk) 
 	begin
 		Q<=D;
 	end

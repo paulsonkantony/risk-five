@@ -229,12 +229,14 @@ module control_unit
             end
         end
 
-    always @(negedge rst or posedge clk)
+    always @(negedge rst)
     begin
-        if(!rst)
-            stall<=1'b0;
-        if(load_o)
-            stall<=load_o;
+        stall<=1'b0;
+    end
+
+    always @(load_o)
+    begin
+        stall<=load_o;
     end
 
 

@@ -229,7 +229,7 @@ module control_unit
             end
         end
 
-    always @(negedge rst or posedge clk)
+    always @(posedge clk)
     begin
         if(!rst)
             stall<=1'b0;

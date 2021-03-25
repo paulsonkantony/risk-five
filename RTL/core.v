@@ -115,7 +115,7 @@ module core(clk,ext_reset);
 	.i0 (pc_mux_out), .i1 (pc), .sel (stall), .out (new_pc_in));	
 
 	new_program_counter new_pc_latch(
-	.D(new_pc_in),.reset(reset),.Q(pc_in));
+		.D(new_pc_in),.reset(reset),.Q(pc_in),.clk(clk);
 	
 	program_counter pc_latch(
 	.D(pc_in),.clk(clk),.Q(pc));

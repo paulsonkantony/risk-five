@@ -248,27 +248,4 @@ module riscv_crypto_aes_fwd_sbox (
 endmodule
 
 
-//
-// Forward / inverse aes sbox.
-module riscv_crypto_aes_sbox(
-    input  wire        dec,
-    input  wire [7:0]  in ,
-    output wire [7:0]  fx
-);
 
-wire [7:0] fx_fwd;
-wire [7:0] fx_inv;
-
-riscv_crypto_aes_fwd_sbox i_fwd (
-    .in(in)     ,
-    .fx(fx_fwd)
-);
-
-riscv_crypto_aes_inv_sbox i_inv (
-    .in(in)     ,
-    .fx(fx_inv)
-);
-
-assign fx = dec ? fx_inv : fx_fwd;
-
-endmodule

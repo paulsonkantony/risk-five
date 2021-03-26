@@ -5,7 +5,7 @@ module program_counter(D,clk,rst,Q);
 	output reg [31:0] Q; // output Q 
 	always @(posedge clk or negedge rst)
 	begin
-		if (!reset) 
+		if (!rst) 
 			Q<=32'b0;
 		else
 		begin

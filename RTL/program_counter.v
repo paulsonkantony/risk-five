@@ -10,7 +10,7 @@ module program_counter(D,clk,rst,Q);
 		else
 		begin
 			if(clk)
-				Q<=D
+				Q<=D;
 		end
 	end  
 endmodule 

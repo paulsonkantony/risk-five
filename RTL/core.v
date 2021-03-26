@@ -21,7 +21,7 @@ module core(clk,ext_reset);
 	wire delayed_load, stall;
 
 	//Program Counter
-	wire [31:0] pc, pc_add_out, pc_add_in, pc_mux_out, pc_in, new_pc_in;
+	wire [31:0] pc, pc_add_out, pc_add_in, pc_mux_out, new_pc_in;
 	wire pc_next_sel, pc_add_sel;
 
 	//ALU
@@ -113,12 +113,9 @@ module core(clk,ext_reset);
 	
 	mux32two stall_mux(
 	.i0 (pc_mux_out), .i1 (pc), .sel (stall), .out (new_pc_in));	
-
-	new_program_counter new_pc_latch(
-	.D(new_pc_in),.reset(reset),.Q(pc_in));
 	
 	program_counter pc_latch(
-	.D(pc_in),.clk(clk),.Q(pc));
+		.D(new_pc_in),.clk(clk),.rst(reset),.Q(pc));
 
 
 	//ALU

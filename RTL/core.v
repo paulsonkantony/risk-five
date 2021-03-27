@@ -1,20 +1,26 @@
-module core(clk,ext_reset);
+module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, instruction);
 	input clk;
-	input ext_reset;	
+	input ext_reset;
 	wire reset;
 	//Wires
 
 	//Register File
 	wire reg_we;
-	wire [31:0] instruction, instruction_mux_out;
+	wire [31:0] instruction_mux_out;
 	wire [4:0] rs1, rs2, rd;
 	wire [31:0] rd_val, rs1_val, rs2_val;
 	wire [1:0] rd_sel;
 
 	//Memory
-	wire [31:0] mem_out, rs2_val_sx, mem_out_sx, delayed_addr;
+	input [31:0] mem_out, instruction; //Data Memory Output, Insn Mem Output
+	output [31:0] rs2_val_sx, alu_addr; //Data Memory Input, Address Input
+	output [3:0] mem_we_in; //Input to Data Memory - Write Enable
+	output [31:0] pc_out;
+	assign pc_out = pc;
+	assign alu_addr = alu_out;
+	
+	wire [31:0] rs2_val_sx, mem_out_sx, delayed_addr;
 	wire [2:0] sx_size;
-	wire [3:0] mem_we_in;
 	wire mem_we;
 	wire [4:0] delayed_rd;
 
@@ -60,18 +66,6 @@ module core(clk,ext_reset);
 
 	
 	//Memory
-	data_mem data_memory( 
-	.dout(mem_out)		, 
-	.addr(alu_out)		, 
-	.clk(clk)			, 
-	.din(rs2_val_sx)	, 
-	.mem_we(mem_we_in)
-	);
-
-	insn_mem insn_memory( 
-	.insn(instruction)	,
-	.insn_addr(pc)		
-	);
 
 	mbr_sx_load mem_to_reg(
 	.sx(mem_out_sx)			, 

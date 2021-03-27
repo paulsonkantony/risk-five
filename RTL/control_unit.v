@@ -229,16 +229,16 @@ module control_unit
             end
         end
 
-    always @(negedge rst)
+    always @(posedge clk)
     begin
+	if(!rst)	
         stall<=1'b0;
+	else
+	begin
+		if(load_o)
+		stall<=load_o;
+    	end
     end
-
-    always @(load_o)
-    begin
-        stall<=load_o;
-    end
-
 
     assign alu_func =   (add_o)     ? func_ADD :   
                         (sub_o)     ? func_SUB :

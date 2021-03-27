@@ -1,33 +1,39 @@
-module core(clk,ext_reset);
+module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, instruction);
 	input clk;
-	input ext_reset;	
+	input ext_reset;
 	wire reset;
 	//Wires
 
 	//Register File
 	wire reg_we;
-	wire [31:0] instruction, instruction_mux_out;
+	wire [31:0] instruction_mux_out;
 	wire [4:0] rs1, rs2, rd;
 	wire [31:0] rd_val, rs1_val, rs2_val;
 	wire [1:0] rd_sel;
 
-	//Memory
-	wire [31:0] mem_out, rs2_val_sx, mem_out_sx, delayed_addr;
-	wire [2:0] sx_size;
-	wire [3:0] mem_we_in;
-	wire mem_we;
-	wire [4:0] delayed_rd;
-
-	wire delayed_load, stall;
-
 	//Program Counter
-	wire [31:0] pc, pc_add_out, pc_add_in, pc_mux_out, pc_in, new_pc_in;
+	wire [31:0] pc, pc_add_out, pc_add_in, pc_mux_out, new_pc_in;
 	wire pc_next_sel, pc_add_sel;
 
 	//ALU
 	wire [31:0] alu_out, mux_a_out, mux_b_out, imm_x;
 	wire [3:0] alu_func;
 	wire eq, a_lt_b, a_lt_ub, mux_a_sel, mux_b_sel;
+
+	//Memory
+	input [31:0] mem_out, instruction; //Data Memory Output, Insn Mem Output
+	output [31:0] rs2_val_sx, alu_addr; //Data Memory Input, Address Input
+	output [3:0] mem_we_in; //Input to Data Memory - Write Enable
+	output [31:0] pc_out;
+	assign pc_out = pc;
+	assign alu_addr = alu_out;
+	
+	wire [31:0] mem_out_sx, delayed_addr;
+	wire [2:0] sx_size;
+	wire mem_we;
+	wire [4:0] delayed_rd;
+
+	wire delayed_load, stall;
 
 	//Crypto
 	wire [19:0] crypto_insn;
@@ -60,18 +66,6 @@ module core(clk,ext_reset);
 
 	
 	//Memory
-	data_mem data_memory( 
-	.dout(mem_out)		, 
-	.addr(alu_out)		, 
-	.clk(clk)			, 
-	.din(rs2_val_sx)	, 
-	.mem_we(mem_we_in)
-	);
-
-	insn_mem insn_memory( 
-	.insn(instruction)	,
-	.insn_addr(pc)		
-	);
 
 	mbr_sx_load mem_to_reg(
 	.sx(mem_out_sx)			, 
@@ -113,12 +107,9 @@ module core(clk,ext_reset);
 	
 	mux32two stall_mux(
 	.i0 (pc_mux_out), .i1 (pc), .sel (stall), .out (new_pc_in));	
-
-	new_program_counter new_pc_latch(
-	.D(new_pc_in),.reset(reset),.Q(pc_in));
 	
 	program_counter pc_latch(
-	.D(pc_in),.clk(clk),.Q(pc));
+		.D(new_pc_in),.clk(clk),.rst(reset),.Q(pc));
 
 
 	//ALU

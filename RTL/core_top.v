@@ -34,7 +34,7 @@ module core_top(clk,reset);
 	.insn_addr(pc_out)		
 	);
 
-
+endmodule
 
 	//input [31:0] mem_out; //Data Memory Output
 	//output [31:0] rs2_val_sx, alu_addr; //Data Memory Input, Address Input

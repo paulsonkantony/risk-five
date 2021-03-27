@@ -1,0 +1,72 @@
+Cadence Genus(TM) Synthesis Solution.
+Copyright 2017 Cadence Design Systems, Inc. All rights reserved worldwide.
+Cadence and the Cadence logo are registered trademarks and Genus is a trademark
+of Cadence Design Systems, Inc. in the United States and other countries.
+
+Version: 17.21-s010_1, built Wed Feb 07 2018
+Options: 
+Date:    Sat Mar 27 16:00:45 2021
+Host:    cad54 (x86_64 w/Linux 2.6.32-71.el6.x86_64) (2cores*4cpus*1physical cpu*Intel(R) Core(TM) i3-2120 CPU @ 3.30GHz 3072KB) (7955092KB)
+OS:      Red Hat Enterprise Linux Server release 6.0 (Santiago)
+
+Checking out license: Genus_Synthesis
+
+Loading tool scripts...
+
+Finished loading tool scripts (41 seconds elapsed).
+
+WARNING: This version of the tool is 1144 days old.
+@genus:root: 1> set_db library slow.lib
+
+Threads Configured:3
+
+  Message Summary for Library slow.lib:
+  *************************************
+  Could not find an attribute in the library. [LBR-436]: 639
+  Missing a function attribute in the output pin definition. [LBR-518]: 1
+  An unsupported construct was detected in this library. [LBR-40]: 1
+  *************************************
+ 
+Info    : Created nominal operating condition. [LBR-412]
+        : Operating condition '_nominal_' was created for the PVT values (1.000000, 1.620000, 125.000000) in library 'slow.lib'.
+        : The nominal operating condition represents either the nominal PVT values if specified in the library source, or the default PVT values (1.0, 1.0, 1.0).
+  Setting attribute of root '/': 'library' = slow.lib
+1 slow.lib
+@genus:root: 2> read_hdl {add32.v alu.v control_unit.v data_mem.v imm_sx.v insn_mem.v load_stall.v mbr_sx_load.v mbr_sx_store.v mux32four.v mux32two.v program_counter.v register_bank.v riscv_crypto_fu_saes32_32.v riscv_crypto_fu_sboxes_aes_32.v riscv_crypto_fu_sboxes_sm4_32.v riscv_crypto_fu_ssha256_32.v riscv_crypto_fu_ssha512_32.v riscv_crypto_fu_ssm3_32.v riscv_crypto_fu_ssm4_32.v riscv_crypto_fu_32.v core_top.v core.v}
+	wire [31:0] mem_out; //Data Memory Output
+	                   |
+Error   : Illegal redeclaration. [VLOGPT-22] [read_hdl]
+        : Redeclaration of non-interface variable 'mem_out' in file 'core_top.v' on line 17, column 21.
+        : A variable cannot be redeclared in the same scope.
+	wire [31:0] rs2_val_sx, alu_addr; //Data Memory Input, Address Input
+	                      |
+Error   : Illegal redeclaration. [VLOGPT-22] [read_hdl]
+        : Redeclaration of non-interface variable 'rs2_val_sx' in file 'core_top.v' on line 18, column 24.
+	wire [31:0] rs2_val_sx, alu_addr; //Data Memory Input, Address Input
+	                                |
+Error   : Illegal redeclaration. [VLOGPT-22] [read_hdl]
+        : Redeclaration of non-interface variable 'alu_addr' in file 'core_top.v' on line 18, column 34.
+	wire [3:0] mem_we_in; //Input to Data Memory - Write Enable
+	                    |
+Error   : Illegal redeclaration. [VLOGPT-22] [read_hdl]
+        : Redeclaration of non-interface variable 'mem_we_in' in file 'core_top.v' on line 19, column 22.
+	wire [31:0] instruction;
+	                       |
+Error   : Illegal redeclaration. [VLOGPT-22] [read_hdl]
+        : Redeclaration of non-interface variable 'instruction' in file 'core_top.v' on line 29, column 25.
+	wire [31:0] pc_out;
+	                  |
+Error   : Illegal redeclaration. [VLOGPT-22] [read_hdl]
+        : Redeclaration of non-interface variable 'pc_out' in file 'core_top.v' on line 30, column 20.
+	assign pc_out = pc;
+	                |
+Error   : Reference to undeclared variable. [VLOGPT-20] [read_hdl]
+        : Symbol 'pc' in file 'core.v' on line 19, column 18.
+        : A variable must be declared before it can be referenced.
+	assign alu_addr = alu_out;
+	                  |
+Error   : Reference to undeclared variable. [VLOGPT-20] [read_hdl]
+        : Symbol 'alu_out' in file 'core.v' on line 20, column 20.
+1
+@genus:root: 3> exit
+Normal exit.

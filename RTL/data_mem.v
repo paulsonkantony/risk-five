@@ -15,7 +15,8 @@
       				mem[addr[11:2]][15:8] <= mem_we[1] ? din[15:8] : mem[addr[11:2]][15:8];
       				mem[addr[11:2]][23:16] <= mem_we[2] ? din[23:16] : mem[addr[11:2]][23:16];
       				mem[addr[11:2]][31:24] <= mem_we[3] ? din[31:24] : mem[addr[11:2]][31:24];
-			dout = mem[addr[11:2]][31:0]
-		end       
+				dout = mem[addr[11:2]][31:0];    
+		end
+		   
 
 endmodule

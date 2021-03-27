@@ -229,10 +229,16 @@ module control_unit
             end
         end
 
-    always @(negedge rst)
-    begin
-        stall<=1'b0;
-    end
+	always @(posedge clk)
+    		begin
+			if(!rst)
+        		stall<=1'b0;
+    			else
+			begin
+				if(load_o)
+					stall<=load_o;
+			end
+		end
 
     always @(load_o)
     begin

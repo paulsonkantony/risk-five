@@ -19,7 +19,7 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	assign pc_out = pc;
 	assign alu_addr = alu_out;
 	
-	wire [31:0] rs2_val_sx, mem_out_sx, delayed_addr;
+	wire [31:0] mem_out_sx, delayed_addr;
 	wire [2:0] sx_size;
 	wire mem_we;
 	wire [4:0] delayed_rd;

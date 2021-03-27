@@ -11,6 +11,15 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	wire [31:0] rd_val, rs1_val, rs2_val;
 	wire [1:0] rd_sel;
 
+	//Program Counter
+	wire [31:0] pc, pc_add_out, pc_add_in, pc_mux_out, new_pc_in;
+	wire pc_next_sel, pc_add_sel;
+
+	//ALU
+	wire [31:0] alu_out, mux_a_out, mux_b_out, imm_x;
+	wire [3:0] alu_func;
+	wire eq, a_lt_b, a_lt_ub, mux_a_sel, mux_b_sel;
+
 	//Memory
 	input [31:0] mem_out, instruction; //Data Memory Output, Insn Mem Output
 	output [31:0] rs2_val_sx, alu_addr; //Data Memory Input, Address Input
@@ -25,15 +34,6 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	wire [4:0] delayed_rd;
 
 	wire delayed_load, stall;
-
-	//Program Counter
-	wire [31:0] pc, pc_add_out, pc_add_in, pc_mux_out, new_pc_in;
-	wire pc_next_sel, pc_add_sel;
-
-	//ALU
-	wire [31:0] alu_out, mux_a_out, mux_b_out, imm_x;
-	wire [3:0] alu_func;
-	wire eq, a_lt_b, a_lt_ub, mux_a_sel, mux_b_sel;
 
 	//Crypto
 	wire [19:0] crypto_insn;

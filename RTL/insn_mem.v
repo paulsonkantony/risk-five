@@ -3,7 +3,6 @@
 	//read_addr and write_addr combined
 	input [31:0] insn_addr;
 	output [31:0] insn;
-
 	reg [31:0] mem [0:1023];
 	  
 	integer k;

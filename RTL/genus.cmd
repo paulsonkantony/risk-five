@@ -1,6 +1,6 @@
 # Cadence Genus(TM) Synthesis Solution, Version 17.21-s010_1, built Feb  7 2018
 
-# Date: Sat Mar 27 19:22:57 2021
+# Date: Sat Mar 27 23:41:08 2021
 # Host: cad54 (x86_64 w/Linux 2.6.32-71.el6.x86_64) (2cores*4cpus*1physical cpu*Intel(R) Core(TM) i3-2120 CPU @ 3.30GHz 3072KB)
 # OS:   Red Hat Enterprise Linux Server release 6.0 (Santiago)
 
@@ -12,8 +12,7 @@ synthesize -to_mapped -effort medium
 report area
 report power
 report timing
-report qor
 write_hdl > net.v
+write_sdc > time_mode.v
 write_sdc > timing.sdc
-write_sdc > time_mod.v
 exit

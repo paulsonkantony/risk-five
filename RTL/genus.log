@@ -5,7 +5,7 @@ of Cadence Design Systems, Inc. in the United States and other countries.
 
 Version: 17.21-s010_1, built Wed Feb 07 2018
 Options: 
-Date:    Sat Mar 27 19:22:57 2021
+Date:    Sat Mar 27 23:41:08 2021
 Host:    cad54 (x86_64 w/Linux 2.6.32-71.el6.x86_64) (2cores*4cpus*1physical cpu*Intel(R) Core(TM) i3-2120 CPU @ 3.30GHz 3072KB) (7955092KB)
 OS:      Red Hat Enterprise Linux Server release 6.0 (Santiago)
 
@@ -13,7 +13,7 @@ Checking out license: Genus_Synthesis
 
 Loading tool scripts...
 
-Finished loading tool scripts (34 seconds elapsed).
+Finished loading tool scripts (48 seconds elapsed).
 
 WARNING: This version of the tool is 1144 days old.
 @genus:root: 1> set_db library slow.lib
@@ -45,7 +45,7 @@ Check completed for analog nets.
 Checking for source RTL...
 Check completed for source RTL.
 UM:  flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
-UM:            14             71                                      elaborate
+UM:            14             91                                      elaborate
 design:core
 @genus:root: 4> read_sdc counter_constraints.g
 Statistics for commands executed by read_sdc:
@@ -136,8 +136,8 @@ Multi-threaded Virtual Mapping    (4 threads per ST process, 4 of 4 CPUs usable)
  
 Global mapping target info
 ==========================
-Cost Group 'clk' target slack:   292 ps
-Target path end-point (Pin: register_file/regFile_reg[2][29]/d)
+Cost Group 'clk' target slack:   832 ps
+Target path end-point (Pin: register_file/regFile_reg[2][31]/d)
 
 Multi-threaded Technology Mapping (4 threads per ST process, 4 of 4 CPUs usable)
  
@@ -148,16 +148,16 @@ Global mapping status
                            Total  Weighted 
 Operation                   Area   Slacks  
 -------------------------------------------------------------------------------
- global_map               202884        0 
+ global_map               172397        0 
 
     Cost Group            Target    Slack    Diff.  Constr.
 -----------------------------------------------------------
-           clk               292      855             10000 
+           clk               832     4833             28000 
 
  
 Global incremental target info
 ==============================
-Cost Group 'clk' target slack:   182 ps
+Cost Group 'clk' target slack:   540 ps
 Target path end-point (Pin: register_file/regFile_reg[2][31]/SI (SDFFSHQX1/SI))
 
  
@@ -168,11 +168,11 @@ Global incremental optimization status
                            Total  Weighted 
 Operation                   Area   Slacks  
 -------------------------------------------------------------------------------
- global_incr              189781        0 
+ global_incr              169720        0 
 
     Cost Group            Target    Slack    Diff.  Constr.
 -----------------------------------------------------------
-           clk               182      155             10000 
+           clk               540     2504             28000 
 
 Info    : Done mapping. [SYNTH-5]
         : Done mapping 'core'.
@@ -186,9 +186,8 @@ Incremental optimization status
                            Total  Weighted      Neg      Max       Max 
 Operation                   Area   Slacks      Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_iopt                189781        0         0         0        0
- const_prop               189781        0         0         0        0
- simp_cc_inputs           189372        0         0         0        0
+ init_iopt                169720        0         0         0        0
+ const_prop               169706        0         0         0        0
  
 Incremental optimization status
 ===============================
@@ -197,7 +196,7 @@ Incremental optimization status
                            Total  Weighted      Neg      Max       Max 
 Operation                   Area   Slacks      Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_delay               189372        0         0         0        0
+ init_delay               169653        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -220,7 +219,7 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        gcomp_tim         0  (        0 /        0 )  0.00
   inv_pair_2_buf         0  (        0 /        0 )  0.00
 
- init_drc                 189372        0         0         0        0
+ init_drc                 169653        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -261,7 +260,7 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        crit_dnsz         0  (        0 /        0 )  0.00
        crit_upsz         0  (        0 /        0 )  0.00
 
- init_tns                 189372        0         0         0        0
+ init_tns                 169653        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -276,34 +275,28 @@ Operation                   Area   Slacks      Slack    Trans      Cap
         setup_dn         0  (        0 /        0 )  0.00
          buf2inv         0  (        0 /        0 )  0.00
 
- init_area                189372        0         0         0        0
- rem_buf                  189016        0         0         0        0
- rem_inv                  188826        0         0         0        0
- merge_bi                 188663        0         0         0        0
- merge_bi                 188653        0         0         0        0
- merge_bi                 188610        0         0         0        0
- io_phase                 188384        0         0         0        0
- gate_comp                187586        0         0         0        0
- glob_area                186458        0         0         0        0
- area_down                186135        0         0         0        0
+ init_area                169653        0         0         0        0
+ rem_buf                  169640        0         0         0        0
+ glob_area                169483        0         0         0        0
+ area_down                169384        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
            undup         0  (        0 /        0 )  0.01
-         rem_buf        62  (       23 /       23 )  0.29
-         rem_inv        76  (       17 /       18 )  0.24
-        merge_bi        49  (       28 /       28 )  0.36
+         rem_buf         2  (        2 /        2 )  0.04
+         rem_inv         1  (        0 /        0 )  0.00
+        merge_bi         3  (        3 /        3 )  0.05
       rem_inv_qb         0  (        0 /        0 )  0.00
-        io_phase        80  (       25 /       27 )  0.41
-       gate_comp       644  (       99 /      106 )  2.83
-       gcomp_mog        20  (        1 /        2 )  0.60
-       glob_area        65  (       43 /       65 )  2.19
-       area_down       221  (       43 /       47 )  1.57
-      size_n_buf         1  (        0 /        0 )  0.03
+        io_phase         6  (        1 /        1 )  0.02
+       gate_comp       169  (        0 /        0 )  0.82
+       gcomp_mog         4  (        0 /        0 )  0.33
+       glob_area        66  (        8 /       66 )  0.06
+       area_down        17  (       13 /       13 )  0.39
+      size_n_buf         0  (        0 /        0 )  0.03
   gate_deco_area         0  (        0 /        0 )  0.00
-         rem_buf        38  (        0 /        0 )  0.04
-         rem_inv        39  (        0 /        0 )  0.06
-        merge_bi        20  (        0 /        0 )  0.05
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         1  (        1 /        1 )  0.02
+        merge_bi         0  (        0 /        0 )  0.02
       rem_inv_qb         0  (        0 /        0 )  0.00
 
  
@@ -314,7 +307,7 @@ Incremental optimization status
                            Total  Weighted      Neg      Max       Max 
 Operation                   Area   Slacks      Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_delay               186135        0         0         0        0
+ init_delay               169374        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -337,7 +330,7 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        gcomp_tim         0  (        0 /        0 )  0.00
   inv_pair_2_buf         0  (        0 /        0 )  0.00
 
- init_drc                 186135        0         0         0        0
+ init_drc                 169374        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -376,34 +369,32 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        crit_dnsz         0  (        0 /        0 )  0.00
        crit_upsz         0  (        0 /        0 )  0.00
 
- init_area                186135        0         0         0        0
- gate_comp                186036        0         0         0        0
- glob_area                185946        0         0         0        0
- area_down                185909        0         0         0        0
+ init_area                169374        0         0         0        0
+ area_down                169330        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
            undup         0  (        0 /        0 )  0.01
-         rem_buf        38  (        0 /        0 )  0.04
-         rem_inv        39  (        0 /        0 )  0.06
-        merge_bi        20  (        0 /        0 )  0.05
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         0  (        0 /        0 )  0.00
+        merge_bi         0  (        0 /        0 )  0.01
       rem_inv_qb         0  (        0 /        0 )  0.00
-        io_phase        52  (        2 /        2 )  0.11
-       gate_comp       524  (       10 /       11 )  2.04
-       gcomp_mog        19  (        0 /        0 )  0.60
-       glob_area        64  (       12 /       64 )  2.01
-       area_down       203  (        6 /        9 )  1.15
-      size_n_buf         0  (        0 /        0 )  0.02
+        io_phase         5  (        0 /        0 )  0.01
+       gate_comp       169  (        0 /        0 )  0.82
+       gcomp_mog         4  (        0 /        0 )  0.33
+       glob_area        50  (        0 /       50 )  0.02
+       area_down        11  (        7 /        7 )  0.17
+      size_n_buf         0  (        0 /        0 )  0.03
   gate_deco_area         0  (        0 /        0 )  0.00
 
 Info    : Done incrementally optimizing. [SYNTH-8]
         : Done incrementally optimizing 'core'.
      flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
-UM:           171            146                                      synthesize
+UM:           129            249                                      synthesize
 @genus:root: 6> report area
 ============================================================
   Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
-  Generated on:           Mar 27 2021  07:26:36 pm
+  Generated on:           Mar 27 2021  11:46:57 pm
   Module:                 core
   Technology library:     tsmc18 1.0
   Operating conditions:   slow (balanced_tree)
@@ -413,38 +404,38 @@ UM:           171            146                                      synthesize
 
                  Instance                              Module             Cell Count  Cell Area  Net Area   Total Area  Wireload     
 -------------------------------------------------------------------------------------------------------------------------------------
-core                                                                            7509 185909.174     0.000   185909.174    <none> (D) 
-  register_file                            register_bank                        3446 117977.433     0.000   117977.433    <none> (D) 
-  crypto_fu                                riscv_crypto_fu                      2109  35851.939     0.000    35851.939    <none> (D) 
-    i_riscv_crypto_fu_ssha512              riscv_crypto_fu_ssha512               361   6429.931     0.000     6429.931    <none> (D) 
-    i_riscv_crypto_fu_aes32_i_aes_sbox_fwd riscv_crypto_aes_fwd_sbox             161   3349.685     0.000     3349.685    <none> (D) 
-      mid                                  riscv_crypto_sbox_inv_mid_658          82   1460.290     0.000     1460.290    <none> (D) 
-      out                                  riscv_crypto_sbox_aes_out              38   1041.163     0.000     1041.163    <none> (D) 
-      top                                  riscv_crypto_sbox_aes_top              41    848.232     0.000      848.232    <none> (D) 
-    i_riscv_crypto_fu_aes32_i_aes_sbox_inv riscv_crypto_aes_inv_sbox             167   3246.566     0.000     3246.566    <none> (D) 
-      mid                                  riscv_crypto_sbox_inv_mid_657          83   1453.637     0.000     1453.637    <none> (D) 
-      out                                  riscv_crypto_sbox_aesi_out             45   1034.510     0.000     1034.510    <none> (D) 
-      top                                  riscv_crypto_sbox_aesi_top             39    758.419     0.000      758.419    <none> (D) 
-    i_riscv_crypto_fu_ssm4_i_sm4_sbox      riscv_crypto_sm4_sbox                 140   2927.232     0.000     2927.232    <none> (D) 
-      mid                                  riscv_crypto_sbox_inv_mid              67   1220.789     0.000     1220.789    <none> (D) 
-      bot                                  riscv_crypto_sbox_sm4_out              40   1034.510     0.000     1034.510    <none> (D) 
-      top                                  riscv_crypto_sbox_sm4_top              33    671.933     0.000      671.933    <none> (D) 
-  core_alu_sub_42_28_Y_core_alu_add_41_29  addsub_unsigned_170                   222   3366.317     0.000     3366.317    <none> (D) 
-  core_control                             control_unit                          203   2933.885     0.000     2933.885    <none> (D) 
-  pc_adder_add_4_17                        add_unsigned                          187   2754.259     0.000     2754.259    <none> (D) 
-  core_alu_srl_47_28                       shift_right_vlog_unsigned_479         152   2551.349     0.000     2551.349    <none> (D) 
-  core_alu_sll_43_28                       shift_left_vlog_unsigned_645          152   2551.349     0.000     2551.349    <none> (D) 
+core                                                                            5978 169330.396     0.000   169330.396    <none> (D) 
+  register_file                            register_bank                        2641 108949.583     0.000   108949.583    <none> (D) 
+  crypto_fu                                riscv_crypto_fu                      1798  31996.642     0.000    31996.642    <none> (D) 
+    i_riscv_crypto_fu_ssha512              riscv_crypto_fu_ssha512               363   6406.646     0.000     6406.646    <none> (D) 
+    i_riscv_crypto_fu_ssm4_i_sm4_sbox      riscv_crypto_sm4_sbox                 137   2704.363     0.000     2704.363    <none> (D) 
+      mid                                  riscv_crypto_sbox_inv_mid              63   1124.323     0.000     1124.323    <none> (D) 
+      bot                                  riscv_crypto_sbox_sm4_out              40    928.066     0.000      928.066    <none> (D) 
+      top                                  riscv_crypto_sbox_sm4_top              34    651.974     0.000      651.974    <none> (D) 
+    i_riscv_crypto_fu_aes32_i_aes_sbox_fwd riscv_crypto_aes_fwd_sbox             136   2671.099     0.000     2671.099    <none> (D) 
+      mid                                  riscv_crypto_sbox_inv_mid_658          63   1127.650     0.000     1127.650    <none> (D) 
+      out                                  riscv_crypto_sbox_aes_out              42    941.371     0.000      941.371    <none> (D) 
+      top                                  riscv_crypto_sbox_aes_top              31    602.078     0.000      602.078    <none> (D) 
+    i_riscv_crypto_fu_aes32_i_aes_sbox_inv riscv_crypto_aes_inv_sbox             127   2654.467     0.000     2654.467    <none> (D) 
+      mid                                  riscv_crypto_sbox_inv_mid_657          62   1114.344     0.000     1114.344    <none> (D) 
+      out                                  riscv_crypto_sbox_aesi_out             37    911.434     0.000      911.434    <none> (D) 
+      top                                  riscv_crypto_sbox_aesi_top             28    628.690     0.000      628.690    <none> (D) 
+  core_alu_sub_42_28_Y_core_alu_add_41_29  addsub_unsigned_170                    66   2963.822     0.000     2963.822    <none> (D) 
+  core_control                             control_unit                          186   2577.960     0.000     2577.960    <none> (D) 
+  core_alu_srl_47_28                       shift_right_vlog_unsigned_479         155   2528.064     0.000     2528.064    <none> (D) 
+  core_alu_sll_43_28                       shift_left_vlog_unsigned_645          155   2528.064     0.000     2528.064    <none> (D) 
   pc_latch                                 program_counter                        32   2235.341     0.000     2235.341    <none> (D) 
-  core_alu_lt_27_20                        lt_unsigned_647                       106   1367.150     0.000     1367.150    <none> (D) 
-  core_alu_lt_26_29                        lt_signed_649                         109   1360.498     0.000     1360.498    <none> (D) 
+  pc_adder_add_4_17                        add_unsigned                           34   2175.466     0.000     2175.466    <none> (D) 
+  core_alu_lt_27_20                        lt_unsigned_647                        93   1124.323     0.000     1124.323    <none> (D) 
+  core_alu_lt_26_29                        lt_signed_649                          93   1124.323     0.000     1124.323    <none> (D) 
   reg_to_mem                               mbr_sx_store                           71    878.170     0.000      878.170    <none> (D) 
-  stall_unit                               load_stall                              9    452.390     0.000      452.390    <none> (D) 
+  stall_unit                               load_stall                              8    429.106     0.000      429.106    <none> (D) 
 
  (D) = wireload is default in technology library
 @genus:root: 7> report power
 ============================================================
   Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
-  Generated on:           Mar 27 2021  07:26:43 pm
+  Generated on:           Mar 27 2021  11:47:02 pm
   Module:                 core
   Technology library:     tsmc18 1.0
   Operating conditions:   slow (balanced_tree)
@@ -455,32 +446,32 @@ core                                                                            
                                      Leakage     Dynamic       Total    
            Instance           Cells Power(nW)   Power(nW)    Power(nW)  
 ------------------------------------------------------------------------
-core                           7509  5620.519 19940515.152 19946135.670 
-  register_file                3446  3410.636 15902211.762 15905622.398 
-  crypto_fu                    2109  1267.291   770551.407   771818.698 
-    i_riscv_crypto_fu_ssha512   361   194.241        0.000      194.241 
-    i_riscv_cr.._aes_sbox_fwd   161   175.177        0.000      175.177 
-      mid                        82    74.467        0.000       74.467 
-      out                        38    54.563        0.000       54.563 
-      top                        41    46.148        0.000       46.148 
-    i_riscv_cr.._aes_sbox_inv   167   154.622        0.000      154.622 
-      mid                        83    70.554        0.000       70.554 
-      out                        45    49.164        0.000       49.164 
-      top                        39    34.905        0.000       34.905 
-    i_riscv_cr..m4_i_sm4_sbox   140   148.654        0.000      148.654 
-      mid                        67    62.895        0.000       62.895 
-      bot                        40    57.963        0.000       57.963 
-      top                        33    27.796        0.000       27.796 
-  core_alu_s..alu_add_41_29     222   103.508   190936.640   191040.148 
-  core_control                  203    94.083   125189.883   125283.966 
-  pc_adder_add_4_17             187    93.830    85165.397    85259.227 
-  pc_latch                       32    71.062   275419.738   275490.800 
-  core_alu_srl_47_28            152    51.627   207128.773   207180.399 
-  core_alu_sll_43_28            152    51.594   207369.384   207420.978 
-  core_alu_lt_27_20             106    40.523    53419.575    53460.098 
-  core_alu_lt_26_29             109    35.347    56306.136    56341.483 
-  reg_to_mem                     71    20.238    29278.638    29298.876 
-  stall_unit                      9    16.291    58784.095    58800.386 
+core                           5978  4806.661 12041673.290 12046479.952 
+  register_file                2641  2989.612  9308844.951  9311834.563 
+  crypto_fu                    1798   976.559   589364.494   590341.052 
+    i_riscv_crypto_fu_ssha512   363   188.184        0.000      188.184 
+    i_riscv_cr.._aes_sbox_fwd   136   107.951        0.000      107.951 
+      mid                        63    43.692        0.000       43.692 
+      out                        42    38.645        0.000       38.645 
+      top                        31    25.614        0.000       25.614 
+    i_riscv_cr.._aes_sbox_inv   127   103.226        0.000      103.226 
+      mid                        62    41.915        0.000       41.915 
+      out                        37    37.475        0.000       37.475 
+      top                        28    23.836        0.000       23.836 
+    i_riscv_cr..m4_i_sm4_sbox   137   100.457        0.000      100.457 
+      mid                        63    42.817        0.000       42.817 
+      bot                        40    36.269        0.000       36.269 
+      top                        34    21.372        0.000       21.372 
+  core_alu_s..alu_add_41_29      66   147.845   217923.297   218071.142 
+  pc_adder_add_4_17              34   112.490    56354.389    56466.879 
+  core_control                  186    74.204    63796.971    63871.175 
+  pc_latch                       32    71.062   120666.620   120737.682 
+  core_alu_sll_43_28            155    47.997   179545.017   179593.014 
+  core_alu_srl_47_28            155    47.895   176791.848   176839.743 
+  core_alu_lt_26_29              93    24.549    36098.233    36122.782 
+  core_alu_lt_27_20              93    24.521    36079.610    36104.131 
+  reg_to_mem                     71    20.238    25214.325    25234.563 
+  stall_unit                      8    14.667    30692.836    30707.502 
 
 @genus:root: 8> report timing
 Warning : Possible timing problems have been detected in this design. [TIM-11]
@@ -488,7 +479,7 @@ Warning : Possible timing problems have been detected in this design. [TIM-11]
         : Use 'report timing -lint' for more information.
 ============================================================
   Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
-  Generated on:           Mar 27 2021  07:26:54 pm
+  Generated on:           Mar 27 2021  11:47:10 pm
   Module:                 core
   Operating conditions:   slow (balanced_tree)
   Wireload mode:          enclosed
@@ -496,140 +487,124 @@ Warning : Possible timing problems have been detected in this design. [TIM-11]
 ============================================================
 
 
-Path 1: MET (0 ps) Setup Check with Pin register_file/regFile_reg[2][27]/CK->SI
+Path 1: MET (1185 ps) Setup Check with Pin register_file/regFile_reg[2][31]/CK->SI
           Group: clk
      Startpoint: (R) stall_unit/delayed_load_reg/CK
           Clock: (R) clk
-       Endpoint: (F) register_file/regFile_reg[2][27]/SI
+       Endpoint: (F) register_file/regFile_reg[2][31]/SI
           Clock: (R) clk
 
                      Capture       Launch     
-        Clock Edge:+   10000            0     
+        Clock Edge:+   28000            0     
        Src Latency:+       0            0     
        Net Latency:+       0 (I)        0 (I) 
-           Arrival:=   10000            0     
+           Arrival:=   28000            0     
                                               
-             Setup:-     839                  
+             Setup:-     904                  
        Uncertainty:-     100                  
-     Required Time:=    9061                  
+     Required Time:=   26996                  
       Launch Clock:-       0                  
-         Data Path:-    9061                  
-             Slack:=       0                  
+         Data Path:-   25812                  
+             Slack:=    1185                  
 
-#-------------------------------------------------------------------------------------------------------------
-#            Timing Point             Flags    Arc   Edge   Cell     Fanout Load Trans Delay Arrival Instance 
-#                                                                           (fF)  (ps)  (ps)   (ps)  Location 
-#-------------------------------------------------------------------------------------------------------------
-  stall_unit/delayed_load_reg/CK      -       -      R     (arrival)   1036    -   100     -       0    (-,-) 
-  stall_unit/delayed_load_reg/Q       -       CK->Q  R     DFFHQX2        8 51.8   349   482     482    (-,-) 
-  g2986/Y                             -       A->Y   F     INVX8         18 87.4   124   100     582    (-,-) 
-  g2980/Y                             -       A->Y   F     AND2X4         8 57.3   137   238     820    (-,-) 
-  register_file/g82549/Y              -       AN->Y  F     NAND2BX4      12 51.6   149   223    1043    (-,-) 
-  register_file/g81837/Y              -       A->Y   R     NOR2X1         4 13.3   326   222    1265    (-,-) 
-  register_file/g82565/Y              -       AN->Y  R     NOR2BX2       18 75.4   746   545    1810    (-,-) 
-  register_file/g80211/Y              -       B1->Y  F     AOI22X1        1  4.8   224   181    1991    (-,-) 
-  register_file/g79656/Y              -       A->Y   R     NAND4X1        1  4.3   189   133    2124    (-,-) 
-  register_file/g79609/Y              -       A->Y   F     NOR2X1         1  8.7   104    90    2214    (-,-) 
-  register_file/g82556/Y              -       B->Y   R     NAND3X2       21 84.7   593   357    2571    (-,-) 
-  g4293/Y                             -       A->Y   F     MXI2X2         2 12.9   203   189    2761    (-,-) 
-  g4261/Y                             -       A->Y   R     CLKINVX3      13 51.6   238   181    2942    (-,-) 
-  core_alu_lt_27_20/g2223/Y           -       B->Y   F     NOR2BX1        1  3.8    92    87    3029    (-,-) 
-  core_alu_lt_27_20/g2196/Y           -       B->Y   R     NOR2X1         2  7.7   221   169    3198    (-,-) 
-  core_alu_lt_27_20/g2188/Y           -       B0->Y  F     OAI21XL        1  2.6   151   111    3309    (-,-) 
-  core_alu_lt_27_20/g2187/Y           -       A->Y   R     INVXL          1  3.0   106    94    3402    (-,-) 
-  core_alu_lt_27_20/g2172/Y           -       B0->Y  F     OAI21XL        1  3.2   120    97    3500    (-,-) 
-  core_alu_lt_27_20/g2275/Y           -       A0N->Y F     OAI2BB1X2      1  3.2    65   187    3687    (-,-) 
-  core_alu_lt_27_20/g2274/Y           -       A0N->Y F     OAI2BB1X2      1  3.2    65   172    3859    (-,-) 
-  core_alu_lt_27_20/g2/Y              -       A->Y   F     AND2X2         2 11.8    81   166    4025    (-,-) 
-  core_control/g1931/Y                -       S0->Y  F     MXI2X1         1  7.8   177   175    4200    (-,-) 
-  core_control/g1930/Y                -       A->Y   R     NAND2X2        1 18.5   171   134    4334    (-,-) 
-  core_control/g2/Y                   -       A->Y   F     NAND4X4       23 74.6   302   199    4534    (-,-) 
-  g2928/Y                             -       A->Y   F     AND2X2         2  9.5    76   219    4753    (-,-) 
-  pc_adder_add_4_17/g2548/Y           -       A->Y   R     NAND2X1        3 10.6   203   126    4879    (-,-) 
-  pc_adder_add_4_17/g2443/Y           -       A1->Y  F     OAI21X1        3  8.3   134   128    5007    (-,-) 
-  pc_adder_add_4_17/g2437/Y           -       A1N->Y F     OAI2BB1X1      3  8.3   129   235    5242    (-,-) 
-  pc_adder_add_4_17/g2435/Y           -       A1N->Y F     OAI2BB1X1      3  9.4   137   240    5482    (-,-) 
-  pc_adder_add_4_17/g2433/Y           -       A1N->Y F     OAI2BB1X2      3  9.4    89   194    5675    (-,-) 
-  pc_adder_add_4_17/g2431/Y           -       A1N->Y F     OAI2BB1X2      3  9.4    89   181    5856    (-,-) 
-  pc_adder_add_4_17/g2429/Y           -       A1N->Y F     OAI2BB1X2      3  9.4    89   181    6037    (-,-) 
-  pc_adder_add_4_17/g2427/Y           -       A1N->Y F     OAI2BB1X2      3 10.8    94   185    6222    (-,-) 
-  pc_adder_add_4_17/g2426/Y           -       A->Y   R     NAND2X1        2 12.0   213   140    6361    (-,-) 
-  pc_adder_add_4_17/g2423/Y           -       A->Y   F     NOR2X2         2  6.9    94    59    6420    (-,-) 
-  pc_adder_add_4_17/g2420/Y           -       A1N->Y F     OAI2BB1X2      3  8.3    85   179    6600    (-,-) 
-  pc_adder_add_4_17/g2416/Y           -       A1N->Y F     OAI2BB1X1      3  9.4   137   228    6828    (-,-) 
-  pc_adder_add_4_17/g2413/Y           -       A1N->Y F     OAI2BB1X2      3  9.4    89   194    7021    (-,-) 
-  pc_adder_add_4_17/g2411/Y           -       A1N->Y F     OAI2BB1X2      3 11.1    95   186    7207    (-,-) 
-  pc_adder_add_4_17/g2409/Y           -       A1N->Y F     OAI2BB1X4      3 14.6    86   169    7376    (-,-) 
-  pc_adder_add_4_17/g2408/Y           -       A->Y   R     NAND2X2        2 12.0   135    91    7467    (-,-) 
-  pc_adder_add_4_17/g2406/Y           -       A->Y   F     NOR2X2         2  6.0    91    53    7520    (-,-) 
-  pc_adder_add_4_17/g2401/Y           -       A1N->Y F     OAI2BB1X2      5 12.4   100   190    7710    (-,-) 
-  pc_adder_add_4_17/g2397/Y           -       A1N->Y F     OAI2BB1X2      4 13.4   104   195    7905    (-,-) 
-  pc_adder_add_4_17/g2393/Y           -       A->Y   R     NAND2X1        2  8.3   169   117    8022    (-,-) 
-  pc_adder_add_4_17/g2386/Y           -       A->Y   F     NOR2X1         1  4.3   106    69    8091    (-,-) 
-  pc_adder_add_4_17/g2385/Y           -       A->Y   R     NOR2X1         2  8.9   245   166    8257    (-,-) 
-  pc_adder_add_4_17/g2378/Y           -       A0->Y  F     OAI21XL        2  6.8   170   135    8392    (-,-) 
-  pc_adder_add_4_17/g2374/Y           -       A1N->Y F     OAI2BB2X1      2  9.7   156   257    8648    (-,-) 
-  g11829/Y                            -       A0->Y  R     AOI21X1        1  6.7   253   193    8841    (-,-) 
-  g12258/Y                            -       B0->Y  F     OAI2BB1X2     31 61.4   291   220    9061    (-,-) 
-  register_file/regFile_reg[2][27]/SI <<<     -      F     SDFFSHQX1     31    -     -     0    9061    (-,-) 
-#-------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------
+#            Timing Point             Flags    Arc   Edge   Cell     Fanout  Load Trans Delay Arrival Instance 
+#                                                                            (fF)  (ps)  (ps)   (ps)  Location 
+#--------------------------------------------------------------------------------------------------------------
+  stall_unit/delayed_load_reg/CK      -       -      R     (arrival)   1036     -   100     -       0    (-,-) 
+  stall_unit/delayed_load_reg/Q       -       CK->Q  F     DFFTRX1       23  92.3   624   647     647    (-,-) 
+  g2987/Y                             -       A->Y   R     INVX1         19  61.5   786   609    1256    (-,-) 
+  g2974/Y                             -       A->Y   R     AND2X2        10  62.2   429   436    1692    (-,-) 
+  register_file/g68527/Y              -       A->Y   R     AND2X2       143 482.9  3043  1837    3529    (-,-) 
+  register_file/g68493/Y              -       A->Y   F     INVX1         12  48.5   821   592    4121    (-,-) 
+  register_file/g68232/Y              -       B->Y   R     NOR2X1        25  94.9  1790  1184    5305    (-,-) 
+  register_file/g67669/Y              -       B1->Y  F     AOI22X1        1   4.5   346   210    5516    (-,-) 
+  register_file/g67027/Y              -       D->Y   R     NAND4X1        7  21.0   387   329    5845    (-,-) 
+  g4957/Y                             -       A->Y   R     MX2X1         70 300.9  3679  2216    8061    (-,-) 
+  core_alu_lt_27_20/g905/Y            -       B->Y   F     NAND2BX1       2   7.0   429    40    8101    (-,-) 
+  core_alu_lt_27_20/g892/Y            -       A0N->Y F     AOI2BB1X1      1   4.4   396   352    8454    (-,-) 
+  core_alu_lt_27_20/g891/Y            -       B0->Y  R     AOI21X1        1   4.4   219   206    8659    (-,-) 
+  core_alu_lt_27_20/g890/Y            -       B0->Y  F     AOI21X1        1   4.6   338    77    8736    (-,-) 
+  core_alu_lt_27_20/g889/Y            -       A0->Y  R     OAI22X1        1   4.7   329   185    8921    (-,-) 
+  core_alu_lt_27_20/g888/Y            -       A0->Y  F     AOI22X1        2   8.1   316   122    9043    (-,-) 
+  core_alu_lt_27_20/g886/Y            -       A0->Y  R     OAI21XL        1   3.0   243   219    9262    (-,-) 
+  core_alu_lt_27_20/g885/Y            -       B0->Y  F     OAI21XL        1   3.4   139   120    9382    (-,-) 
+  core_alu_lt_27_20/g884/Y            -       B0->Y  R     OAI2BB1X1      1   3.0   114   105    9487    (-,-) 
+  core_alu_lt_27_20/g883/Y            -       B0->Y  F     OAI21XL        1   3.0   138    97    9585    (-,-) 
+  core_alu_lt_27_20/g882/Y            -       B0->Y  R     OAI21XL        1   4.7   289   125    9710    (-,-) 
+  core_alu_lt_27_20/g881/Y            -       A0->Y  F     AOI22X1        1   4.6   186    97    9806    (-,-) 
+  core_alu_lt_27_20/g880/Y            -       A0->Y  R     OAI22X1        1   4.7   330   155    9962    (-,-) 
+  core_alu_lt_27_20/g879/Y            -       A0->Y  F     AOI22X1        1   4.6   186   100   10062    (-,-) 
+  core_alu_lt_27_20/g878/Y            -       A0->Y  R     OAI22X1        1   4.7   330   155   10217    (-,-) 
+  core_alu_lt_27_20/g877/Y            -       A0->Y  F     AOI22X1        1   4.6   184   100   10317    (-,-) 
+  core_alu_lt_27_20/g876/Y            -       A0->Y  R     OAI22X1        1   4.7   331   155   10472    (-,-) 
+  core_alu_lt_27_20/g875/Y            -       A0->Y  F     AOI22X1        1   4.6   184   100   10572    (-,-) 
+  core_alu_lt_27_20/g874/Y            -       A0->Y  R     OAI22X1        1   4.7   331   155   10727    (-,-) 
+  core_alu_lt_27_20/g873/Y            -       A0->Y  F     AOI22X1        1   4.6   184   100   10827    (-,-) 
+  core_alu_lt_27_20/g872/Y            -       A0->Y  R     OAI22X1        1   4.7   331   155   10982    (-,-) 
+  core_alu_lt_27_20/g871/Y            -       A0->Y  F     AOI22X1        2   8.1   212   122   11104    (-,-) 
+  core_alu_lt_27_20/g869/Y            -       A0->Y  R     OAI21XL        1   3.0   233   195   11299    (-,-) 
+  core_alu_lt_27_20/g868/Y            -       B0->Y  F     OAI21XL        1   4.7   154   130   11428    (-,-) 
+  core_alu_lt_27_20/g867/Y            -       A0->Y  R     AOI22X1        1   4.6   248   166   11594    (-,-) 
+  core_alu_lt_27_20/g866/Y            -       A0->Y  F     OAI22X1        1   4.7   150   113   11707    (-,-) 
+  core_alu_lt_27_20/g865/Y            -       A0->Y  R     AOI22X1        1   4.6   248   165   11872    (-,-) 
+  core_alu_lt_27_20/g864/Y            -       A0->Y  F     OAI22X1        1   4.7   150   113   11985    (-,-) 
+  core_alu_lt_27_20/g863/Y            -       A0->Y  R     AOI22X1        1   4.6   248   165   12150    (-,-) 
+  core_alu_lt_27_20/g862/Y            -       A0->Y  F     OAI22X1        1   4.7   150   113   12262    (-,-) 
+  core_alu_lt_27_20/g861/Y            -       A0->Y  R     AOI22X1        1   4.6   248   165   12427    (-,-) 
+  core_alu_lt_27_20/g860/Y            -       A0->Y  F     OAI22X1        1   4.7   150   113   12540    (-,-) 
+  core_alu_lt_27_20/g859/Y            -       A0->Y  R     AOI22X1        1   3.6   230   154   12695    (-,-) 
+  core_alu_lt_27_20/g858/Y            -       A0->Y  F     OAI222XL       1   3.0   214   196   12891    (-,-) 
+  core_alu_lt_27_20/g857/Y            -       B0->Y  R     OAI21XL        1   3.4   257   128   13019    (-,-) 
+  core_alu_lt_27_20/g856/Y            -       B0->Y  F     OAI2BB1X1      1   3.0    90    73   13091    (-,-) 
+  core_alu_lt_27_20/g855/Y            -       B0->Y  R     OAI21XL        3   6.5   329   129   13221    (-,-) 
+  core_control/g1952/Y                -       AN->Y  R     NAND3BX1       1   3.4   198   200   13421    (-,-) 
+  core_control/g1951/Y                -       B0->Y  F     OAI2BB1X1      1   4.7   102    80   13502    (-,-) 
+  core_control/g1950/Y                -       A0->Y  R     AOI31X1        1   3.3   236   152   13654    (-,-) 
+  core_control/g1949/Y                -       C0->Y  F     OAI221XL       1   2.1   167   144   13798    (-,-) 
+  core_control/g1948/Y                -       AN->Y  F     NAND2BX1      32 103.1   871   678   14476    (-,-) 
+  g2928/Y                             -       A->Y   F     AND2X2         2   5.7    78   322   14798    (-,-) 
+  pc_adder_add_4_17/g783/Y            -       A->Y   F     AND2X2         2   9.3    74   163   14962    (-,-) 
+  pc_adder_add_4_17/g780/CO           -       CI->CO F     ADDFX1         1   6.2   142   312   15274    (-,-) 
+  pc_adder_add_4_17/g779/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   15604    (-,-) 
+  pc_adder_add_4_17/g778/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   15934    (-,-) 
+  pc_adder_add_4_17/g777/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   16264    (-,-) 
+  pc_adder_add_4_17/g776/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   16594    (-,-) 
+  pc_adder_add_4_17/g775/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   16924    (-,-) 
+  pc_adder_add_4_17/g774/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   17254    (-,-) 
+  pc_adder_add_4_17/g773/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   17584    (-,-) 
+  pc_adder_add_4_17/g772/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   17914    (-,-) 
+  pc_adder_add_4_17/g771/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   18244    (-,-) 
+  pc_adder_add_4_17/g770/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   18574    (-,-) 
+  pc_adder_add_4_17/g769/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   18904    (-,-) 
+  pc_adder_add_4_17/g768/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   19234    (-,-) 
+  pc_adder_add_4_17/g767/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   19564    (-,-) 
+  pc_adder_add_4_17/g766/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   19894    (-,-) 
+  pc_adder_add_4_17/g765/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   20224    (-,-) 
+  pc_adder_add_4_17/g764/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   20554    (-,-) 
+  pc_adder_add_4_17/g763/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   20884    (-,-) 
+  pc_adder_add_4_17/g762/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   21214    (-,-) 
+  pc_adder_add_4_17/g761/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   21544    (-,-) 
+  pc_adder_add_4_17/g760/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   21874    (-,-) 
+  pc_adder_add_4_17/g759/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   22204    (-,-) 
+  pc_adder_add_4_17/g758/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   22534    (-,-) 
+  pc_adder_add_4_17/g757/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   22864    (-,-) 
+  pc_adder_add_4_17/g756/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   23194    (-,-) 
+  pc_adder_add_4_17/g755/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   23524    (-,-) 
+  pc_adder_add_4_17/g754/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   23854    (-,-) 
+  pc_adder_add_4_17/g753/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   24184    (-,-) 
+  pc_adder_add_4_17/g752/CO           -       CI->CO F     ADDFX1         1   6.2   142   330   24514    (-,-) 
+  pc_adder_add_4_17/g751/CO           -       CI->CO F     ADDFX1         2   6.8   146   334   24848    (-,-) 
+  pc_adder_add_4_17/g750/Y            -       A1N->Y F     OAI2BB2X1      2   9.0   151   247   25094    (-,-) 
+  g13050/Y                            -       B0->Y  R     AOI22X1        1   4.8   376   222   25316    (-,-) 
+  g12965/Y                            -       A->Y   F     NAND4X1       31  57.8   778   496   25812    (-,-) 
+  register_file/regFile_reg[2][31]/SI <<<     -      F     SDFFSHQX1     31     -     -     0   25812    (-,-) 
+#--------------------------------------------------------------------------------------------------------------
 
-@genus:root: 9> report qor
-============================================================
-  Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
-  Generated on:           Mar 27 2021  07:27:25 pm
-  Module:                 core
-  Operating conditions:   slow (balanced_tree)
-  Wireload mode:          enclosed
-  Area mode:              timing library
-============================================================
-
-Timing
---------
-
-Clock  Period 
---------------
-clk   10000.0 
-
-
-  Cost    Critical         Violating 
- Group   Path Slack  TNS     Paths   
--------------------------------------
-clk             0.3   0.0          0 
-default    No paths   0.0            
--------------------------------------
-Total                 0.0          0 
-
-Instance Count
---------------
-Leaf Instance Count             7509 
-Physical Instance count            0 
-Sequential Instance Count       1036 
-Combinational Instance Count    6473 
-Hierarchical Instance Count       25 
-
-Area
-----
-Cell Area                          185909.174
-Physical Cell Area                 0.000
-Total Cell Area (Cell+Physical)    185909.174
-Net Area                           0.000
-Total Area (Cell+Physical+Net)     185909.174
-
-Max Fanout                         1036 (clk)
-Min Fanout                         0 (delayed_addr[2])
-Average Fanout                     2.9
-Terms to net ratio                 4.0507
-Terms to instance ratio            4.1192
-Runtime                            133.451588 seconds
-Elapsed Runtime                    273 seconds
-Genus peak memory usage            753.41 
-Innovus peak memory usage          no_value 
-Hostname                           cad54
-@genus:root: 10> write_hdl > net.v
+@genus:root: 9> write_hdl > net.v
+@genus:root: 10> write_sdc > time_mode.v
+Finished SDC export (command execution time mm:ss (real) = 00:00).
 @genus:root: 11> write_sdc > timing.sdc
 Finished SDC export (command execution time mm:ss (real) = 00:00).
-@genus:root: 12> write_sdc > time_mod.v
-Finished SDC export (command execution time mm:ss (real) = 00:00).
-@genus:root: 13> exit
+@genus:root: 12> exit
 Normal exit.

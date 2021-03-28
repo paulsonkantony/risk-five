@@ -1,6 +1,6 @@
 # ####################################################################
 
-#  Created by Genus(TM) Synthesis Solution 17.21-s010_1 on Sat Mar 27 17:21:24 IST 2021
+#  Created by Genus(TM) Synthesis Solution 17.21-s010_1 on Sat Mar 27 23:48:19 IST 2021
 
 # ####################################################################
 
@@ -12,7 +12,7 @@ set_units -time 1000.0ps
 # Set the current design
 current_design core
 
-create_clock -name "clk" -period 10.0 -waveform {0.0 5.0} [get_ports clk]
+create_clock -name "clk" -period 28.0 -waveform {0.0 14.0} [get_ports clk]
 set_clock_transition 0.1 [get_clocks clk]
 set_clock_gating_check -setup 0.0 
 set_wire_load_mode "enclosed"

@@ -1,0 +1,14 @@
+Gate area 9.9792 um^2
+Level 0 Module core                                     Gates=     16933 Cells=    5914 Area=  168984.4 um^2
+Level 1 Module core_alu_sll_43_28                       Gates=253        Cells=155      Area=    2528.1 um^2
+Level 1 Module core_alu_srl_47_28                       Gates=253        Cells=155      Area=    2528.1 um^2
+Level 1 Module core_alu_sub_42_28_Y_core_alu_add_41_29  Gates=297        Cells=66       Area=    2963.8 um^2
+Level 1 Module core_control                             Gates=257        Cells=184      Area=    2568.0 um^2
+Level 1 Module crypto_fu                                Gates=3206       Cells=1798     Area=   31996.6 um^2
+Level 2 Module crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd Gates=267        Cells=136      Area=    2671.1 um^2
+Level 2 Module crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_inv Gates=266        Cells=127      Area=    2654.5 um^2
+Level 2 Module crypto_fu/i_riscv_crypto_fu_ssha512      Gates=642        Cells=363      Area=    6406.6 um^2
+Level 2 Module crypto_fu/i_riscv_crypto_fu_ssm4_i_sm4_sbox Gates=271        Cells=137      Area=    2704.4 um^2
+Level 1 Module pc_adder_add_4_17                        Gates=218        Cells=34       Area=    2175.5 um^2
+Level 1 Module pc_latch                                 Gates=224        Cells=32       Area=    2235.3 um^2
+Level 1 Module register_file                            Gates=10912      Cells=2640     Area=  108899.7 um^2

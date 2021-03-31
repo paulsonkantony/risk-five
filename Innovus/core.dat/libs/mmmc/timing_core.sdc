@@ -1,0 +1,1 @@
+/home/student/Desktop/17BEC10971/timing_core.sdc

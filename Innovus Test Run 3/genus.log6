@@ -5,7 +5,7 @@ of Cadence Design Systems, Inc. in the United States and other countries.
 
 Version: 17.21-s010_1, built Wed Feb 07 2018
 Options: 
-Date:    Tue Mar 30 12:12:31 2021
+Date:    Fri Apr 02 19:35:36 2021
 Host:    cad54 (x86_64 w/Linux 2.6.32-71.el6.x86_64) (2cores*4cpus*1physical cpu*Intel(R) Core(TM) i3-2120 CPU @ 3.30GHz 3072KB) (7955092KB)
 OS:      Red Hat Enterprise Linux Server release 6.0 (Santiago)
 
@@ -13,40 +13,55 @@ Checking out license: Genus_Synthesis
 
 Loading tool scripts...
 
-Finished loading tool scripts (30 seconds elapsed).
+Finished loading tool scripts (37 seconds elapsed).
 
-WARNING: This version of the tool is 1147 days old.
-@genus:root: 1> set_db library slow.lib
+WARNING: This version of the tool is 1150 days old.
+@genus:root: 1> set_db library fast.lib
 
 Threads Configured:3
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNX1' (File /home/student/Desktop/17BEC1073/fast.lib, Line 147265)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNX2' (File /home/student/Desktop/17BEC1073/fast.lib, Line 147568)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNX4' (File /home/student/Desktop/17BEC1073/fast.lib, Line 147871)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNXL' (File /home/student/Desktop/17BEC1073/fast.lib, Line 148174)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATX1' (File /home/student/Desktop/17BEC1073/fast.lib, Line 148477)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATX2' (File /home/student/Desktop/17BEC1073/fast.lib, Line 148841)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATX4' (File /home/student/Desktop/17BEC1073/fast.lib, Line 149205)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATXL' (File /home/student/Desktop/17BEC1073/fast.lib, Line 149569)
 
-  Message Summary for Library slow.lib:
+  Message Summary for Library fast.lib:
   *************************************
-  Could not find an attribute in the library. [LBR-436]: 639
+  Could not find an attribute in the library. [LBR-436]: 655
+  Missing clock pin in the sequential cell. [LBR-525]: 8
   Missing a function attribute in the output pin definition. [LBR-518]: 1
   An unsupported construct was detected in this library. [LBR-40]: 1
   *************************************
  
 Info    : Created nominal operating condition. [LBR-412]
-        : Operating condition '_nominal_' was created for the PVT values (1.000000, 1.620000, 125.000000) in library 'slow.lib'.
+        : Operating condition '_nominal_' was created for the PVT values (1.000000, 1.980000, 0.000000) in library 'fast.lib'.
         : The nominal operating condition represents either the nominal PVT values if specified in the library source, or the default PVT values (1.0, 1.0, 1.0).
-  Setting attribute of root '/': 'library' = slow.lib
-1 slow.lib
-@genus:root: 2> read_hdl {add32.v alu.v control_unit.v data_mem.v imm_sx.v insn_mem.v load_stall.v mbr_sx_load.v mbr_sx_store.v mux32four.v mux32two.v program_counter.v register_bank.v riscv_crypto_fu_saes32_32.v riscv_crypto_fu_sboxes_aes_32.v riscv_crypto_fu_sboxes_sm4_32.v riscv_crypto_fu_ssha256_32.v riscv_crypto_fu_ssha512_32.v riscv_crypto_fu_ssm3_32.v riscv_crypto_fu_ssm4_32.v riscv_crypto_fu_32.v core_top.v core.v}
-@genus:root: 3> elaborate core
+  Setting attribute of root '/': 'library' = fast.lib
+1 fast.lib
+@genus:root: 2> read_hdl load_stall.v
+@genus:root: 3> elaborate
 Info    : Elaborating Design. [ELAB-1]
-        : Elaborating top-level block 'core' from file 'core.v'.
-Warning : Using default parameter value for module elaboration. [CDFG-818]
-        : Elaborating block 'core' with default parameters value.
+        : Elaborating top-level block 'load_stall' from file 'load_stall.v'.
 Info    : Done Elaborating Design. [ELAB-3]
-        : Done elaborating 'core'.
+        : Done elaborating 'load_stall'.
 Checking for analog nets...
 Check completed for analog nets.
 Checking for source RTL...
 Check completed for source RTL.
 UM:  flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
-UM:            15             87                                      elaborate
-design:core
+UM:            10             87                                      elaborate
+design:load_stall
 @genus:root: 4> read_sdc counter_constraints.g
 Statistics for commands executed by read_sdc:
  "create_clock"             - successful      1 , failed      0 (runtime  0.00)
@@ -60,86 +75,26 @@ Warning : This command will be obsolete in a next major release. [TUI-37]
         : command: 'synthesize'
         : The synthesize command is obsolete. Use the syn_gen, syn_map or syn_opt commands instead.
 Info    : Synthesizing. [SYNTH-1]
-        : Synthesizing 'core' to generic gates using 'medium' effort.
-Info    : Deleting instances not driving any primary outputs. [GLO-34]
-        : Deleting 30 sequential instances.
-        : Optimizations such as constant propagation or redundancy removal could change the connections so a hierarchical instance does not drive any primary outputs anymore. To see the list of deleted hierarchical instances, set the 'information_level' attribute to 2 or above. If the message is truncated set the message attribute 'truncate' to false to see the complete list. To prevent this optimization, set the 'delete_unloaded_insts' root/subdesign attribute to 'false' or 'preserve' instance attribute to 'true'.
-Info    : Deleting instances not driving any primary outputs. [GLO-34]
-        : Deleting 34 hierarchical instances.
+        : Synthesizing 'load_stall' to generic gates using 'medium' effort.
 Info    : Pre-processed datapath logic. [DPOPT-6]
-        : No pre-processing optimizations applied to datapath logic in 'core'.
-Info    : Optimizing datapath logic. [DPOPT-1]
-        : Optimizing datapath logic in 'core'.
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_652'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_652'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_653'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_653'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_650'
-Info    : Accepted resource sharing opportunity. [RTLOPT-30]
-        : Merged the following sets of instances in 'CDN_DP_region_650_c1 in core':
-	  (core_alu_sub_42_28, core_alu_add_41_29)
-
-Info    : Accepted resource sharing opportunity. [RTLOPT-30]
-        : Merged the following sets of instances in 'CDN_DP_region_650_c2 in core':
-	  (core_alu_sub_42_28, core_alu_add_41_29)
-
-Info    : Accepted resource sharing opportunity. [RTLOPT-30]
-        : Merged the following sets of instances in 'CDN_DP_region_650_c3 in core':
-	  (core_alu_sub_42_28, core_alu_add_41_29)
-
-Info    : Accepted resource sharing opportunity. [RTLOPT-30]
-        : Merged the following sets of instances in 'CDN_DP_region_650_c4 in core':
-	  (core_alu_sub_42_28, core_alu_add_41_29)
-
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_650'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(1), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_651'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_651'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Done optimizing datapath logic. [DPOPT-2]
-        : Done optimizing datapath logic in 'core'.
-Warning : Not obtained requested number of super thread servers. [ST-136]
-        : The tool is running on a 4 cpu machine.
-        : The requested number of cpus are not available on machine.
-Info    : Deleting instances not driving any primary outputs. [GLO-34]
-        : Deleting 32 sequential instances.
+        : No pre-processing optimizations applied to datapath logic in 'load_stall'.
+Info    : Skipping datapath optimization. [DPOPT-5]
+        : There is no datapath logic in 'load_stall'.
 Info    : Done synthesizing. [SYNTH-2]
-        : Done synthesizing 'core' to generic gates.
+        : Done synthesizing 'load_stall' to generic gates.
 Info    : Mapping. [SYNTH-4]
-        : Mapping 'core' using 'medium' effort.
+        : Mapping 'load_stall' using 'medium' effort.
 Mapper: Libraries have:
 	domain _default_: 278 combo usable cells and 172 sequential usable cells
-Warning : Not obtained requested number of super thread servers. [ST-136]
-        : The tool is running on a 4 cpu machine.
 Multi-threaded constant propagation [1|0] ...
-Multi-threaded Virtual Mapping    (4 threads per ST process, 4 of 4 CPUs usable)
+Multi-threaded Virtual Mapping    (4 threads, 4 of 4 CPUs usable)
  
 Global mapping target info
 ==========================
-Cost Group 'clk' target slack:   412 ps
-Target path end-point (Pin: register_file/regFile_reg[2][21]/d)
+Cost Group 'default' target slack: Unconstrained
 
-Multi-threaded Technology Mapping (4 threads per ST process, 4 of 4 CPUs usable)
+Multi-threaded Virtual Mapping    (4 threads, 4 of 4 CPUs usable)
+Multi-threaded Technology Mapping (4 threads, 4 of 4 CPUs usable)
  
 Global mapping status
 =====================
@@ -148,17 +103,16 @@ Global mapping status
                            Total  Weighted 
 Operation                   Area   Slacks  
 -------------------------------------------------------------------------------
- global_map               182430        0 
+ global_map                 2026        0 
 
     Cost Group            Target    Slack    Diff.  Constr.
 -----------------------------------------------------------
-           clk               412     1866             14000 
+       default          unconst. unconst.              N.A. 
 
  
 Global incremental target info
 ==============================
-Cost Group 'clk' target slack:   261 ps
-Target path end-point (Pin: register_file/regFile_reg[2][12]/SI (SDFFSHQX1/SI))
+Cost Group 'default' target slack: Unconstrained
 
  
 Global incremental optimization status
@@ -168,16 +122,16 @@ Global incremental optimization status
                            Total  Weighted 
 Operation                   Area   Slacks  
 -------------------------------------------------------------------------------
- global_incr              176179        0 
+ global_incr                2026        0 
 
     Cost Group            Target    Slack    Diff.  Constr.
 -----------------------------------------------------------
-           clk               261      616             14000 
+       default          unconst. unconst.              N.A. 
 
 Info    : Done mapping. [SYNTH-5]
-        : Done mapping 'core'.
+        : Done mapping 'load_stall'.
 Info    : Incrementally optimizing. [SYNTH-7]
-        : Incrementally optimizing 'core' using 'medium' effort.
+        : Incrementally optimizing 'load_stall' using 'medium' effort.
  
 Incremental optimization status
 ===============================
@@ -186,8 +140,8 @@ Incremental optimization status
                            Total  Weighted      Neg      Max       Max 
 Operation                   Area   Slacks      Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_iopt                176179        0         0         0        0
- const_prop               176166        0         0         0        0
+ init_iopt                  2026        0         0         0        0
+ const_prop                 2026        0         0         0        0
  
 Incremental optimization status
 ===============================
@@ -196,7 +150,7 @@ Incremental optimization status
                            Total  Weighted      Neg      Max       Max 
 Operation                   Area   Slacks      Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_delay               176056        0         0         0        0
+ init_delay                 2026        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -219,7 +173,7 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        gcomp_tim         0  (        0 /        0 )  0.00
   inv_pair_2_buf         0  (        0 /        0 )  0.00
 
- init_drc                 176056        0         0         0        0
+ init_drc                   2026        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -260,7 +214,7 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        crit_dnsz         0  (        0 /        0 )  0.00
        crit_upsz         0  (        0 /        0 )  0.00
 
- init_tns                 176056        0         0         0        0
+ init_tns                   2026        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -275,33 +229,25 @@ Operation                   Area   Slacks      Slack    Trans      Cap
         setup_dn         0  (        0 /        0 )  0.00
          buf2inv         0  (        0 /        0 )  0.00
 
- init_area                176056        0         0         0        0
- rem_inv                  175611        0         0         0        0
- merge_bi                 175468        0         0         0        0
- merge_bi                 175444        0         0         0        0
- gate_comp                174895        0         0         0        0
- glob_area                174579        0         0         0        0
- area_down                174383        0         0         0        0
- rem_inv                  174373        0         0         0        0
- merge_bi                 174360        0         0         0        0
+ init_area                  2026        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
-           undup         0  (        0 /        0 )  0.01
-         rem_buf        18  (       17 /       18 )  0.15
-         rem_inv        32  (       18 /       21 )  0.35
-        merge_bi        28  (       16 /       16 )  0.24
+           undup         0  (        0 /        0 )  0.00
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         0  (        0 /        0 )  0.00
+        merge_bi         0  (        0 /        0 )  0.00
       rem_inv_qb         0  (        0 /        0 )  0.00
-        io_phase        16  (        5 /        5 )  0.18
-       gate_comp       405  (       52 /       52 )  1.60
-       gcomp_mog        31  (        0 /        0 )  0.44
-       glob_area        77  (       13 /       77 )  0.70
-       area_down        46  (       21 /       23 )  0.80
-      size_n_buf         1  (        0 /        0 )  0.02
+        io_phase         0  (        0 /        0 )  0.00
+       gate_comp         0  (        0 /        0 )  0.00
+       gcomp_mog         0  (        0 /        0 )  0.00
+       glob_area         1  (        0 /        1 )  0.00
+       area_down         0  (        0 /        0 )  0.00
+      size_n_buf         0  (        0 /        0 )  0.00
   gate_deco_area         0  (        0 /        0 )  0.00
-         rem_buf         1  (        0 /        0 )  0.00
-         rem_inv         9  (        1 /        1 )  0.03
-        merge_bi        11  (        1 /        1 )  0.04
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         0  (        0 /        0 )  0.00
+        merge_bi         0  (        0 /        0 )  0.00
       rem_inv_qb         0  (        0 /        0 )  0.00
 
  
@@ -312,7 +258,7 @@ Incremental optimization status
                            Total  Weighted      Neg      Max       Max 
 Operation                   Area   Slacks      Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_delay               174360        0         0         0        0
+ init_delay                 2026        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -335,7 +281,7 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        gcomp_tim         0  (        0 /        0 )  0.00
   inv_pair_2_buf         0  (        0 /        0 )  0.00
 
- init_drc                 174360        0         0         0        0
+ init_drc                   2026        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -374,217 +320,74 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        crit_dnsz         0  (        0 /        0 )  0.00
        crit_upsz         0  (        0 /        0 )  0.00
 
- init_area                174360        0         0         0        0
- area_down                174307        0         0         0        0
+ init_area                  2026        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
-           undup         1  (        0 /        0 )  0.01
-         rem_buf         1  (        0 /        0 )  0.00
-         rem_inv         7  (        0 /        0 )  0.01
-        merge_bi        10  (        0 /        0 )  0.03
+           undup         0  (        0 /        0 )  0.00
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         0  (        0 /        0 )  0.00
+        merge_bi         0  (        0 /        0 )  0.00
       rem_inv_qb         0  (        0 /        0 )  0.00
-        io_phase        11  (        0 /        0 )  0.03
-       gate_comp       348  (        0 /        0 )  1.26
-       gcomp_mog        31  (        0 /        0 )  0.43
-       glob_area        50  (        0 /       50 )  0.58
-       area_down        44  (        8 /       10 )  0.52
-      size_n_buf         0  (        0 /        0 )  0.02
+        io_phase         0  (        0 /        0 )  0.00
+       gate_comp         0  (        0 /        0 )  0.00
+       gcomp_mog         0  (        0 /        0 )  0.00
+       glob_area         1  (        0 /        1 )  0.00
+       area_down         0  (        0 /        0 )  0.00
+      size_n_buf         0  (        0 /        0 )  0.00
   gate_deco_area         0  (        0 /        0 )  0.00
 
 Info    : Done incrementally optimizing. [SYNTH-8]
-        : Done incrementally optimizing 'core'.
+        : Done incrementally optimizing 'load_stall'.
      flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
-UM:           142            133                                      synthesize
-@genus:root: 6> report slack
-Cannot find subcommand: slack
-  report: generate one of various reports
-Usage: report subcommand [-h]
-
-  The 'subcommand' can be one of the following:
-area                             - prints an area report
-boundary_opto                    - reports boundary optimization summary
-case_analysis                    - prints a case_analysis report
-cdn_loop_breaker                 - reports the cdn_loop_breaker instances
-cell_delay_calculation           - reports how the cell delay of a libcell instance is calculated
-clock_gating                     - prints a clock-gating report
-clocks                           - prints a clock report
-congestion                       - reports congestion summary
-datapath                         - prints a datapath resources report
-dedicated_clock_remapping_report - prints remap_to_dedicated_clock_library report
-design_rules                     - prints design rule violations
-dft_chains                       - reports DFT scan chains
-dft_clock_domain_info            - reports DFT clock domain information with OPCG inserted logic
-dft_core_wrapper                 - reports the IEEE 1500 core wrapper segments inserted for ports and pins
-dft_registers                    - reports DFT status of registers
-dft_setup                        - reports DFT setup for scan
-dft_violations                   - reports DFT rule violations
-gates                            - prints a gates report
-hierarchy                        - prints a hierarchy report
-instance                         - prints an instance report
-low_power_intent                 - prints Power Intent report
-memory                           - prints a memory usage report
-memory_cells                     - print memory cells in the library
-messages                         - prints a summary of error messages that have been issued
-min_pulse_width                  - prints min pulse width violations
-mode                             - prints a mode report
-module                           - prints a module report
-multibit_inferencing             - prints a multibit inferencing report
-net_cap_calculation              - reports how the capacitance of the net is calculated
-net_delay_calculation            - reports how the net delay is calculated
-net_res_calculation              - reports how the resistance of the net is calculated
-nets                             - prints a nets report
-opcg_equivalents                 - reports the scan cell to OPCG cell equivalent mappings for cells specified using the 'set_opcg_equivalent' command
-ple                              - reports physical layout estimation data
-port                             - prints a port report
-power                            - prints a power report
-power_intent                     - prints Power Intent report
-power_intent_instances           - prints Low Power cells report
-property                         - list all the properties
-proto                            - reports prototype synthesis information
-qor                              - prints a QOR report
-scan_compressibility             - reports the scan compressibility of the design having previously run the 'analyze_scan_compressibility' command
-sequential                       - prints a sequential instance report
-slew_calculation                 - reports how the slew on the driver pin of a libcell instance is calculated
-summary                          - prints an area, timing, and design rules report
-test_power                       - estimates the average scan power in shift and capture modes during test
-timing                           - prints a timing report
-units                            - reports units
-utilization                      - reports how floorplan utilization is calculated
-yield                            - prints a yield report
-Failed on 'report slack'
-@genus:root: 7> report timing
-Warning : Possible timing problems have been detected in this design. [TIM-11]
-        : The design is 'core'.
-        : Use 'report timing -lint' for more information.
+UM:             1             37                                      synthesize
+@genus:root: 6> report area
 ============================================================
   Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
-  Generated on:           Mar 30 2021  12:16:54 pm
-  Module:                 core
-  Operating conditions:   slow (balanced_tree)
+  Generated on:           Apr 02 2021  07:37:41 pm
+  Module:                 load_stall
+  Technology library:     tsmc18 1.0
+  Operating conditions:   fast (balanced_tree)
   Wireload mode:          enclosed
   Area mode:              timing library
 ============================================================
 
+ Instance  Module  Cell Count  Cell Area  Net Area   Total Area  Wireload     
+------------------------------------------------------------------------------
+load_stall                 38   2025.778     0.000     2025.778    <none> (D) 
 
-Path 1: MET (7 ps) Setup Check with Pin register_file/regFile_reg[2][31]/CK->SI
-          Group: clk
-     Startpoint: (R) stall_unit/delayed_load_reg/CK
-          Clock: (R) clk
-       Endpoint: (F) register_file/regFile_reg[2][31]/SI
-          Clock: (R) clk
+ (D) = wireload is default in technology library
+@genus:root: 7> report power
+============================================================
+  Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
+  Generated on:           Apr 02 2021  07:37:45 pm
+  Module:                 load_stall
+  Technology library:     tsmc18 1.0
+  Operating conditions:   fast (balanced_tree)
+  Wireload mode:          enclosed
+  Area mode:              timing library
+============================================================
 
-                     Capture       Launch     
-        Clock Edge:+   14000            0     
-       Src Latency:+       0            0     
-       Net Latency:+       0 (I)        0 (I) 
-           Arrival:=   14000            0     
-                                              
-             Setup:-     869                  
-       Uncertainty:-     100                  
-     Required Time:=   13031                  
-      Launch Clock:-       0                  
-         Data Path:-   13024                  
-             Slack:=       7                  
+                  Leakage    Dynamic     Total   
+ Instance  Cells Power(nW)  Power(nW)  Power(nW) 
+-------------------------------------------------
+load_stall    38    62.030 135672.243 135734.273 
 
-#--------------------------------------------------------------------------------------------------------------
-#            Timing Point             Flags    Arc   Edge   Cell     Fanout  Load Trans Delay Arrival Instance 
-#                                                                            (fF)  (ps)  (ps)   (ps)  Location 
-#--------------------------------------------------------------------------------------------------------------
-  stall_unit/delayed_load_reg/CK      -       -      R     (arrival)   1036     -   100     -       0    (-,-) 
-  stall_unit/delayed_load_reg/Q       -       CK->Q  R     DFFTRX2       13  73.4   476   601     601    (-,-) 
-  g2987/Y                             -       A->Y   F     INVX8         29 112.4   166   137     738    (-,-) 
-  g2979/Y                             -       A->Y   F     AND2X4         6  47.3   121   236     973    (-,-) 
-  register_file/g79022/Y              -       B->Y   F     OR2X2          5  40.9   188   334    1308    (-,-) 
-  register_file/g78482/Y              -       A->Y   R     INVX8         41 178.4   288   213    1520    (-,-) 
-  register_file/g78378/Y              -       A->Y   R     AND2X2        18  80.8   542   447    1967    (-,-) 
-  register_file/g79017/Y              -       AN->Y  R     NOR2BX1        3  10.2   271   288    2256    (-,-) 
-  register_file/g77525/Y              -       A1->Y  F     AOI22XL        1   3.2   176   100    2356    (-,-) 
-  register_file/g77060/Y              -       A->Y   F     AND2X2         1   4.5    60   177    2533    (-,-) 
-  register_file/g76658/Y              -       D->Y   R     NAND4X1       15  60.2   828   496    3028    (-,-) 
-  g4385/Y                             -       A1N->Y R     OAI2BB1X2     11  45.0   322   383    3411    (-,-) 
-  core_alu_lt_26_29/g2/Y              -       AN->Y  R     NAND2BX1       2   7.7   176   199    3610    (-,-) 
-  core_alu_lt_26_29/g1374/Y           -       A->Y   R     OR2X2          1   4.7    78   147    3757    (-,-) 
-  core_alu_lt_26_29/g1358/Y           -       A0->Y  F     AOI22X1        1   4.6   158    73    3830    (-,-) 
-  core_alu_lt_26_29/g1348/Y           -       A0->Y  R     OAI22X1        1   3.4   297   136    3966    (-,-) 
-  core_alu_lt_26_29/g1345/Y           -       B0->Y  F     OAI2BB1X1      1   3.0    93    74    4040    (-,-) 
-  core_alu_lt_26_29/g1344/Y           -       B0->Y  R     OAI21XL        1   4.0   274   106    4147    (-,-) 
-  core_alu_lt_26_29/g1342/Y           -       A->Y   F     NAND2X1        1   4.0    99    78    4225    (-,-) 
-  core_alu_lt_26_29/g1341/Y           -       A->Y   R     NAND2X1        1   4.8   141    92    4317    (-,-) 
-  core_alu_lt_26_29/g1340/Y           -       A->Y   F     NAND4X1        1   4.0   158   101    4418    (-,-) 
-  core_alu_lt_26_29/g1339/Y           -       A->Y   R     NAND2X1        1   4.8   129   106    4524    (-,-) 
-  core_alu_lt_26_29/g1338/Y           -       A->Y   F     NAND4X1        1   4.0   153    99    4622    (-,-) 
-  core_alu_lt_26_29/g1337/Y           -       A->Y   R     NAND2X1        1   4.6   129   104    4726    (-,-) 
-  core_alu_lt_26_29/g1336/Y           -       A0->Y  F     AOI21X1        3  11.0   156   128    4853    (-,-) 
-  core_control/g2/Y                   -       AN->Y  F     NAND2BX1       1   3.5    84   194    5047    (-,-) 
-  core_control/g1952/Y                -       A->Y   F     AND3X2         1  15.6   102   209    5256    (-,-) 
-  core_control/g1951/Y                -       A->Y   R     NAND2X4       32  99.2   371   229    5486    (-,-) 
-  g2928/Y                             -       A->Y   R     AND2X2         2   7.4   100   196    5682    (-,-) 
-  pc_adder_add_4_17/g900/Y            -       A->Y   F     NAND2X1        4  12.7   172   108    5790    (-,-) 
-  pc_adder_add_4_17/g838/Y            -       A0->Y  R     OAI21XL        2   9.5   396   283    6072    (-,-) 
-  pc_adder_add_4_17/g837/Y            -       A->Y   F     NAND2X1        1   3.4   110    81    6154    (-,-) 
-  pc_adder_add_4_17/g835/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   189   141    6295    (-,-) 
-  pc_adder_add_4_17/g834/Y            -       A->Y   F     NAND2X1        1   3.4    84    70    6365    (-,-) 
-  pc_adder_add_4_17/g832/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    6498    (-,-) 
-  pc_adder_add_4_17/g831/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    6568    (-,-) 
-  pc_adder_add_4_17/g829/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    6702    (-,-) 
-  pc_adder_add_4_17/g828/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    6772    (-,-) 
-  pc_adder_add_4_17/g826/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    6906    (-,-) 
-  pc_adder_add_4_17/g825/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    6976    (-,-) 
-  pc_adder_add_4_17/g823/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    7109    (-,-) 
-  pc_adder_add_4_17/g822/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    7179    (-,-) 
-  pc_adder_add_4_17/g820/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    7313    (-,-) 
-  pc_adder_add_4_17/g819/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    7383    (-,-) 
-  pc_adder_add_4_17/g817/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    7516    (-,-) 
-  pc_adder_add_4_17/g816/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    7586    (-,-) 
-  pc_adder_add_4_17/g814/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    7720    (-,-) 
-  pc_adder_add_4_17/g813/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    7790    (-,-) 
-  pc_adder_add_4_17/g811/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    7924    (-,-) 
-  pc_adder_add_4_17/g810/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    7994    (-,-) 
-  pc_adder_add_4_17/g808/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    8127    (-,-) 
-  pc_adder_add_4_17/g807/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    8197    (-,-) 
-  pc_adder_add_4_17/g805/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    8331    (-,-) 
-  pc_adder_add_4_17/g804/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    8401    (-,-) 
-  pc_adder_add_4_17/g802/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    8534    (-,-) 
-  pc_adder_add_4_17/g801/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    8604    (-,-) 
-  pc_adder_add_4_17/g799/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    8738    (-,-) 
-  pc_adder_add_4_17/g798/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    8808    (-,-) 
-  pc_adder_add_4_17/g796/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    8942    (-,-) 
-  pc_adder_add_4_17/g795/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    9012    (-,-) 
-  pc_adder_add_4_17/g793/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    9145    (-,-) 
-  pc_adder_add_4_17/g792/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    9215    (-,-) 
-  pc_adder_add_4_17/g790/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    9349    (-,-) 
-  pc_adder_add_4_17/g789/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    9419    (-,-) 
-  pc_adder_add_4_17/g787/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    9552    (-,-) 
-  pc_adder_add_4_17/g786/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    9622    (-,-) 
-  pc_adder_add_4_17/g784/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    9756    (-,-) 
-  pc_adder_add_4_17/g783/Y            -       A->Y   F     NAND2X1        1   3.4    83    70    9826    (-,-) 
-  pc_adder_add_4_17/g781/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134    9960    (-,-) 
-  pc_adder_add_4_17/g780/Y            -       A->Y   F     NAND2X1        1   3.4    83    70   10030    (-,-) 
-  pc_adder_add_4_17/g778/Y            -       B0->Y  R     OAI2BB1X1      2   9.5   188   134   10163    (-,-) 
-  pc_adder_add_4_17/g777/Y            -       A->Y   F     NAND2X1        1   3.4    83    70   10233    (-,-) 
-  pc_adder_add_4_17/g775/Y            -       B0->Y  R     OAI2BB1X1      3  10.8   203   142   10376    (-,-) 
-  pc_adder_add_4_17/g774/Y            -       A->Y   F     NAND2X1        1   3.4    85    71   10446    (-,-) 
-  pc_adder_add_4_17/g772/Y            -       B0->Y  R     OAI2BB1X1      3  10.8   203   143   10589    (-,-) 
-  pc_adder_add_4_17/g771/Y            -       A->Y   F     NAND2X1        1   3.4    85    71   10660    (-,-) 
-  pc_adder_add_4_17/g769/Y            -       B0->Y  R     OAI2BB1X1      3  10.8   203   143   10803    (-,-) 
-  pc_adder_add_4_17/g768/Y            -       A->Y   F     NAND2X1        1   3.4    85    71   10874    (-,-) 
-  pc_adder_add_4_17/g766/Y            -       B0->Y  R     OAI2BB1X1      3  10.8   203   143   11017    (-,-) 
-  pc_adder_add_4_17/g765/Y            -       A->Y   F     NAND2X1        1   3.4    85    71   11088    (-,-) 
-  pc_adder_add_4_17/g763/Y            -       B0->Y  R     OAI2BB1X1      3   9.8   191   136   11224    (-,-) 
-  pc_adder_add_4_17/g762/Y            -       B0->Y  F     OAI21XL        1   3.4   148   114   11338    (-,-) 
-  pc_adder_add_4_17/g760/Y            -       B0->Y  R     OAI2BB1X1      3   9.8   194   153   11491    (-,-) 
-  pc_adder_add_4_17/g759/Y            -       B0->Y  F     OAI21XL        1   3.4   149   114   11605    (-,-) 
-  pc_adder_add_4_17/g757/Y            -       B0->Y  R     OAI2BB1X1      3   9.8   194   154   11759    (-,-) 
-  pc_adder_add_4_17/g756/Y            -       B0->Y  F     OAI21XL        1   3.4   149   114   11873    (-,-) 
-  pc_adder_add_4_17/g754/Y            -       B0->Y  R     OAI2BB1X1      3   9.8   194   154   12026    (-,-) 
-  pc_adder_add_4_17/g753/Y            -       B0->Y  F     OAI21XL        1   3.4   149   114   12140    (-,-) 
-  pc_adder_add_4_17/g751/Y            -       B0->Y  R     OAI2BB1X1      2   6.8   159   133   12274    (-,-) 
-  pc_adder_add_4_17/g750/Y            -       B0->Y  F     OAI2BB2X1      2  10.0   159   122   12395    (-,-) 
-  g13139/Y                            -       A0->Y  R     AOI221X1       1   3.4   360   259   12654    (-,-) 
-  g13103/Y                            -       B0->Y  F     OAI2BB1X1     31  57.8   517   370   13024    (-,-) 
-  register_file/regFile_reg[2][31]/SI <<<     -      F     SDFFSHQX1     31     -     -     0   13024    (-,-) 
-#--------------------------------------------------------------------------------------------------------------
+@genus:root: 8> report timing
+Warning : Possible timing problems have been detected in this design. [TIM-11]
+        : The design is 'load_stall'.
+        : Use 'report timing -lint' for more information.
+============================================================
+  Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
+  Generated on:           Apr 02 2021  07:37:49 pm
+  Module:                 load_stall
+  Operating conditions:   fast (balanced_tree)
+  Wireload mode:          enclosed
+  Area mode:              timing library
+============================================================
 
-@genus:root: 8> exit
+Some unconstrained paths have not been displayed.
+Use -unconstrained or set the root attribute 'timing_report_unconstrained' to 'true' to see only these unconstrained paths.
+
+@genus:root: 9> exit
 Normal exit.

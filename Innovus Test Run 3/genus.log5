@@ -5,7 +5,7 @@ of Cadence Design Systems, Inc. in the United States and other countries.
 
 Version: 17.21-s010_1, built Wed Feb 07 2018
 Options: 
-Date:    Tue Mar 30 12:04:04 2021
+Date:    Fri Apr 02 19:32:28 2021
 Host:    cad54 (x86_64 w/Linux 2.6.32-71.el6.x86_64) (2cores*4cpus*1physical cpu*Intel(R) Core(TM) i3-2120 CPU @ 3.30GHz 3072KB) (7955092KB)
 OS:      Red Hat Enterprise Linux Server release 6.0 (Santiago)
 
@@ -13,271 +13,147 @@ Checking out license: Genus_Synthesis
 
 Loading tool scripts...
 
-Finished loading tool scripts (34 seconds elapsed).
+Finished loading tool scripts (38 seconds elapsed).
 
-WARNING: This version of the tool is 1147 days old.
-@genus:root: 1> set_db library slow.lib
+WARNING: This version of the tool is 1150 days old.
+@genus:root: 1> set_db library fast.lib
 
 Threads Configured:3
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNX1' (File /home/student/Desktop/17BEC1073/fast.lib, Line 147265)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNX2' (File /home/student/Desktop/17BEC1073/fast.lib, Line 147568)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNX4' (File /home/student/Desktop/17BEC1073/fast.lib, Line 147871)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATNXL' (File /home/student/Desktop/17BEC1073/fast.lib, Line 148174)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATX1' (File /home/student/Desktop/17BEC1073/fast.lib, Line 148477)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATX2' (File /home/student/Desktop/17BEC1073/fast.lib, Line 148841)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATX4' (File /home/student/Desktop/17BEC1073/fast.lib, Line 149205)
+Warning : Missing clock pin in the sequential cell. [LBR-525]
+        : Clock pin absent in sequential cell(s) 'RSLATXL' (File /home/student/Desktop/17BEC1073/fast.lib, Line 149569)
 
-  Message Summary for Library slow.lib:
+  Message Summary for Library fast.lib:
   *************************************
-  Could not find an attribute in the library. [LBR-436]: 639
+  Could not find an attribute in the library. [LBR-436]: 655
+  Missing clock pin in the sequential cell. [LBR-525]: 8
   Missing a function attribute in the output pin definition. [LBR-518]: 1
   An unsupported construct was detected in this library. [LBR-40]: 1
   *************************************
  
 Info    : Created nominal operating condition. [LBR-412]
-        : Operating condition '_nominal_' was created for the PVT values (1.000000, 1.620000, 125.000000) in library 'slow.lib'.
+        : Operating condition '_nominal_' was created for the PVT values (1.000000, 1.980000, 0.000000) in library 'fast.lib'.
         : The nominal operating condition represents either the nominal PVT values if specified in the library source, or the default PVT values (1.0, 1.0, 1.0).
-  Setting attribute of root '/': 'library' = slow.lib
-1 slow.lib
-@genus:root: 2> read_hdl {add32.v alu.v control_unit.v data_mem.v imm_sx.v insn_mem.v load_stall.v mbr_sx_load.v mbr_sx_store.v mux32four.v mux32two.v program_counter.v register_bank.v riscv_crypto_fu_saes32_32.v riscv_crypto_fu_sboxes_aes_32.v riscv_crypto_fu_sboxes_sm4_32.v riscv_crypto_fu_ssha256_32.v riscv_crypto_fu_ssha512_32.v riscv_crypto_fu_ssm3_32.v riscv_crypto_fu_ssm4_32.v riscv_crypto_fu_32.v core_top.v core.v}
-@genus:root: 3> elaborate core
+  Setting attribute of root '/': 'library' = fast.lib
+1 fast.lib
+@genus:root: 2> read_hdl insn_mem.v
+@genus:root: 3> elaborate
 Info    : Elaborating Design. [ELAB-1]
-        : Elaborating top-level block 'core' from file 'core.v'.
-Warning : Using default parameter value for module elaboration. [CDFG-818]
-        : Elaborating block 'core' with default parameters value.
+        : Elaborating top-level block 'insn_mem' from file 'insn_mem.v'.
 Info    : Done Elaborating Design. [ELAB-3]
-        : Done elaborating 'core'.
+        : Done elaborating 'insn_mem'.
 Checking for analog nets...
 Check completed for analog nets.
 Checking for source RTL...
 Check completed for source RTL.
 UM:  flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
-UM:            14             80                                      elaborate
-design:core
-@genus:root: 4> read_sdc counter_constraints.g
-Statistics for commands executed by read_sdc:
- "create_clock"             - successful      1 , failed      0 (runtime  0.00)
- "get_clocks"               - successful      2 , failed      0 (runtime  0.00)
- "get_ports"                - successful      2 , failed      0 (runtime  0.00)
- "set_clock_transition"     - successful      2 , failed      0 (runtime  0.00)
- "set_clock_uncertainty"    - successful      1 , failed      0 (runtime  0.00)
-Total runtime 0
-@genus:root: 5> synthesize -to_mapped -effort medium
+UM:            12            120                                      elaborate
+design:insn_mem
+@genus:root: 4> synthesize -to_mapped -effort medium
 Warning : This command will be obsolete in a next major release. [TUI-37]
         : command: 'synthesize'
         : The synthesize command is obsolete. Use the syn_gen, syn_map or syn_opt commands instead.
-Info    : Synthesizing. [SYNTH-1]
-        : Synthesizing 'core' to generic gates using 'medium' effort.
-Info    : Deleting instances not driving any primary outputs. [GLO-34]
-        : Deleting 30 sequential instances.
-        : Optimizations such as constant propagation or redundancy removal could change the connections so a hierarchical instance does not drive any primary outputs anymore. To see the list of deleted hierarchical instances, set the 'information_level' attribute to 2 or above. If the message is truncated set the message attribute 'truncate' to false to see the complete list. To prevent this optimization, set the 'delete_unloaded_insts' root/subdesign attribute to 'false' or 'preserve' instance attribute to 'true'.
-Info    : Deleting instances not driving any primary outputs. [GLO-34]
-        : Deleting 34 hierarchical instances.
-Info    : Pre-processed datapath logic. [DPOPT-6]
-        : No pre-processing optimizations applied to datapath logic in 'core'.
-Info    : Optimizing datapath logic. [DPOPT-1]
-        : Optimizing datapath logic in 'core'.
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_652'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_652'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_653'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_653'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_650'
-Info    : Accepted resource sharing opportunity. [RTLOPT-30]
-        : Merged the following sets of instances in 'CDN_DP_region_650_c1 in core':
-	  (core_alu_sub_42_28, core_alu_add_41_29)
-
-Info    : Accepted resource sharing opportunity. [RTLOPT-30]
-        : Merged the following sets of instances in 'CDN_DP_region_650_c2 in core':
-	  (core_alu_sub_42_28, core_alu_add_41_29)
-
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_650'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Implementing datapath configurations. [DPOPT-3]
-        : Implementing datapath configurations for 'CDN_DP_region_651'
-Info    : Done implementing datapath configurations. [DPOPT-4]
-        : Selected 'very_fast' configuration 4 for module 'CDN_DP_region_651'.
-          Optimizations applied to 'very_fast' configuration:
-            rewriting(0), factoring(0), sharing(0), cmultcse(0), downsizing(0), speculation(0)
-Info    : Done optimizing datapath logic. [DPOPT-2]
-        : Done optimizing datapath logic in 'core'.
-Warning : Not obtained requested number of super thread servers. [ST-136]
-        : The tool is running on a 4 cpu machine.
-        : The requested number of cpus are not available on machine.
-Info    : Done synthesizing. [SYNTH-2]
-        : Done synthesizing 'core' to generic gates.
 Info    : Mapping. [SYNTH-4]
-        : Mapping 'core' using 'medium' effort.
+        : Mapping 'insn_mem' using 'medium' effort.
 Mapper: Libraries have:
 	domain _default_: 278 combo usable cells and 172 sequential usable cells
-Warning : Not obtained requested number of super thread servers. [ST-136]
-        : The tool is running on a 4 cpu machine.
 Multi-threaded constant propagation [1|0] ...
-Multi-threaded Virtual Mapping    (4 threads per ST process, 4 of 4 CPUs usable)
+Multi-threaded Virtual Mapping    (4 threads, 4 of 4 CPUs usable)
  
 Global mapping target info
 ==========================
-Cost Group 'clk' target slack: -1027 ps
-Target path end-point (Pin: register_file/regFile_reg[2][12]/d)
+Cost Group 'default' target slack: Unconstrained
 
-Multi-threaded Technology Mapping (4 threads per ST process, 4 of 4 CPUs usable)
-Info    : Deleting instances not driving any primary outputs. [GLO-34]
-        : Deleting 32 sequential instances.
+Multi-threaded Virtual Mapping    (4 threads, 4 of 4 CPUs usable)
+Multi-threaded Technology Mapping (4 threads, 4 of 4 CPUs usable)
  
 Global mapping status
 =====================
-                                   Group   
-                                  Tot Wrst 
-                           Total  Weighted 
-Operation                   Area   Slacks  
+                                    Worst 
+                           Total  Weighted
+Operation                   Area  Neg Slk Worst Path
 -------------------------------------------------------------------------------
- global_map               276218    -2042 
-            Worst cost_group: clk, WNS: -2042.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][9]/D
+ global_map                    0        0  N/A
 
     Cost Group            Target    Slack    Diff.  Constr.
 -----------------------------------------------------------
-           clk             -1027    -2042     -14%     6000 
+       default          unconst. unconst.              N.A. 
 
  
 Global incremental target info
 ==============================
-Cost Group 'clk' target slack: -2042 ps
-Target path end-point (Pin: register_file/regFile_reg[29][9]/D (DFFRHQX4/D))
+Cost Group 'default' target slack: Unconstrained
 
  
 Global incremental optimization status
 ======================================
-                                   Group   
-                                  Tot Wrst 
-                           Total  Weighted 
-Operation                   Area   Slacks  
+                                    Worst 
+                           Total  Weighted
+Operation                   Area  Neg Slk Worst Path
 -------------------------------------------------------------------------------
- global_incr              253092    -2205 
-            Worst cost_group: clk, WNS: -2205.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][17]/D
+ global_incr                   0        0  N/A
 
     Cost Group            Target    Slack    Diff.  Constr.
 -----------------------------------------------------------
-           clk             -2042    -2205      -2%     6000 
+       default          unconst. unconst.              N.A. 
 
 Info    : Done mapping. [SYNTH-5]
-        : Done mapping 'core'.
+        : Done mapping 'insn_mem'.
 Info    : Incrementally optimizing. [SYNTH-7]
-        : Incrementally optimizing 'core' using 'medium' effort.
+        : Incrementally optimizing 'insn_mem' using 'medium' effort.
  
 Incremental optimization status
 ===============================
-                                   Group   
-                                  Tot Wrst     Total - - DRC Totals - -
-                           Total  Weighted      Neg      Max       Max 
-Operation                   Area   Slacks      Slack    Trans      Cap 
+                                    Worst     Total - - DRC Totals - -
+                           Total  Weighted     Neg      Max       Max 
+Operation                   Area  Neg Slk     Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_iopt                253092    -2205  -2100134         0        0
-            Worst cost_group: clk, WNS: -2205.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][17]/D
- const_prop               253079    -2205  -2099849         0        0
-            Worst cost_group: clk, WNS: -2205.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][17]/D
+ init_iopt                     0        0         0         0        0
+ const_prop                    0        0         0         0        0
  
 Incremental optimization status
 ===============================
-                                   Group   
-                                  Tot Wrst     Total - - DRC Totals - -
-                           Total  Weighted      Neg      Max       Max 
-Operation                   Area   Slacks      Slack    Trans      Cap 
+                                    Worst     Total - - DRC Totals - -
+                           Total  Weighted     Neg      Max       Max 
+Operation                   Area  Neg Slk     Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_delay               252949    -2202  -2100769         0        0
-            Worst cost_group: clk, WNS: -2202.2
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][17]/D
- incr_delay               234841    -1790  -1750839         0        0
-            Worst cost_group: clk, WNS: -1790.0
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][15]/D
- incr_delay               233773    -1750  -1714917         0        0
-            Worst cost_group: clk, WNS: -1750.0
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][22]/D
- incr_delay               233839    -1723  -1694636         0        0
-            Worst cost_group: clk, WNS: -1723.8
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][22]/D
- incr_delay               232978    -1704  -1672936         0        0
-            Worst cost_group: clk, WNS: -1704.7
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[19][21]/D
- incr_delay               233074    -1700  -1669577         0        0
-            Worst cost_group: clk, WNS: -1700.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[19][21]/D
- incr_delay               233457    -1690  -1662815         0        0
-            Worst cost_group: clk, WNS: -1690.3
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][16]/D
- incr_delay               233902    -1682  -1654620         0        0
-            Worst cost_group: clk, WNS: -1682.0
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][19]/D
- incr_delay               233956    -1678  -1651503         0        0
-            Worst cost_group: clk, WNS: -1678.7
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][7]/D
- incr_delay               233962    -1672  -1650432         0        0
-            Worst cost_group: clk, WNS: -1672.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][16]/D
- incr_delay               234016    -1668  -1646433         0        0
-            Worst cost_group: clk, WNS: -1668.0
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][7]/D
- incr_delay               233996    -1652  -1632159         0        0
-            Worst cost_group: clk, WNS: -1652.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- incr_delay               233959    -1647  -1627745         0        0
-            Worst cost_group: clk, WNS: -1647.7
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
+ init_delay                    0        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
-       crit_upsz      2761  (      496 /      520 )  8.42
+       crit_upsz         0  (        0 /        0 )  0.00
     plc_bal_star         0  (        0 /        0 )  0.00
      drc_buftimb         0  (        0 /        0 )  0.00
-          plc_st       694  (        0 /        0 )  0.00
-       plc_lo_st       694  (        0 /        0 )  0.00
-        plc_star       694  (        0 /        0 )  0.00
+          plc_st         0  (        0 /        0 )  0.00
+       plc_lo_st         0  (        0 /        0 )  0.00
+        plc_star         0  (        0 /        0 )  0.00
      drc_buftims         0  (        0 /        0 )  0.00
-       plc_lo_st       694  (        0 /        0 )  0.00
-            fopt       694  (        0 /        0 )  0.02
-       crit_dnsz      6993  (     1313 /     1337 )  43.46
-             dup       774  (        6 /        6 )  0.29
-            fopt      1139  (       63 /      256 )  7.92
-        setup_dn       824  (       61 /       62 )  2.46
-         buf2inv       691  (        0 /        0 )  0.00
-             exp       121  (        8 /       90 )  3.56
-       gate_deco       362  (        2 /        2 )  5.21
-       gcomp_tim       954  (       13 /       13 )  2.88
-  inv_pair_2_buf       931  (        0 /        0 )  0.02
+       plc_lo_st         0  (        0 /        0 )  0.00
+            fopt         0  (        0 /        0 )  0.00
+       crit_dnsz         0  (        0 /        0 )  0.00
+             dup         0  (        0 /        0 )  0.00
+            fopt         0  (        0 /        0 )  0.00
+        setup_dn         0  (        0 /        0 )  0.00
+         buf2inv         0  (        0 /        0 )  0.00
+             exp         0  (        0 /        0 )  0.00
+       gate_deco         0  (        0 /        0 )  0.00
+       gcomp_tim         0  (        0 /        0 )  0.00
+  inv_pair_2_buf         0  (        0 /        0 )  0.00
 
- init_drc                 233959    -1647  -1627745         0        0
-            Worst cost_group: clk, WNS: -1647.7
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
+ init_drc                      0        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -318,154 +194,73 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        crit_dnsz         0  (        0 /        0 )  0.00
        crit_upsz         0  (        0 /        0 )  0.00
 
- init_tns                 233959    -1647  -1627745         0        0
-            Worst cost_group: clk, WNS: -1647.7
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- incr_tns                 233843    -1640  -1589778         0        0
-            Worst cost_group: clk, WNS: -1640.2
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- incr_tns                 233843    -1640  -1589778         0        0
-            Worst cost_group: clk, WNS: -1640.2
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
+ init_tns                      0        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
     plc_bal_star         0  (        0 /        0 )  0.00
      drc_buftimb         0  (        0 /        0 )  0.00
      drc_buftims         0  (        0 /        0 )  0.00
-       crit_upsz      2151  (       83 /      142 )  3.27
-       plc_lo_st      2068  (        0 /        0 )  0.00
-            fopt      2068  (        0 /        1 )  0.15
-       crit_dnsz      3910  (      218 /      598 )  10.18
-             dup      1850  (        0 /        1 )  0.22
-        setup_dn      1850  (       31 /       64 )  1.89
-         buf2inv      1819  (        0 /        0 )  0.00
+       crit_upsz         0  (        0 /        0 )  0.00
+       plc_lo_st         0  (        0 /        0 )  0.00
+            fopt         0  (        0 /        0 )  0.00
+       crit_dnsz         0  (        0 /        0 )  0.00
+             dup         0  (        0 /        0 )  0.00
+        setup_dn         0  (        0 /        0 )  0.00
+         buf2inv         0  (        0 /        0 )  0.00
 
- init_area                233843    -1640  -1589778         0        0
-            Worst cost_group: clk, WNS: -1640.2
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- rem_buf                  233487    -1640  -1589604         0        0
-            Worst cost_group: clk, WNS: -1640.1
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[25][21]/D
- rem_inv                  232971    -1640  -1589517         0        0
-            Worst cost_group: clk, WNS: -1640.1
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[25][21]/D
- merge_bi                 232040    -1639  -1588556         0        0
-            Worst cost_group: clk, WNS: -1639.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- merge_bi                 231990    -1639  -1588560         0        0
-            Worst cost_group: clk, WNS: -1639.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- rem_inv_qb               231584    -1639  -1588482         0        0
-            Worst cost_group: clk, WNS: -1639.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- io_phase                 231394    -1639  -1586096         0        0
-            Worst cost_group: clk, WNS: -1639.3
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[23][9]/D
- gate_comp                230842    -1635  -1582949         0        0
-            Worst cost_group: clk, WNS: -1635.4
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[23][9]/D
- glob_area                229558    -1633  -1579942         0        0
-            Worst cost_group: clk, WNS: -1633.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][29]/D
- area_down                227293    -1632  -1573142         0        0
-            Worst cost_group: clk, WNS: -1632.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][29]/D
- size_n_buf               225892    -1632  -1563384         0        0
-            Worst cost_group: clk, WNS: -1632.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][29]/D
- rem_buf                  224096    -1632  -1563384         0        0
-            Worst cost_group: clk, WNS: -1632.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][29]/D
- rem_inv                  224016    -1632  -1563003         0        0
-            Worst cost_group: clk, WNS: -1632.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][29]/D
- merge_bi                 223973    -1632  -1563006         0        0
-            Worst cost_group: clk, WNS: -1632.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][29]/D
+ init_area                     0        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
-           undup         9  (        0 /        0 )  0.06
-         rem_buf       124  (       26 /       42 )  0.39
-         rem_inv       351  (       60 /      105 )  0.93
-        merge_bi       305  (      141 /      216 )  1.20
-      rem_inv_qb        71  (        3 /        3 )  0.18
-        io_phase       239  (       18 /       62 )  0.94
-       gate_comp       982  (       71 /      122 )  4.10
-       gcomp_mog         4  (        0 /        0 )  1.07
-       glob_area        69  (       22 /       69 )  4.53
-       area_down       797  (      155 /      299 )  8.57
-      size_n_buf        55  (       12 /       16 )  1.99
-  gate_deco_area         0  (        0 /        0 )  0.01
-         rem_buf       227  (      135 /      146 )  0.62
-         rem_inv       211  (        9 /       38 )  0.58
-        merge_bi       152  (        8 /       62 )  0.70
-      rem_inv_qb        10  (        0 /        0 )  0.03
+           undup         0  (        0 /        0 )  0.00
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         0  (        0 /        0 )  0.00
+        merge_bi         0  (        0 /        0 )  0.00
+      rem_inv_qb         0  (        0 /        0 )  0.00
+        io_phase         0  (        0 /        0 )  0.00
+       gate_comp         0  (        0 /        0 )  0.00
+       gcomp_mog         0  (        0 /        0 )  0.00
+       glob_area         0  (        0 /        0 )  0.00
+       area_down         0  (        0 /        0 )  0.00
+      size_n_buf         0  (        0 /        0 )  0.00
+  gate_deco_area         0  (        0 /        0 )  0.00
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         0  (        0 /        0 )  0.00
+        merge_bi         0  (        0 /        0 )  0.00
+      rem_inv_qb         0  (        0 /        0 )  0.00
 
  
 Incremental optimization status
 ===============================
-                                   Group   
-                                  Tot Wrst     Total - - DRC Totals - -
-                           Total  Weighted      Neg      Max       Max 
-Operation                   Area   Slacks      Slack    Trans      Cap 
+                                    Worst     Total - - DRC Totals - -
+                           Total  Weighted     Neg      Max       Max 
+Operation                   Area  Neg Slk     Slack    Trans      Cap 
 -------------------------------------------------------------------------------
- init_delay               223973    -1632  -1563006         0        0
-            Worst cost_group: clk, WNS: -1632.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][29]/D
- incr_delay               224080    -1626  -1561545         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- incr_delay               224080    -1626  -1561545         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
+ init_delay                    0        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
-       crit_upsz       263  (       26 /       27 )  0.61
+       crit_upsz         0  (        0 /        0 )  0.00
     plc_bal_star         0  (        0 /        0 )  0.00
      drc_buftimb         0  (        0 /        0 )  0.00
-          plc_st       157  (        0 /        0 )  0.00
-       plc_lo_st       157  (        0 /        0 )  0.00
-        plc_star       157  (        0 /        0 )  0.00
+          plc_st         0  (        0 /        0 )  0.00
+       plc_lo_st         0  (        0 /        0 )  0.00
+        plc_star         0  (        0 /        0 )  0.00
      drc_buftims         0  (        0 /        0 )  0.00
-       plc_lo_st       157  (        0 /        0 )  0.00
-            fopt       157  (        0 /        0 )  0.00
-       crit_dnsz       396  (       10 /       10 )  0.46
-             dup       157  (        0 /        0 )  0.04
-            fopt       158  (        1 /       19 )  0.87
-        setup_dn       157  (        0 /        0 )  0.00
-         buf2inv       157  (        0 /        0 )  0.00
-             exp        23  (        0 /       23 )  0.77
-       gate_deco        64  (        0 /        0 )  0.95
-       gcomp_tim       184  (        2 /        2 )  0.55
-  inv_pair_2_buf       282  (        0 /        0 )  0.00
+       plc_lo_st         0  (        0 /        0 )  0.00
+            fopt         0  (        0 /        0 )  0.00
+       crit_dnsz         0  (        0 /        0 )  0.00
+             dup         0  (        0 /        0 )  0.00
+            fopt         0  (        0 /        0 )  0.00
+        setup_dn         0  (        0 /        0 )  0.00
+         buf2inv         0  (        0 /        0 )  0.00
+             exp         0  (        0 /        0 )  0.00
+       gate_deco         0  (        0 /        0 )  0.00
+       gcomp_tim         0  (        0 /        0 )  0.00
+  inv_pair_2_buf         0  (        0 /        0 )  0.00
 
- init_drc                 224080    -1626  -1561545         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
+ init_drc                      0        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
@@ -504,160 +299,58 @@ Operation                   Area   Slacks      Slack    Trans      Cap
        crit_dnsz         0  (        0 /        0 )  0.00
        crit_upsz         0  (        0 /        0 )  0.00
 
- init_area                224080    -1626  -1561545         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- rem_buf                  224043    -1626  -1561545         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- rem_inv                  223983    -1626  -1560194         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- merge_bi                 223940    -1626  -1560199         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- rem_inv_qb               223807    -1626  -1559357         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- io_phase                 223744    -1626  -1559187         0        0
-            Worst cost_group: clk, WNS: -1626.9
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- gate_comp                223571    -1625  -1559546         0        0
-            Worst cost_group: clk, WNS: -1625.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][7]/D
- glob_area                223494    -1625  -1559462         0        0
-            Worst cost_group: clk, WNS: -1625.6
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[2][7]/D
- area_down                222862    -1625  -1560293         0        0
-            Worst cost_group: clk, WNS: -1625.0
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
- size_n_buf               222882    -1625  -1560140         0        0
-            Worst cost_group: clk, WNS: -1625.0
-            Path: stall_unit/delayed_load_reg/CK -->
-                    register_file/regFile_reg[1][13]/D
+ init_area                     0        0         0         0        0
 
            Trick     Calls     Accepts   Attempts    Time(secs) 
 -----------------------------------------------------------
-           undup        12  (        0 /        0 )  0.08
-         rem_buf        92  (        3 /        9 )  0.20
-         rem_inv       200  (        7 /       30 )  0.53
-        merge_bi       145  (        7 /       49 )  0.61
-      rem_inv_qb        10  (        1 /        1 )  0.06
-        io_phase       213  (        7 /       39 )  0.67
-       gate_comp       869  (       29 /       60 )  3.46
-       gcomp_mog         4  (        0 /        0 )  1.05
-       glob_area        69  (       13 /       69 )  4.32
-       area_down       727  (       49 /      188 )  7.34
-      size_n_buf         8  (        1 /        3 )  0.32
+           undup         0  (        0 /        0 )  0.00
+         rem_buf         0  (        0 /        0 )  0.00
+         rem_inv         0  (        0 /        0 )  0.00
+        merge_bi         0  (        0 /        0 )  0.00
+      rem_inv_qb         0  (        0 /        0 )  0.00
+        io_phase         0  (        0 /        0 )  0.00
+       gate_comp         0  (        0 /        0 )  0.00
+       gcomp_mog         0  (        0 /        0 )  0.00
+       glob_area         0  (        0 /        0 )  0.00
+       area_down         0  (        0 /        0 )  0.00
+      size_n_buf         0  (        0 /        0 )  0.00
   gate_deco_area         0  (        0 /        0 )  0.00
 
 Info    : Done incrementally optimizing. [SYNTH-8]
-        : Done incrementally optimizing 'core'.
+        : Done incrementally optimizing 'insn_mem'.
      flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
-UM:           343            322                                      synthesize
-@genus:root: 6> report timing
-Warning : Possible timing problems have been detected in this design. [TIM-11]
-        : The design is 'core'.
-        : Use 'report timing -lint' for more information.
+UM:             0             37                                      synthesize
+@genus:root: 5> report area
 ============================================================
   Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
-  Generated on:           Mar 30 2021  12:10:47 pm
-  Module:                 core
-  Operating conditions:   slow (balanced_tree)
+  Generated on:           Apr 02 2021  07:35:03 pm
+  Module:                 insn_mem
+  Technology library:     tsmc18 1.0
+  Operating conditions:   fast (balanced_tree)
   Wireload mode:          enclosed
   Area mode:              timing library
 ============================================================
 
+Instance Module  Cell Count  Cell Area  Net Area   Total Area  Wireload     
+----------------------------------------------------------------------------
+insn_mem                  0      0.000     0.000        0.000    <none> (D) 
 
-Path 1: VIOLATED (-1625 ps) Setup Check with Pin register_file/regFile_reg[19][13]/CK->D
-          Group: clk
-     Startpoint: (R) stall_unit/delayed_load_reg/CK
-          Clock: (R) clk
-       Endpoint: (R) register_file/regFile_reg[19][13]/D
-          Clock: (R) clk
+ (D) = wireload is default in technology library
+@genus:root: 6> report power
+============================================================
+  Generated by:           Genus(TM) Synthesis Solution 17.21-s010_1
+  Generated on:           Apr 02 2021  07:35:11 pm
+  Module:                 insn_mem
+  Technology library:     tsmc18 1.0
+  Operating conditions:   fast (balanced_tree)
+  Wireload mode:          enclosed
+  Area mode:              timing library
+============================================================
 
-                     Capture       Launch     
-        Clock Edge:+    6000            0     
-       Src Latency:+       0            0     
-       Net Latency:+       0 (I)        0 (I) 
-           Arrival:=    6000            0     
-                                              
-             Setup:-     118                  
-       Uncertainty:-     100                  
-     Required Time:=    5782                  
-      Launch Clock:-       0                  
-         Data Path:-    7408                  
-             Slack:=   -1625                  
-
-#----------------------------------------------------------------------------------------------------------------------------------------
-#                         Timing Point                           Flags    Arc   Edge   Cell     Fanout Load Trans Delay Arrival Instance 
-#                                                                                                      (fF)  (ps)  (ps)   (ps)  Location 
-#----------------------------------------------------------------------------------------------------------------------------------------
-  stall_unit/delayed_load_reg/CK                                 -       -      R     (arrival)   1036    -   100     -       0    (-,-) 
-  stall_unit/delayed_load_reg/Q                                  -       CK->Q  F     DFFHQX4        4 35.6    99   260     260    (-,-) 
-  g3078/Y                                                        -       A->Y   R     INVX4          4 30.7   125    94     354    (-,-) 
-  g3026/Y                                                        -       A->Y   F     NAND2X2        1 13.1    94    77     431    (-,-) 
-  g3020/Y                                                        -       A->Y   R     INVX4          6 40.9   154   110     541    (-,-) 
-  register_file/g32219/Y                                         -       AN->Y  R     NAND2BX4       3 20.9   133   167     708    (-,-) 
-  register_file/g32213/Y                                         -       A->Y   F     CLKINVX3       1 10.7    72    65     772    (-,-) 
-  register_file/g32209/Y                                         -       A->Y   R     CLKINVX4       2 29.4   113    81     853    (-,-) 
-  register_file/g32211/Y                                         -       A->Y   F     INVX4          2 30.6    71    59     912    (-,-) 
-  register_file/g32146/Y                                         -       B->Y   R     NAND2BX4      14 58.5   247   164    1076    (-,-) 
-  register_file/g32094/Y                                         -       A->Y   F     INVX8         19 64.1    90    74    1150    (-,-) 
-  register_file/g30648/Y                                         -       A1N->Y F     OAI2BB1X2      1  3.8    68   165    1315    (-,-) 
-  register_file/g32698/Y                                         -       AN->Y  F     NAND4BX2       1  8.2   145   195    1510    (-,-) 
-  register_file/g29457/Y                                         -       B->Y   R     NOR2X2         1  7.8   146   134    1644    (-,-) 
-  register_file/g29372/Y                                         -       A->Y   F     NAND2X2        3  7.8    78    66    1711    (-,-) 
-  crypto_fu/g8987/Y                                              -       A1N->Y F     OAI2BB1X2      1  6.2    77   169    1880    (-,-) 
-  crypto_fu/g8975/Y                                              -       AN->Y  F     NAND2BX4       7 30.6   109   178    2058    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/top/fopt638/Y -       A->Y   R     INVX2          2  6.4    80    69    2127    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/top/g542/Y    -       A->Y   F     MXI2X1         2 17.1   254   164    2291    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/top/g536/Y    -       A->Y   R     INVX4          5 24.9   124   110    2401    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/top/g505/Y    -       A1N->Y R     OAI2BB2X2      2  9.8   224   196    2598    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2497/Y   -       A->Y   F     NAND2X2        2 13.8   110    88    2686    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2494/Y   -       A->Y   R     CLKINVX3       1  7.8    66    56    2741    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2483/Y   -       A->Y   F     NAND2X2        1 12.4    93    66    2808    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2481/Y   -       B0->Y  R     OAI2BB1X4      3 51.9   216   152    2960    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2467/Y   -       A1N->Y R     OAI2BB2X4      1 20.2   215   202    3162    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2458/Y   -       S0->Y  F     MXI2X4         3 27.2   176   200    3362    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2456/Y   -       A->Y   R     NAND2X4        4 23.9   142   114    3476    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2438/Y   -       S0->Y  F     MXI2X1         1  7.8   177   192    3668    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2431/Y   -       A->Y   R     NAND2X2        2 17.3   175   130    3798    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2429/Y   -       A->Y   R     CLKBUFX8       1 27.3    78   157    3954    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2388/Y   -       B->Y   F     XNOR3X4        2 11.5   112   311    4265    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/mid/g2570/Y   -       AN->Y  F     NOR2BX2        2  5.3    60   162    4427    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/out/g767/Y    -       AN->Y  F     NAND2BX1       1  6.7   108   185    4612    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/out/g710/Y    -       B0->Y  R     OAI2BB1X2      3 24.1   203   147    4759    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/out/g692/Y    -       A1N->Y R     OAI2BB1X4      4 24.4   136   206    4965    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/out/g761/Y    -       A->Y   F     XOR2X4         2 24.6    87   213    5178    (-,-) 
-  crypto_fu/i_riscv_crypto_fu_aes32_i_aes_sbox_fwd/out/g664/Y    -       A1N->Y F     OAI2BB2X4      1 17.1   107   184    5362    (-,-) 
-  crypto_fu/g30830/Y                                             -       A0->Y  R     AOI21X4        2 17.1   178   145    5507    (-,-) 
-  crypto_fu/g30691/Y                                             -       A->Y   F     INVX4          3 16.6    59    49    5555    (-,-) 
-  crypto_fu/g30567/Y                                             -       A1N->Y F     OAI2BB1X4      6 31.7   114   183    5738    (-,-) 
-  crypto_fu/g30299/Y                                             -       A->Y   R     NOR2X2         2  8.8   150   112    5851    (-,-) 
-  crypto_fu/g30226/Y                                             -       AN->Y  R     NAND2BX4       7 32.5   171   187    6038    (-,-) 
-  crypto_fu/g30116/Y                                             -       A->Y   F     NAND2X1        1 13.6   156   124    6162    (-,-) 
-  crypto_fu/g30020/Y                                             -       B->Y   R     NAND3BX4       4 18.6   213   135    6297    (-,-) 
-  crypto_fu/g29882/Y                                             -       A->Y   F     NOR2X1         1  3.8   138    69    6366    (-,-) 
-  crypto_fu/g29813/Y                                             -       B->Y   R     NOR2X1         1  6.7   205   168    6534    (-,-) 
-  crypto_fu/g31333/Y                                             -       B0->Y  F     OAI2BB1X2      1  9.6    94    75    6610    (-,-) 
-  crypto_fu/g29689/Y                                             -       S0->Y  R     MXI2X2         1  4.3   220   130    6740    (-,-) 
-  crypto_fu/g29636/Y                                             -       A1N->Y R     OAI2BB1X4      1 15.6   122   193    6933    (-,-) 
-  g13231/Y                                                       -       A->Y   F     NAND2X4        1 15.6   133    62    6994    (-,-) 
-  g12772/Y                                                       -       A->Y   R     NAND2X4        4 42.8   240   139    7133    (-,-) 
-  register_file/fopt35798/Y                                      -       A->Y   F     CLKINVX4       8 35.2   139   116    7250    (-,-) 
-  register_file/g21973/Y                                         -       A0->Y  R     OAI21X1        1  3.2   240   158    7408    (-,-) 
-  register_file/regFile_reg[19][13]/D                            <<<     -      R     DFFRXL         1    -     -     0    7408    (-,-) 
-#----------------------------------------------------------------------------------------------------------------------------------------
+                Leakage   Dynamic    Total   
+Instance Cells Power(nW) Power(nW) Power(nW) 
+---------------------------------------------
+insn_mem     0     0.000     0.000     0.000 
 
 @genus:root: 7> exit
 Normal exit.

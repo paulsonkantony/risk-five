@@ -1,0 +1,349 @@
+Cadence Genus(TM) Synthesis Solution.
+Copyright 2017 Cadence Design Systems, Inc. All rights reserved worldwide.
+Cadence and the Cadence logo are registered trademarks and Genus is a trademark
+of Cadence Design Systems, Inc. in the United States and other countries.
+
+Version: 17.21-s010_1, built Wed Feb 07 2018
+Options: 
+Date:    Mon Mar 29 19:58:38 2021
+Host:    cad54 (x86_64 w/Linux 2.6.32-71.el6.x86_64) (2cores*4cpus*1physical cpu*Intel(R) Core(TM) i3-2120 CPU @ 3.30GHz 3072KB) (7955092KB)
+OS:      Red Hat Enterprise Linux Server release 6.0 (Santiago)
+
+Checking out license: Genus_Synthesis
+
+Loading tool scripts...
+
+Finished loading tool scripts (32 seconds elapsed).
+
+WARNING: This version of the tool is 1146 days old.
+@genus:root: 1> set_db library slow.lib
+
+Threads Configured:3
+
+  Message Summary for Library slow.lib:
+  *************************************
+  Could not find an attribute in the library. [LBR-436]: 639
+  Missing a function attribute in the output pin definition. [LBR-518]: 1
+  An unsupported construct was detected in this library. [LBR-40]: 1
+  *************************************
+ 
+Info    : Created nominal operating condition. [LBR-412]
+        : Operating condition '_nominal_' was created for the PVT values (1.000000, 1.620000, 125.000000) in library 'slow.lib'.
+        : The nominal operating condition represents either the nominal PVT values if specified in the library source, or the default PVT values (1.0, 1.0, 1.0).
+  Setting attribute of root '/': 'library' = slow.lib
+1 slow.lib
+@genus:root: 2> read_hdl read_hdl {add32.v alu.v control_unit.v data_mem.v imm_sx.v insn_mem.v load_stall.v mbr_sx_load.v mbr_sx_store.v mux32four.v mux32two.v program_counter.v register_bank.v riscv_crypto_fu_saes32_32.v riscv_crypto_fu_sboxes_aes_32.v riscv_crypto_fu_sboxes_sm4_32.v riscv_crypto_fu_ssha256_32.v riscv_crypto_fu_ssha512_32.v riscv_crypto_fu_ssm3_32.v riscv_crypto_fu_ssm4_32.v riscv_crypto_fu_32.v core_top.v core.v}
+Warning : Cannot open file. [VLOGPT-650]
+        : File 'read_hdl'.
+        : The specified file could not be opened.  Check the value of the init_hdl_search_path attribute.
+@genus:root: 3> read_hdl {add32.v alu.v control_unit.v data_mem.v imm_sx.v insn_mem.v load_stall.v mbr_sx_load.v mbr_sx_store.v mux32four.v mux32two.v program_counter.v register_bank.v riscv_crypto_fu_saes32_32.v riscv_crypto_fu_sboxes_aes_32.v riscv_crypto_fu_sboxes_sm4_32.v riscv_crypto_fu_ssha256_32.v riscv_crypto_fu_ssha512_32.v riscv_crypto_fu_ssm3_32.v riscv_crypto_fu_ssm4_32.v riscv_crypto_fu_32.v core_top.v core.v}
+module add32(sum, A, B);
+           |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'add32' with Verilog module in file 'add32.v' on line 1, column 12.
+        : A Verilog description is replaced when a new description of the same name and same library is read again.
+    Verilog descriptions are:
+       module
+       macromodule
+    SystemVerilog adds the following descriptions:
+       interface
+       program
+       package.
+module alu(alu_out, eq, a_lt_b, a_lt_ub, func, A, B);
+         |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'alu' with Verilog module in file 'alu.v' on line 1, column 10.
+module control_unit
+                  |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'control_unit' with Verilog module in file 'control_unit.v' on line 1, column 19.
+  module data_mem (dout, addr, clk, din, mem_we);
+                |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'data_mem' with Verilog module in file 'data_mem.v' on line 1, column 17.
+module imm_sx(imm_x, insn);
+            |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'imm_sx' with Verilog module in file 'imm_sx.v' on line 1, column 13.
+  module insn_mem (insn, insn_addr);
+                |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'insn_mem' with Verilog module in file 'insn_mem.v' on line 1, column 17.
+module load_stall(delayed_rd, delayed_addr, delayed_load, lxx_in, rd, alu_out, clk, rst);
+                |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'load_stall' with Verilog module in file 'load_stall.v' on line 1, column 17.
+module mbr_sx_load(sx, mbr, size, delayed_addr);
+                 |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'mbr_sx_load' with Verilog module in file 'mbr_sx_load.v' on line 1, column 18.
+module mbr_sx_store(sx, w_en, mbr, size, mem_we, addr);
+                  |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'mbr_sx_store' with Verilog module in file 'mbr_sx_store.v' on line 1, column 19.
+module mux32four(i0,i1,i2,i3,sel,out);
+               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'mux32four' with Verilog module in file 'mux32four.v' on line 1, column 16.
+module mux32two(i0,i1,sel,out);
+              |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'mux32two' with Verilog module in file 'mux32two.v' on line 1, column 15.
+module program_counter(D,clk,rst,Q);
+                     |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'program_counter' with Verilog module in file 'program_counter.v' on line 1, column 22.
+module register_bank(
+                   |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'register_bank' with Verilog module in file 'register_bank.v' on line 1, column 20.
+module riscv_crypto_fu_saes32 (rs1, rs2, bs, op_saes32_encs, op_saes32_encsm, op_saes32_decs, op_saes32_decsm, rd);
+                            |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_fu_saes32' with Verilog module in file 'riscv_crypto_fu_saes32_32.v' on line 1, column 29.
+module riscv_crypto_sbox_inv_mid(
+                               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sbox_inv_mid' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 1, column 32.
+module riscv_crypto_sbox_aes_top(
+                               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sbox_aes_top' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 75, column 32.
+module riscv_crypto_sbox_aes_out(
+                               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sbox_aes_out' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 135, column 32.
+module riscv_crypto_sbox_aesi_top(
+                                |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sbox_aesi_top' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 184, column 33.
+module riscv_crypto_sbox_aesi_out(
+                                |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sbox_aesi_out' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 243, column 33.
+module riscv_crypto_aes_inv_sbox (
+                               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_aes_inv_sbox' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 291, column 32.
+module riscv_crypto_aes_fwd_sbox (
+                               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_aes_fwd_sbox' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 308, column 32.
+module riscv_crypto_aes_sbox(
+                           |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_aes_sbox' with Verilog module in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 325, column 28.
+module riscv_crypto_sbox_sm4_top(
+                               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sbox_sm4_top' with Verilog module in file 'riscv_crypto_fu_sboxes_sm4_32.v' on line 3, column 32.
+module riscv_crypto_sbox_sm4_out(
+                               |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sbox_sm4_out' with Verilog module in file 'riscv_crypto_fu_sboxes_sm4_32.v' on line 65, column 32.
+module riscv_crypto_sm4_sbox( output [7:0] out, input [7:0] in );
+                           |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_sm4_sbox' with Verilog module in file 'riscv_crypto_fu_sboxes_sm4_32.v' on line 114, column 28.
+module riscv_crypto_fu_ssha256 (rs1, op_ssha256_sig0, op_ssha256_sig1, op_ssha256_sum0, op_ssha256_sum1, rd);
+                             |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_fu_ssha256' with Verilog module in file 'riscv_crypto_fu_ssha256_32.v' on line 1, column 30.
+module riscv_crypto_fu_ssha512 (rs1, rs2,
+                             |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_fu_ssha512' with Verilog module in file 'riscv_crypto_fu_ssha512_32.v' on line 1, column 30.
+module riscv_crypto_fu_ssm3 (rs1, op_ssm3_p0, op_ssm3_p1, rd);
+                          |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_fu_ssm3' with Verilog module in file 'riscv_crypto_fu_ssm3_32.v' on line 1, column 27.
+module riscv_crypto_fu_ssm4 (rs1, rs2, bs, op_ssm4_ks, op_ssm4_ed, result);
+                          |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_fu_ssm4' with Verilog module in file 'riscv_crypto_fu_ssm4_32.v' on line 1, column 27.
+module riscv_crypto_fu (rs1, rs2, instruction, rd);
+                     |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'riscv_crypto_fu' with Verilog module in file 'riscv_crypto_fu_32.v' on line 1, column 22.
+module core_top(clk,reset);
+              |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'core_top' with Verilog module in file 'core_top.v' on line 1, column 15.
+module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, instruction);
+          |
+Warning : Replacing previously read Verilog description. [VLOGPT-6]
+        : Replacing Verilog description 'core' with Verilog module in file 'core.v' on line 1, column 11.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'add32' in library 'default' with newly read Verilog module 'add32' in the same library in file 'add32.v' on line 1.
+        : A newly read VHDL entity replaces any previously read Verilog module or VHDL entity in the same library if its name matches (case-insensitively) the existing module or entity.
+    For instance:
+        VHDL 'foo'                  replaces  VHDL {'FOO' or 'foo' or 'Foo' or ...} in the same library
+        VHDL 'foo' (in any library) replaces  Verilog {'FOO' or 'foo' or 'Foo' or ...} in the same library
+ 
+A newly read Verilog module replaces any previously read Verilog module if its name matches (case-sensitively) that module.  Further, it replaces any previously read VHDL entity in the same library if its name matches (case -insensitively) that entity.
+    For instance:
+        Verilog 'foo' replaces    VHDL {'FOO' or 'foo' or 'Foo' or ...} in the same library
+        Verilog 'foo' replaces    Verilog 'foo' only
+    In addition:
+        Verilog 'foo' does not replace Verilog 'FOO' and the two remain as distinct modules.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'alu' in library 'default' with newly read Verilog module 'alu' in the same library in file 'alu.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'control_unit' in library 'default' with newly read Verilog module 'control_unit' in the same library in file 'control_unit.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'data_mem' in library 'default' with newly read Verilog module 'data_mem' in the same library in file 'data_mem.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'imm_sx' in library 'default' with newly read Verilog module 'imm_sx' in the same library in file 'imm_sx.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'insn_mem' in library 'default' with newly read Verilog module 'insn_mem' in the same library in file 'insn_mem.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'load_stall' in library 'default' with newly read Verilog module 'load_stall' in the same library in file 'load_stall.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'mbr_sx_load' in library 'default' with newly read Verilog module 'mbr_sx_load' in the same library in file 'mbr_sx_load.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'mbr_sx_store' in library 'default' with newly read Verilog module 'mbr_sx_store' in the same library in file 'mbr_sx_store.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'mux32four' in library 'default' with newly read Verilog module 'mux32four' in the same library in file 'mux32four.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'mux32two' in library 'default' with newly read Verilog module 'mux32two' in the same library in file 'mux32two.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'program_counter' in library 'default' with newly read Verilog module 'program_counter' in the same library in file 'program_counter.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'register_bank' in library 'default' with newly read Verilog module 'register_bank' in the same library in file 'register_bank.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_fu_saes32' in library 'default' with newly read Verilog module 'riscv_crypto_fu_saes32' in the same library in file 'riscv_crypto_fu_saes32_32.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sbox_inv_mid' in library 'default' with newly read Verilog module 'riscv_crypto_sbox_inv_mid' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sbox_aes_top' in library 'default' with newly read Verilog module 'riscv_crypto_sbox_aes_top' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 75.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sbox_aes_out' in library 'default' with newly read Verilog module 'riscv_crypto_sbox_aes_out' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 135.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sbox_aesi_top' in library 'default' with newly read Verilog module 'riscv_crypto_sbox_aesi_top' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 184.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sbox_aesi_out' in library 'default' with newly read Verilog module 'riscv_crypto_sbox_aesi_out' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 243.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_aes_inv_sbox' in library 'default' with newly read Verilog module 'riscv_crypto_aes_inv_sbox' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 291.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_aes_fwd_sbox' in library 'default' with newly read Verilog module 'riscv_crypto_aes_fwd_sbox' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 308.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_aes_sbox' in library 'default' with newly read Verilog module 'riscv_crypto_aes_sbox' in the same library in file 'riscv_crypto_fu_sboxes_aes_32.v' on line 325.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sbox_sm4_top' in library 'default' with newly read Verilog module 'riscv_crypto_sbox_sm4_top' in the same library in file 'riscv_crypto_fu_sboxes_sm4_32.v' on line 3.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sbox_sm4_out' in library 'default' with newly read Verilog module 'riscv_crypto_sbox_sm4_out' in the same library in file 'riscv_crypto_fu_sboxes_sm4_32.v' on line 65.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_sm4_sbox' in library 'default' with newly read Verilog module 'riscv_crypto_sm4_sbox' in the same library in file 'riscv_crypto_fu_sboxes_sm4_32.v' on line 114.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_fu_ssha256' in library 'default' with newly read Verilog module 'riscv_crypto_fu_ssha256' in the same library in file 'riscv_crypto_fu_ssha256_32.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_fu_ssha512' in library 'default' with newly read Verilog module 'riscv_crypto_fu_ssha512' in the same library in file 'riscv_crypto_fu_ssha512_32.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_fu_ssm3' in library 'default' with newly read Verilog module 'riscv_crypto_fu_ssm3' in the same library in file 'riscv_crypto_fu_ssm3_32.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_fu_ssm4' in library 'default' with newly read Verilog module 'riscv_crypto_fu_ssm4' in the same library in file 'riscv_crypto_fu_ssm4_32.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'riscv_crypto_fu' in library 'default' with newly read Verilog module 'riscv_crypto_fu' in the same library in file 'riscv_crypto_fu_32.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'core_top' in library 'default' with newly read Verilog module 'core_top' in the same library in file 'core_top.v' on line 1.
+Warning : Replacing previously read Verilog module or VHDL entity. [HPT-76]
+        : Replacing Verilog module 'core' in library 'default' with newly read Verilog module 'core' in the same library in file 'core.v' on line 1.
+@genus:root: 4> elaborate mux32two
+Info    : Elaborating Design. [ELAB-1]
+        : Elaborating top-level block 'mux32two' from file 'mux32two.v'.
+Info    : Done Elaborating Design. [ELAB-3]
+        : Done elaborating 'mux32two'.
+Checking for analog nets...
+Check completed for analog nets.
+Checking for source RTL...
+Check completed for source RTL.
+UM:  flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
+UM:            15            157                                      elaborate
+design:mux32two
+@genus:root: 5> elaborate core
+Error   : Could not find an HDL design. [CDFG-210] [elaborate]
+        : The design is 'core'.
+        : Ensure that the design exists or the correct file was loaded.
+1
+@genus:root: 6> elaborate control_unit
+Error   : Could not find an HDL design. [CDFG-210] [elaborate]
+        : The design is 'control_unit'.
+1
+@genus:root: 7> elaborate insn_mem
+Error   : Could not find an HDL design. [CDFG-210] [elaborate]
+        : The design is 'insn_mem'.
+1
+@genus:root: 8> elaborate add32
+Error   : Could not find an HDL design. [CDFG-210] [elaborate]
+        : The design is 'add32'.
+1
+@genus:root: 9> elaborate add32.v
+Error   : Could not find an HDL design. [CDFG-210] [elaborate]
+        : The design is 'add32.v'.
+1
+@genus:root: 10> elaborate mux32two
+Error   : Could not find an HDL design. [CDFG-210] [elaborate]
+        : The design is 'mux32two'.
+1
+@genus:root: 11> elaborate
+     flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
+UM:             2             83                                      elaborate
+@genus:root: 12> elaborate
+     flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
+UM:             1              5                                      elaborate
+@genus:root: 13> elaborate
+     flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
+UM:             0              2                                      elaborate
+@genus:root: 14> elaborate
+     flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
+UM:             0              5                                      elaborate
+@genus:root: 15> elaborate
+     flow.cputime  flow.realtime  timing.setup.tns  timing.setup.wns  snapshot
+UM:             0              2                                      elaborate
+@genus:root: 16> read_src counter_constraints
+invalid command name "read_src"
+@genus:root: 17> read_sdc counter_constraints
+Error: Unable to open counter_constraints
+Failed on read_sdc
+@genus:root: 18> read_sdc counter_constraints.g
+Warning : Could not find requested search value. [SDC-208] [get_ports]
+        : The 'get_ports' command on line '1' of the SDC file 'counter_constraints.g'  cannot find any ports named 'clk'
+        : Use the 'vcd' and 'vls' commands to browse the virtual directories to find the object because the specified name and/or location does not exist.
+Error   : A required object parameter could not be found. [TUI-61] [parse_options]
+        : An object of type 'port|pin|hpin' named '' could not be found.
+        : Check to make sure that the object exists and is of the correct type.  The 'what_is' command can be used to determine the type of an object.
+Error   : Could not interpret SDC command. [SDC-202] [read_sdc]
+        : The 'read_sdc' command encountered an error while processing this command on line '1' of the SDC file 'counter_constraints.g': create_clock -name clk -period 6 -waveform {0 3} [get_ports 'clk'].
+        : The 'read_sdc' command encountered a problem while trying to evaluate an SDC command. This SDC command will be added to the Tcl variable $::dc::sdc_failed_commands.
+Warning : Could not find requested search value. [SDC-208] [get_clocks]
+        : The 'get_clocks' command on line '2' of the SDC file 'counter_constraints.g'  cannot find any clocks named 'clk'
+Error   : A required object parameter could not be found. [TUI-61] [parse_options]
+        : An object of type 'clock' named '' could not be found.
+Error   : Could not interpret SDC command. [SDC-202] [read_sdc]
+        : The 'read_sdc' command encountered an error while processing this command on line '2' of the SDC file 'counter_constraints.g': set_clock_transition -rise 0.1 [get_clocks 'clk'].
+Warning : Could not find requested search value. [SDC-208] [get_clocks]
+        : The 'get_clocks' command on line '3' of the SDC file 'counter_constraints.g'  cannot find any clocks named 'clk'
+Error   : A required object parameter could not be found. [TUI-61] [parse_options]
+        : An object of type 'clock' named '' could not be found.
+Error   : Could not interpret SDC command. [SDC-202] [read_sdc]
+        : The 'read_sdc' command encountered an error while processing this command on line '3' of the SDC file 'counter_constraints.g': set_clock_transition -fall 0.1 [get_clocks 'clk'].
+Warning : Could not find requested search value. [SDC-208] [get_ports]
+        : The 'get_ports' command on line '4' of the SDC file 'counter_constraints.g'  cannot find any ports named 'clk'
+Error   : Option missing for SDC command. [SDC-203] [set_clock_uncertainty]
+        : The 'set_clock_uncertainty' command on line '4' of the SDC file 'counter_constraints.g' requires '-from', '-to', '-rise_from', '-fall_from', '-rise_to', '-fall_to', or list of objects option.
+        : This SDC command requires the indicated options.  Check the SDC command and contact Cadence customer support if you believe this option combination should be supported.
+Error   : Could not interpret SDC command. [SDC-202] [read_sdc]
+        : The 'read_sdc' command encountered an error while processing this command on line '4' of the SDC file 'counter_constraints.g': set_clock_uncertainty 0.1 [get_ports 'clk'].
+Statistics for commands executed by read_sdc:
+ "create_clock"             - successful      0 , failed      1 (runtime  0.00)
+ "get_clocks"               - successful      0 , failed      2 (runtime  0.00)
+ "get_ports"                - successful      0 , failed      2 (runtime  0.00)
+ "set_clock_transition"     - successful      0 , failed      2 (runtime  0.00)
+ "set_clock_uncertainty"    - successful      0 , failed      1 (runtime  0.00)
+Warning : Total failed commands during read_sdc are 8
+Warning : One or more commands failed when these constraints were applied. [SDC-209]
+        : The 'read_sdc' command encountered a problem while processing commands.
+        : You can examine the failed commands or save them to a file by querying the Tcl variable $::dc::sdc_failed_commands.
+Total runtime 0
+@genus:root: 19> exit
+Normal exit.

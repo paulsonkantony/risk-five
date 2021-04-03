@@ -60,7 +60,11 @@ module rvb_clmul (
 		end
 	end
 
-	always @(posedge clock or negedge reset) begin
+	always @(posedge clock) begin
+		if (!reset) begin
+			busy <= 0;
+			state <= 0;
+		end
 		if (dout_valid) begin
 			busy <= 0;
 		end
@@ -76,10 +80,6 @@ module rvb_clmul (
 			X <= next_X;
 			B <= B << 8;
 			state <= state - 1;
-		end
-		if (!reset) begin
-			busy <= 0;
-			state <= 0;
 		end
 	end
 endmodule

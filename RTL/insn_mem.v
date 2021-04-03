@@ -5,15 +5,17 @@
 	output [31:0] insn;	 
 	reg [31:0] mem [0:1023];
 	
+	`ifndef TESTING
 	integer k;
 	
 	always @*
 	begin
-	for(k=0; k<1024; k=k+1)
-	begin
-		mem[k] = 32'b0;
+		for(k=0; k<1024; k=k+1)
+		begin
+			mem[k] = 32'b0;
+		end
 	end
-	end
+	`endif
 
 	assign insn = mem[insn_addr[11:2]];
 		       

@@ -14,7 +14,7 @@ module rvb_clmul (
 	output        dout_valid,     // output is valid
 	output [31:0] dout_rd,         // output value
 	output 		  busy_out,
-	output 		  state_out
+	output [3:0]  state_out
 );
 	// 13 12  3   Function
 	// --------   --------
@@ -42,12 +42,12 @@ module rvb_clmul (
 		input [31:0] in;
 		integer i;
 		begin
-			for (i = 0; i < XLEN; i = i+1)
+			for (i = 0; i < 32; i = i+1)
 				bitrev[i] = in[31-i];
 		end
 	endfunction
 
-	assign din_ready = (!busy || dout_valid) && reset;
+	assign din_ready = (!busy || dout_valid) && reset && (op_clmulh || op_clmul);
 	assign dout_valid = !state && busy && reset;
 
 	reg [31:0] dout_rd_reg;
@@ -60,13 +60,13 @@ module rvb_clmul (
 		end
 	end
 
-	always @(posedge clock) begin
+	always @(posedge clock or negedge reset) begin
 		if (dout_valid) begin
 			busy <= 0;
 		end
 		if (!state) begin
 			if (din_ready) begin
-				funct_h <= op_clmulh
+				funct_h <= op_clmulh;
 				A <= op_clmulh ? bitrev(din_rs1) : din_rs1;
 				B <= op_clmulh ? bitrev(din_rs2) : din_rs2;
 				busy <= 1;

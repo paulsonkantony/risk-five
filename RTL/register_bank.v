@@ -25,7 +25,7 @@ module register_bank(
 
 	integer j;
 		
-	always @ (posedge clk or negedge rst_n) 
+	always @ (posedge clk) 
 	begin 
 		// Async Reset (reset=0)
 		if ( !rst_n ) 
@@ -39,7 +39,7 @@ module register_bank(
 					end
 			end 
 		// Write Operation (clk=1)
-		else if (clk)
+		else
 			begin
 				if(reg_we)
 				begin

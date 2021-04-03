@@ -1,18 +1,20 @@
-module bitmanip_top (rs1, rs2, instruction, rd, clk, rst);
+module bitmanip_top (delayed_clmul, busy, rd, rs1, rs2, instruction, clk, rst);
+
+input clk, rst;
 
 input [31:0] rs1 ; // Source register 1
 input [31:0] rs2 ; // Source register 2
 
-input [21:0] instruction;
+input [20:0] instruction;
 
 wire op_clmul, op_clmulh, op_xperm_n, op_xperm_b, op_ror, op_rol, op_rori, op_andn, op_orn, op_xnor,
     op_pack, op_packu, op_packh, op_grevi, op_shfl, op_unshfl;
 
-wire [5:0] imm;
+wire [4:0] imm;
 
-output [31:0] rd;	
+output [31:0] rd;   
 
-assign imm = instruction[21:16];
+assign imm = instruction[20:16];
 
 assign op_clmul   = instruction[15];
 assign op_clmulh  = instruction[14];
@@ -55,8 +57,8 @@ assign rotate_shamt = (op_ror|op_rol)  ? (rs2 & 31) :
                       (op_rori)        ? (imm & 31) : 
                       0 ;
 
-assign rotate_result = (op_ror|op_rori) ? ROR32(rs1, rotate_shamt) :
-                       (op_rol) ? ROL32(rs1, rotate_shamt) :
+assign rotate_result = (op_ror|op_rori) ? `ROR32(rs1, rotate_shamt) :
+                       (op_rol) ? `ROL32(rs1, rotate_shamt) :
                        0 ;
 
 
@@ -90,7 +92,7 @@ assign lower = op_packu ? {16'bx, rs1[31:16]} :
                rs1 ;  
 
 assign upper = op_packu ? {16'bx, rs2[31:16]} :
-               rs2
+               rs2;
 
 assign pack_result = op_pack | op_packu ? {upper[15:0], lower[15:0]} :
                      op_packh ? {16'b0, rs2[7:0], rs1[7:0]} :
@@ -110,11 +112,11 @@ wire [31:0]  g1, g2, g3, g4, g5, g6; // Intermediate Signals
 wire [4:0] grevi_shamt = grevi_valid ? imm & 31 : 0 ;
 
 assign g1 =  rs1 ;
-assign g2 = (grevi_shamt & 1)  ? ((g1 & 0x55555555) <<  1) | ((g1 & 0xAAAAAAAA) >>  1) : g1 ;  
-assign g3 = (grevi_shamt & 2)  ? ((g2 & 0x33333333) <<  2) | ((g2 & 0xCCCCCCCC) >>  2) : g2 ;
-assign g4 = (grevi_shamt & 4)  ? ((g3 & 0x0F0F0F0F) <<  4) | ((g3 & 0xF0F0F0F0) >>  4) : g3 ;
-assign g5 = (grevi_shamt & 8)  ? ((g4 & 0x00FF00FF) <<  8) | ((g4 & 0xFF00FF00) >>  8) : g4 ;
-assign g6 = (grevi_shamt & 16) ? ((g5 & 0x0000FFFF) << 16) | ((g5 & 0xFFFF0000) >> 16) : g5 ;
+assign g2 = (grevi_shamt & 1)  ? ((g1 & 32'h55555555) <<  1) | ((g1 & 32'hAAAAAAAA) >>  1) : g1 ;  
+assign g3 = (grevi_shamt & 2)  ? ((g2 & 32'h33333333) <<  2) | ((g2 & 32'hCCCCCCCC) >>  2) : g2 ;
+assign g4 = (grevi_shamt & 4)  ? ((g3 & 32'h0F0F0F0F) <<  4) | ((g3 & 32'hF0F0F0F0) >>  4) : g3 ;
+assign g5 = (grevi_shamt & 8)  ? ((g4 & 32'h00FF00FF) <<  8) | ((g4 & 32'hFF00FF00) >>  8) : g4 ;
+assign g6 = (grevi_shamt & 16) ? ((g5 & 32'h0000FFFF) << 16) | ((g5 & 32'hFFFF0000) >> 16) : g5 ;
 
 assign grevi_result = g6 ;
 
@@ -128,25 +130,21 @@ wire [31:0] xperm_result ;
 wire xperm_valid;
 assign xperm_valid = op_xperm_b | op_xperm_n ;
 
-reg [31:0] res ;
-res = 0;
+wire [31:0] xperm_rs1, xperm_rs2;
 
-wire [2:0] sz_log2 = op_xperm_n ? 2 :
-                     op_xperm_b ? 3 :
-                     0 ; 
+assign xperm_rs1 = `GATE_INPUTS(32, xperm_valid, rs1) ;
+assign xperm_rs2 = `GATE_INPUTS(32, xperm_valid, rs2) ;
 
-wire [31:0] sz = 1 << sz_log2 ;
-wire [31:0] mask = (1 << sz) - 1;
+wire [31:0] res ;
 
-integer i, pos;
-for (i = 0; i < 32; i = i + sz) 
-    begin
-        pos = ((rs2 >> i) & mask) << sz_log2;
-        if (pos < XLEN) 
-            begin 
-                res <= res | ((rs1 >> pos) & mask) << i;
-            end    
-    end
+rvb_xperm i_rvb_xperm(
+  .xperm_valid(xperm_valid),
+  .op_xperm_n(op_xperm_n), 
+  .op_xperm_b(op_xperm_b),
+  .rs1(xperm_rs1),
+  .rs2(xperm_rs2),
+  .res(res)
+  );
 
 assign xperm_result = res ;
 
@@ -174,20 +172,20 @@ wire [31:0] s1, s2, s3, s4, s5; //Intermediate Results
 assign s1 = rs1 ;
 assign shfl_shamt = shfl_valid ? rs2 & 15 : 0 ;
 
-assign s2 = (shfl_shamt & 8 & op_shfl)      ? shuffle32_stage(s1, 0x00ff0000, 0x0000ff00, 8) : 
-            (shfl_shamt & 1 & op_unshfl)    ? shuffle32_stage(s1, 0x44444444, 0x22222222, 1) : 
+assign s2 = (shfl_shamt & 8 & op_shfl)      ? shuffle32_stage(s1, 32'h00ff0000, 32'h0000ff00, 8) : 
+            (shfl_shamt & 1 & op_unshfl)    ? shuffle32_stage(s1, 32'h44444444, 32'h22222222, 1) : 
             s1 ;  
 
-assign s3 = (shfl_shamt & 4 & op_shfl)      ? shuffle32_stage(s2, 0x0f000f00, 0x00f000f0, 4) : 
-            (shfl_shamt & 2 & op_unshfl)    ? shuffle32_stage(s2, 0x30303030, 0x0c0c0c0c, 2) : 
+assign s3 = (shfl_shamt & 4 & op_shfl)      ? shuffle32_stage(s2, 32'h0f000f00, 32'h00f000f0, 4) : 
+            (shfl_shamt & 2 & op_unshfl)    ? shuffle32_stage(s2, 32'h30303030, 32'h0c0c0c0c, 2) : 
             s2 ;
 
-assign s4 = (shfl_shamt & 2 & op_shfl)      ? shuffle32_stage(s3, 0x30303030, 0x0c0c0c0c, 2) : 
-            (shfl_shamt & 4 & op_unshfl)    ? shuffle32_stage(s3, 0x0f000f00, 0x00f000f0, 4) : 
+assign s4 = (shfl_shamt & 2 & op_shfl)      ? shuffle32_stage(s3, 32'h30303030, 32'h0c0c0c0c, 2) : 
+            (shfl_shamt & 4 & op_unshfl)    ? shuffle32_stage(s3, 32'h0f000f00, 32'h00f000f0, 4) : 
             s3 ;
 
-assign s5 = (shfl_shamt & 1 & op_shfl)      ? shuffle32_stage(s4, 0x44444444, 0x22222222, 1) : 
-            (shfl_shamt & 8 & op_unshfl)    ? shuffle32_stage(s4, 0x00ff0000, 0x0000ff00, 8) : 
+assign s5 = (shfl_shamt & 1 & op_shfl)      ? shuffle32_stage(s4, 32'h44444444, 32'h22222222, 1) : 
+            (shfl_shamt & 8 & op_unshfl)    ? shuffle32_stage(s4, 32'h00ff0000, 32'h0000ff00, 8) : 
             s4 ;
 
 assign shfl_result = s5 ;
@@ -199,13 +197,31 @@ assign shfl_result = s5 ;
 // ------------------------------------------------------------
 
 
-wire        clmul_ready, clmul_out_valid ;
+wire        clmul_ready, clmul_out_valid, clmul_valid ;
 wire [31:0] clmul_rs1 , clmul_rs2, clmul_result ;
 
 assign clmul_rs1 = `GATE_INPUTS(32, clmul_valid, rs1) ;
 assign clmul_rs2 = `GATE_INPUTS(32, clmul_valid, rs2) ;
 
 assign clmul_valid = op_clmul | op_clmulh ;
+
+output reg busy;
+
+wire busy_out;
+
+always @(posedge clk or negedge rst) 
+begin
+  if(~rst) begin
+     busy <= 0;
+  end 
+  else begin
+     busy <= busy_out ;
+  end
+end
+
+wire [3:0] state;
+output delayed_clmul;
+assign delayed_clmul = (state == 0) & clmul_out_valid;
 
 rvb_clmul i_rvb_clmul (
     // control signals
@@ -219,7 +235,9 @@ rvb_clmul i_rvb_clmul (
     .op_clmulh(op_clmulh),
     // data output
     .dout_valid(clmul_out_valid),  // output is valid - output
-    .dout_rd(clmul_result)         // output value
+    .dout_rd(clmul_result),         // output value
+    .busy_out(busy_out),
+    .state_out(state)
 );
 
 

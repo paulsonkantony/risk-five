@@ -1,6 +1,6 @@
 module control_unit
-	(imm_val, rs1, rs2, rd, mux_a_sel, mux_b_sel, alu_func, is_scalar_crypto, rd_sel, reg_we, pc_add_sel, pc_next_sel, 
-	 mem_we, sx_size, stall, crypto_instruction, sysi_o, eq, a_lt_b, a_lt_ub, instruction, clk, rst, delayed_load, delayed_rd );
+	(imm_val, rs1, rs2, rd, mux_a_sel, mux_b_sel, alu_func, is_scalar_crypto, is_bitmanip, rd_sel, reg_we, pc_add_sel, pc_next_sel, 
+	 mem_we, sx_size, stall, crypto_instruction, bitmanip_instruction, sysi_o, eq, a_lt_b, a_lt_ub, instruction, clk, rst, delayed_load, delayed_rd, delayed_clmul);
 
 	input eq, a_lt_b, a_lt_ub;
     input [31:0] instruction;
@@ -8,6 +8,9 @@ module control_unit
 
     input delayed_load;
     input [4:0] delayed_rd;
+
+    input delayed_clmul; 
+
 	
     wire func7;
     wire [6:0] opcode;
@@ -37,12 +40,15 @@ module control_unit
     op_ssm3_p0 ,op_ssm3_p1 , op_ssm4_ks ,op_ssm4_ed;
     //op_lut4lo, op_lut4hi;
 
-    //wire op_clmul, op_clmulh, op_xperm_n, op_xperm_b, op_ror, op_rol, op_rori, op_andn, op_orn, op_xnor,
-    //op_pack, op_packu, op_packh, op_grevi, op_gorci, op_shfl, op_unshfl;
+    wire op_clmul, op_clmulh, op_xperm_n, op_xperm_b, op_ror, op_rol, op_rori, op_andn, op_orn, op_xnor,
+    op_pack, op_packu, op_packh, op_grevi, op_shfl, op_unshfl;
+
+    output is_bitmanip;
+    output [20:0] bitmanip_instruction;
 
     //wire invalid_opcode;
 
-    output reg stall;
+    output stall;
 
 	output [3:0] alu_func;
 	output reg [2:0] sx_size;
@@ -91,49 +97,6 @@ module control_unit
     assign alu_o    = (opcode==OPCODE_R_ALU);
     assign sysi_o   = (opcode==OPCODE_I_SYSTEM) || (opcode==OPCODE_I_FENCE);
  
-    /*func3 (For reference)
-    parameter FUNCT3_JARL = 3'b000;
-
-    //  B_BRANCH
-    parameter FUNCT3_BEQ 	 = 3'b000,
-     		FUNCT3_BNE 	 = 3'b001,
-     		FUNCT3_BLT 	 = 3'b100,
-     		FUNCT3_BGE 	 = 3'b101,
-     		FUNCT3_BLTU 	 = 3'b110,
-     		FUNCT3_BGEU 	 = 3'b111;
-
-    // I_LOAD
-    parameter FUNCT3_LB 	= 3'b000,
-     		FUNCT3_LH 	= 3'b001,
-     		FUNCT3_LW 	= 3'b010,
-     		FUNCT3_LBU 	= 3'b100,
-     		FUNCT3_LHU 	= 3'b101;
-
-    //  S_STORES
-    parameter FUNCT3_SB = 3'b000,
-     		FUNCT3_SH 	= 3'b001,
-     		FUNCT3_SW 	= 3'b010;
-
-    //  I_IMM
-    parameter FUNCT3_ADDI	 = 3'b000,
-     		FUNCT3_SLTI 	 = 3'b010,
-     		FUNCT3_SLTIU 	 = 3'b011,
-     		FUNCT3_XORI 	 = 3'b100,
-     		FUNCT3_ORI 	     = 3'b110,
-     		FUNCT3_ANDI 	 = 3'b111,
-     		FUNCT3_SLLI 	 = 3'b001,
-     		FUNCT3_SRLI_SRAI = 3'b101;
-
-    //  R_ALU
-    parameter FUNCT3_ADD_SUB = 3'b000,
-     		FUNCT3_SLL   	 = 3'b001,
-     		FUNCT3_SLT 	     = 3'b010,
-     		FUNCT3_SLTU 	 = 3'b011,
-     		FUNCT3_XOR 	     = 3'b100,
-     		FUNCT3_SRL_SRA 	 = 3'b101,
-     		FUNCT3_OR 	     = 3'b110,
-     		FUNCT3_AND 	     = 3'b111; */
-
     assign fn3_0_o = func3 == 3'b000;
     assign fn3_1_o = func3 == 3'b001;
     assign fn3_2_o = func3 == 3'b010;
@@ -229,16 +192,22 @@ module control_unit
             end
         end
 
-    always @(posedge clk)
-    begin
-	if(!rst)	
-        stall<=1'b0;
-	else
-	begin
-		if(load_o)
-		stall<=load_o;
-    	end
-    end
+    //always @(posedge clk)
+    //    begin
+	// if(!rst | !load_o)	
+    //        stall <= 1'b0;
+	// else if (load_o) 
+	// 	stall <= 1'b1;
+    //    end
+    // always @(negedge rst or load_o)
+    // begin
+    //     if(!rst)
+    //         stall<=1'b0;
+    //     else
+    //         stall<=load_o;
+    // end
+
+    assign stall = rst & load_o;
 
     assign alu_func =   (add_o)     ? func_ADD :   
                         (sub_o)     ? func_SUB :
@@ -309,9 +278,7 @@ module control_unit
      op_ssm4_ks ,op_ssm4_ed
     };
 
-    /*
-
-    //RISC-V Crypto - Bitmanip
+//RISC-V Crypto - Bitmanip
   
     assign op_clmul     = (alu_o&fn3_1_o) & instruction[27] & instruction[25];
     assign op_clmulh    = (alu_o&fn3_3_o) & instruction[27] & instruction[25];
@@ -327,23 +294,35 @@ module control_unit
     assign op_packu     = (alu_o&fn3_4_o) & instruction[30] & instruction[27]; 
     assign op_packh     = (alu_o&fn3_7_o) & instruction[27] ;
     assign op_grevi     = (imm_o&fn3_5_o) & instruction[30] & instruction[29] & instruction[27];
-    assign op_gorci     = (imm_o&fn3_5_o) & instruction[29] & instruction[27];
     assign op_shfl      = (alu_o&fn3_1_o) & instruction[27] ;
     assign op_unshfl    = (alu_o&fn3_5_o) & instruction[27] ;
 
     assign is_bitmanip = op_clmul | op_clmul | op_clmulh | op_xperm_n | op_xperm_b | 
         op_ror | op_rol | op_rori | op_andn | op_orn | op_xnor | op_pack | op_packu | 
-        op_packh | op_grevi | op_gorci | op_shfl | op_unshfl;
+        op_packh | op_grevi | op_shfl | op_unshfl;
 
-    wire [5:0] bitmanip_imm;
-    assign bitmanip_imm = instruction[26:20]; 
+    wire [4:0] bitmanip_imm;
+    assign bitmanip_imm = instruction[24:20]; 
 
     assign bitmanip_instruction = {
-    bitmanip_imm, op_clmul, op_clmulh, op_xperm_n, op_xperm_b, op_ror, op_rol, op_rori, op_andn, op_orn, op_xnor,
-    op_pack, op_packu, op_packh, op_grevi, op_gorci, op_shfl, op_unshfl;
+    bitmanip_imm, 
+    op_clmul, 
+    op_clmulh, 
+    op_xperm_n, 
+    op_xperm_b, 
+    op_ror, 
+    op_rol, 
+    op_rori, 
+    op_andn, 
+    op_orn, 
+    op_xnor,
+    op_pack, 
+    op_packu, 
+    op_packh, 
+    op_grevi, 
+    op_shfl, 
+    op_unshfl
     };
 
-    */
-
-endmodule
     
+endmodule

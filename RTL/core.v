@@ -10,6 +10,7 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	wire [4:0] rs1, rs2, rd;
 	wire [31:0] rd_val, rs1_val, rs2_val;
 	wire [1:0] rd_sel;
+	wire [31:0] rd_mux_out;
 
 	//Program Counter
 	wire [31:0] pc, pc_add_out, pc_add_in, pc_mux_out, new_pc_in;
@@ -37,8 +38,14 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 
 	//Crypto
 	wire [19:0] crypto_insn;
-	wire [31:0] crypto_mux_out, crypto_rd;
+	wire [31:0] crypto_rd;
 	wire is_scalar_crypto;
+
+	//Bitmanip
+	wire [20:0] bitmanip_insn;
+	wire [31:0] bitmanip_rd;
+	wire is_bitmanip;
+	wire delayed_clmul, busy, wait_in;
 
 	//Datapath
 
@@ -50,7 +57,7 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	.rs1	 (rs1)		,  // Address of r1 Read
 	.rs2     (rs2)		,  // Address of r2 Read
 	.rd		 (rd)		,  // Addres of Write Register
-	.rd_val	 (crypto_mux_out)	,  // Data to write
+	.rd_val	 (rd_mux_out)	,  // Data to write
 	.rs1_val (rs1_val)	,  // Output register 1
 	.rs2_val (rs2_val)	   // Output register 2
 	);
@@ -106,7 +113,7 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	.i0 (pc_add_out), .i1(alu_out), .sel(pc_next_sel), .out(pc_mux_out));
 	
 	mux32two stall_mux(
-	.i0 (pc_mux_out), .i1 (pc), .sel (stall), .out (new_pc_in));	
+	.i0 (pc_mux_out), .i1 (pc), .sel (wait_in), .out (new_pc_in));	
 	
 	program_counter pc_latch(
 		.D(new_pc_in),.clk(clk),.rst(reset),.Q(pc));
@@ -146,13 +153,16 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	.mux_b_sel(mux_b_sel)	,	 
 	.alu_func(alu_func)		, 
 	.is_scalar_crypto(is_scalar_crypto),
+	.is_bitmanip(is_bitmanip),
 	.rd_sel(rd_sel)			, 
 	.reg_we(reg_we), 
 	.pc_add_sel(pc_add_sel)	, 
 	.pc_next_sel(pc_next_sel), 
 	.mem_we(mem_we)			, 
 	.sx_size(sx_size)		, 
-	.stall(stall)			, 
+	.stall(stall)			,
+	.crypto_instruction(crypto_insn),
+	.bitmanip_instruction(bitmanip_insn),
 	.sysi_o(sysi_o)			,
 	.eq(eq) 				, 
 	.a_lt_b(a_lt_b)			, 
@@ -162,22 +172,34 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	.rst(reset)			, 
 	.delayed_load(delayed_load), 
 	.delayed_rd(delayed_rd),
-	.crypto_instruction(crypto_insn)
+	.delayed_clmul(delayed_clmul)
 	);
 
 
 	//If any system function is called, it generates a reset
 	assign reset = ext_reset & !sysi_o;
+	assign wait_in = busy | stall;
 
 	//Scalar Crypto
-	mux32two crypto_mux(
-	.i0 (rd_val), .i1 (crypto_rd), .sel (is_scalar_crypto), .out (crypto_mux_out));
+	mux32three crypto_mux(
+	.i0 (rd_val), .i1 (crypto_rd), .i2(bitmanip_rd), .sel ({is_bitmanip, is_scalar_crypto}), .out (rd_mux_out));
 
 	riscv_crypto_fu crypto_fu(
 	.rs1(rs1_val), 
 	.rs2(rs2_val), 
 	.instruction(crypto_insn), 
 	.rd(crypto_rd)
+	);
+
+	bitmanip_top bitmanip_fu(
+	.delayed_clmul(delayed_clmul), 
+	.busy(busy),
+	.rs1(rs1_val), 
+	.rs2(rs2_val), 
+	.instruction(bitmanip_insn), 
+	.rd(bitmanip_rd), 
+	.clk(clk), 
+	.rst(reset)
 	);
 
 endmodule

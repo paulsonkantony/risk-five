@@ -1,0 +1,57 @@
+00200433
+00000133
+10010113
+00412603
+00012083
+000002b3
+00100313
+00100093
+02c28c63
+00100093
+02c30863
+00130313
+00000533
+00100533
+000005b3
+006005b3
+000002b3
+000000b3
+00a080b3
+00128293
+feb29ce3
+fcc31ce3
+00112023
+00040133
+0000006f
+
+
+/*
+Machine Code	Basic Code	Original Code
+0x00200433	add x8 x0 x2	add s0, x0, sp
+0x00000133	add x2 x0 x0	add sp, x0, x0
+0x10010113	addi x2 x2 256	addi sp, sp, 256
+0x00412603	lw x12 4(x2)	lw a2, 4(sp)
+0x00012083	lw x1 0(x2)	lw ra, 0(sp)
+0x000002b3	add x5 x0 x0	add t0, x0, x0
+0x00100313	addi x6 x0 1	addi t1, x0, 1
+0x00100093	addi x1 x0 1	addi ra, x0, 1
+0x02c28c63	beq x5 x12 56	beq t0, a2, end
+0x00100093	addi x1 x0 1	addi ra, x0, 1
+0x02c30863	beq x6 x12 48	beq t1, a2, end
+0x00130313	addi x6 x6 1	start1: addi t1, t1, 1
+0x00000533	add x10 x0 x0	add a0, x0, x0
+0x00100533	add x10 x0 x1	add a0, x0, ra
+0x000005b3	add x11 x0 x0	add a1, x0, x0
+0x006005b3	add x11 x0 x6	add a1, x0, t1
+0x000002b3	add x5 x0 x0	add t0, x0, x0
+0x000000b3	add x1 x0 x0	add ra, x0, x0
+0x00a080b3	add x1 x1 x10	start2: add ra, ra, a0
+0x00128293	addi x5 x5 1	addi t0, t0, 1
+0xfeb29ce3	bne x5 x11 -8	bne t0, a1, start2
+0xfcc31ce3	bne x6 x12 -40	bne t1, a2, start1
+0x00112023	sw x1 0(x2)	end:sw ra, 0(sp)
+0x00040133	add x2 x8 x0	add sp, s0, x0
+0x0000006f	jal x0 0	loop: jal zero, loop
+*/
+
+

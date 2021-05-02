@@ -113,7 +113,6 @@ module core(rs2_val_sx, alu_addr, mem_we_in, pc_out, clk, ext_reset, mem_out, in
 	.i0 (pc_add_out), .i1(alu_out), .sel(pc_next_sel), .out(pc_mux_out));
 	
 	mux32two stall_mux(
-	.i0 (pc_mux_out), .i1 (pc), .sel (wait_in), .out (new_pc_in));	
 	
 	program_counter pc_latch(
 		.D(new_pc_in),.clk(clk),.rst(reset),.Q(pc));

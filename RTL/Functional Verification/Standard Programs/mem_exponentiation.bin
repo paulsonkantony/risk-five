@@ -1,0 +1,52 @@
+00200433
+00000133
+10010113
+00412503
+00812583
+00012083
+000002b3
+00100313
+04a08463
+00100093
+04a30063
+00100093
+02b00c63
+00a000b3
+02b30863
+00130313
+00000633
+00100633
+000006b3
+00a006b3
+000002b3
+000000b3
+00c080b3
+00128293
+fed29ce3
+fcb31ce3
+00112023
+00040133
+0000006f
+
+/*
+Machine Code	Basic Code	Original Code
+0x00200433	add x8 x0 x2	add s0, x0, sp
+0x00000133	add x2 x0 x0	add sp, x0, x0
+0x10010113	addi x2 x2 256	addi sp, sp, 256
+0x00412503	lw x10 4(x2)	lw a0, 4(sp)
+0x00812583	lw x11 8(x2)	lw a1, 8(sp)
+0x00012083	lw x1 0(x2)	lw ra, 0(sp)
+0x000002b3	add x5 x0 x0	add t0, x0, x0
+0x00100313	addi x6 x0 1	addi t1, x0, 1
+0x04a08463	beq x1 x10 72	beq ra, a0, end
+0x00100093	addi x1 x0 1	addi ra, x0, 1
+0x04a30063	beq x6 x10 64	beq t1, a0, end
+0x00100093	addi x1 x0 1	addi ra, x0, 1
+0x02b00c63	beq x0 x11 56	beq x0, a1, end
+0x00a000b3	add x1 x0 x10	add ra, x0, a0
+0x02b30863	beq x6 x11 48	beq t1, a1, end
+0x00130313	addi x6 x6 1	addi t1, t1, 1
+0x00000633	add x12 x0 x0	add a2, x0, x0
+0x00100633	add x12 x0 x1	add a2, x0, ra
+0x000006b3	add x13 x0 x0	add a3, x0, x0
+*/

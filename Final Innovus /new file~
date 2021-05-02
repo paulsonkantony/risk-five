@@ -1,0 +1,5 @@
+read_hdl {add32.v alu.v control_unit.v data_mem.v imm_sx.v insn_mem.v load_stall.v mbr_sx_load.v mbr_sx_store.v mux32four.v mux32three.v mux32two.v program_counter.v register_bank.v riscv_crypto_fu_saes32_32.v riscv_crypto_fu_sboxes_aes_32.v riscv_crypto_fu_sboxes_sm4_32.v riscv_crypto_fu_ssha256_32.v riscv_crypto_fu_ssha512_32.v riscv_crypto_fu_ssm3_32.v riscv_crypto_fu_ssm4_32.v riscv_crypto_fu_32.v rvb_clmul.v rvb_xperm.v bitmanip_top.v core_top.v core.v}
+
+
+
+read_hdl {riscv_crypto_fu_saes32_32.v riscv_crypto_fu_sboxes_aes_32.v riscv_crypto_fu_sboxes_sm4_32.v riscv_crypto_fu_ssha256_32.v riscv_crypto_fu_ssha512_32.v riscv_crypto_fu_ssm3_32.v riscv_crypto_fu_ssm4_32.v riscv_crypto_fu_32.v}

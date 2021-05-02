@@ -1,0 +1,40 @@
+00200433
+00000133
+10010113
+00412503
+00812583
+00c12603
+000000b3
+00100293
+00a000b3
+00c28c63
+40560633
+00000293
+00c080b3
+00128293
+feb29ce3
+00112023
+00040133
+0000006f
+
+/*
+Machine Code	Basic Code	Original Code
+0x00200433	add x8 x0 x2	add s0, x0, sp
+0x00000133	add x2 x0 x0	add sp, x0, x0
+0x10010113	addi x2 x2 256	addi sp, sp, 256 # make room for a0, ra
+0x00412503	lw x10 4(x2)	lw a0, 4(sp)
+0x00812583	lw x11 8(x2)	lw a1, 8(sp)
+0x00c12603	lw x12 12(x2)	lw a2, 12(sp)
+0x000000b3	add x1 x0 x0	add ra, x0, x0
+0x00100293	addi x5 x0 1	addi t0, x0, 1
+0x00a000b3	add x1 x0 x10	add ra, x0, a0
+0x00c28c63	beq x5 x12 24	beq t0, a2,end
+0x40560633	sub x12 x12 x5	sub a2, a2, t0
+0x00000293	addi x5 x0 0	addi t0, x0, 0
+0x00c080b3	add x1 x1 x12	add ra, ra, a2
+0x00128293	addi x5 x5 1	addi t0, t0, 1
+0xfeb29ce3	bne x5 x11 -8	bne t0, a1, start
+0x00112023	sw x1 0(x2)	sw ra, 0(sp)
+0x00040133	add x2 x8 x0	add sp, s0, x0
+0x0000006f	jal x0 0	loop: jal zero, loop
+*/

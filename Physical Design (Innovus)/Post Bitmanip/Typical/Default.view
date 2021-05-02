@@ -1,0 +1,10 @@
+# Version:1.0 MMMC View Definition File
+# Do Not Remove Above Line
+create_library_set -name max_timing -timing {/cad/FOUNDRY/digital/180nm/dig/lib/slow.lib}
+create_library_set -name min_timing -timing {/cad/FOUNDRY/digital/180nm/dig/lib/fast.lib}
+create_constraint_mode -name constraints_top -sdc_files {timing.sdc}
+create_delay_corner -name max -library_set {max_timing}
+create_delay_corner -name min -library_set {min_timing}
+create_analysis_view -name best -constraint_mode {constraints_top} -delay_corner {min}
+create_analysis_view -name worst -constraint_mode {constraints_top} -delay_corner {max}
+set_analysis_view -setup {worst} -hold {best}

@@ -16,14 +16,20 @@ A Verilog based implementation of the RV32I Unprivileged RISC-V Instruction Set 
 A subset of the RV32I Base Module has been implemented. The functions that have not been included are CSR functions, fence, ecall and ebreak.
 
 ## Current Design
-- Entirely written in Verilog.
-- Requires 1 clock cycle to complete any instruction (except LOAD - Requires two cycles).
-- Single RISC-V Hart only.
-- The privileged ISA is **not** implemented.
+- Entirely written in Verilog
+- Requires 1 clock cycle to complete any instruction (except LOAD - Requires two cycles)
+- Single RISC-V Hart only
+- The privileged ISA is **not** implemented
 - FENCE, FENCE.I and CSR instructions are not implemented.
 - K Extension - Zkn and Zks - Implemented
   - The Bit-Manipulation and Cryptography Instruction Set that we are using is still in the experimental phase.
   - The extension has not been ratified by the RISC-V Foundation yet.
+
+## ASIC Implementation
+ASIC implementation of the processor from the Register Transfer Level (RTL)  stage to the GDSII stage (Physical Design)
+- RTL Design in Verilog HDL
+- Semi-custom ASIC flow in 180nm technology
+- Performance comparison using area, power, timing, and delay reports for the post synthesis and post layout results at multiple clock frequencies.
 
 ## Future Scope
 - Implement a classic 5-stage RISC pipeline.

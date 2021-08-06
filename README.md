@@ -22,6 +22,8 @@ A subset of the RV32I Base Module has been implemented. The functions that have 
 - The privileged ISA is **not** implemented.
 - FENCE, FENCE.I and CSR instructions are not implemented.
 - K Extension - Zkn and Zks - Implemented
+  - The Bit-Manipulation and Cryptography Instruction Set that we are using is still in the experimental phase.
+  - The extension has not been ratified by the RISC-V Foundation yet.
 
 ## Future Scope
 - Implement a classic 5-stage RISC pipeline.

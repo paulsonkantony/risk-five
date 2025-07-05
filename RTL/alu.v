@@ -1,10 +1,9 @@
-module alu(alu_out, eq, a_lt_b, a_lt_ub, func, A, B);
+module alu(alu_out, func, A, B);
 	
 	input [3:0] func;
 	input [31:0] A;
 	input [31:0] B;
-	output [31:0] alu_out; 
-	output eq, a_lt_b, a_lt_ub;
+	output [31:0] alu_out;
 
 	wire add_o, sub_o, sll_o, slt_o, sltu_o, xor_o, srl_o, sra_o, or_o, and_o, alu_jalr_o;
 	
@@ -21,10 +20,6 @@ module alu(alu_out, eq, a_lt_b, a_lt_ub, func, A, B);
 		func_ADD_JALR =4'b1010;
 
 	wire [4:0] shamt = B[4:0];
-	
-	assign eq = A==B;
-	assign a_lt_b = $signed(A) < $signed(B);
-	assign a_lt_ub = A<B;
 
     assign add_o = func==func_ADD;
     assign sub_o = func==func_SUB;

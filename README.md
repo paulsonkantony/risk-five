@@ -46,22 +46,20 @@ The RTL design has been synthesized and taken through a complete ASIC physical d
 
 ---
 
-### 🧿 Layout (Post-Layout View)
-
-<p align="center">
-  <img src="images/Layout.png" alt="ASIC Layout from Cadence" width="600">
-</p>
-
-<p align="center">
-  <em>Figure: Physical Design Layout of the proposed processor with SHA-3 acceleration unit using 45nm technology</em>
-</p>
-
----
-
 ### 🖼️ Pipeline Diagram
 
 <p align="center">
   <img src="images/Pipeline_Datapath.png" alt="Pipeline Diagram">
+</p>
+
+### 🧿 Layout
+
+<p align="center">
+  <img src="images/Layout.png" alt="ASIC Layout from Cadence" width="300">
+</p>
+
+<p align="center">
+  <em>Figure: Physical Design Layout of the proposed processor with SHA-3 acceleration unit using 45nm technology</em>
 </p>
 
 ---

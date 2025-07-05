@@ -94,7 +94,7 @@ Chennai – 600127
 
 If you use this project or refer to the design in your work, please cite the following publication:
 
-P. K. Antony, N. N. Ramesh, P. Suryadevara, and P. A, **“RISC-V Processor Hardware Modelling with Custom Instruction Set for SHA-3 Acceleration,”** in *Resilient Community Microgrids*,  John Wiley & Sons, Inc. ; Scrivener Publishing LLC, 2025, pp. 189–213 
+P. K. Antony, N. N. Ramesh, P. Suryadevara, and A. Prathiba, **“RISC‐V processor hardware modelling with custom instruction set for SHA‐3 acceleration,”** *Resilient Community Microgrids*, pp. 189–213, Mar. 2025. doi:10.1002/9781394272549.ch7 
 
 ---
 

@@ -55,7 +55,7 @@ The RTL design has been synthesized and taken through a complete ASIC physical d
 ### 🧿 Layout
 
 <p align="center">
-  <img src="images/Layout.png" alt="ASIC Layout from Cadence" width="300">
+  <img src="images/Layout.png" alt="ASIC Layout from Cadence" width="450">
 </p>
 
 <p align="center">

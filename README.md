@@ -4,8 +4,6 @@
   </a>
 </p>
 
-<h1 align="center">RISK-FIVE</h1>
-
 <p align="center">
   A 32-bit single-core pipelined RISC-V processor with cryptographic and bit-manipulation support, ASIC-ready and optimized for SHA-3 acceleration.
 </p>
@@ -14,7 +12,7 @@
 
 ## 🚀 About the Project
 
-**RISK-FIVE** is a Verilog-based implementation of a 32-bit RISC-V processor supporting the RV32I instruction set architecture with extensions for cryptographic and bit-manipulation operations. The processor is designed with a classic 5-stage pipeline and includes **4 custom instructions** to accelerate SHA-3 hashing.
+This is a Verilog-based implementation of a 32-bit RISC-V processor supporting the RV32I instruction set architecture with extensions for cryptographic and bit-manipulation operations. The processor is designed with a classic 5-stage pipeline and includes **4 custom instructions** to accelerate SHA-3 hashing.
 
 ### Key Highlights:
 - **71 standard RISC-V instructions** implemented (RV32I subset)
@@ -51,11 +49,11 @@ The RTL design has been synthesized and taken through a complete ASIC physical d
 ### 🧿 Layout (Post-Layout View)
 
 <p align="center">
-  <img src="images/layout.png" alt="ASIC Layout from Cadence" width="600">
+  <img src="images/Layout.png" alt="ASIC Layout from Cadence" width="600">
 </p>
 
 <p align="center">
-  <em>Figure: Post-layout view of the RISK-FIVE processor using Cadence® tools in 45nm technology.</em>
+  <em>Figure: Physical Design Layout of the proposed processor with SHA-3 acceleration unit using 45nm technology</em>
 </p>
 
 ---
@@ -63,7 +61,7 @@ The RTL design has been synthesized and taken through a complete ASIC physical d
 ### 🖼️ Pipeline Diagram
 
 <p align="center">
-  <img src="images/pipeline.png" alt="Pipeline Diagram">
+  <img src="images/Pipeline_Datapath.png" alt="Pipeline Diagram">
 </p>
 
 ---

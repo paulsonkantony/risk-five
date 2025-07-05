@@ -1,0 +1,76 @@
+li x2, 0x34567898
+li x3, 0xabcde012
+
+# x3 => High, x4 => Low
+
+addi x0, x0, 0 # unzip x4, x2 # 8f15213
+addi x0, x0, 0 # unzip x5, x3 # 8f1d293
+
+li x31, 0x0000FFFF
+li x30, 0xFFFF0000
+
+and x6, x4, x31 
+slli x7, x5, 16
+or x6, x6, x7
+
+and x7, x5, x30
+srli x8, x4, 16
+or x7, x7, x8 
+
+addi x29, x0, 9 # Rotation offset
+addi x0, x0, 0 # rol x8, x6, x29 # 61d31433
+addi x0, x0, 0 # rol x9, x7, x29 # 61d394b3
+
+li x31, 0x55555555
+li x30, 0xAAAAAAAA
+
+addi x0, x0, 0 # zip x10, x8 # 8f41513
+addi x0, x0, 0 # zip x11, x9 # 8f49593
+
+# p[0] = ((x24 & 0x55555555) << 1) | (x23 & 0x55555555);
+# p[1] = ((x23 & 0xAAAAAAAA) >> 1) | (x24 & 0xAAAAAAAA);
+
+and  x12, x10, x31
+and  x13, x11, x31
+slli x13, x13, 1
+or   x12, x12, x13 
+
+and  x13, x10, x30
+and  x14, x11, x30
+srli x13, x13, 1
+or   x13, x13, x14 
+
+34568137
+89810113
+abcde1b7
+01218193
+08f15213
+08f1d293
+00010fb7
+ffff8f93
+ffff0f37
+000f0f13
+01f27333
+01029393
+00736333
+01e2f3b3
+01025413
+0083e3b3
+00900e93
+61d31433
+61d394b3
+55555fb7
+555f8f93
+aaaabf37
+aaaf0f13
+08f41513
+08f49593
+01f57633
+01f5f6b3
+00169693
+00d66633
+01e576b3
+01e5f733
+0016d693
+00e6e6b3
+

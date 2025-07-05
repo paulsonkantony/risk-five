@@ -1,0 +1,582 @@
+## Memory
+
+# M => Padded Message
+# A => Initial State (Zero)
+
+mem[0000] = M[0031:0000] 
+mem[0001] = M[0063:0032] 
+mem[0002] = M[0095:0064]
+...
+...
+...
+mem[0032] = M[1055:1024]
+mem[0033] = M[1087:1056]
+
+mem[0050] = A[0,0][31:00]
+mem[0051] = A[0,0][63:32]
+mem[0052] = A[1,0][31:00]
+mem[0053] = A[1,0][63:32]
+...
+...
+...
+mem[0096] = A[3,4][31:00]
+mem[0097] = A[3,4][63:32]
+mem[0098] = A[4,4][31:00]
+mem[0099] = A[4,4][63:32]
+
+
+start:
+	addi t0, x0, 0     # t0 => Message 
+	addi t1, x0, 200   # t1 => State => 50*4
+	addi t2, x0, 136   # t2 => Message End => 34*4
+	addi t3, x0, 0	   # t5 => Counter
+	addi t4, x0, 24    # t6 => Counter End
+	addi t5, x0, 600   # Round Constants => 150*4
+
+make_state:
+	lw x1, 0(t0)
+	lw x2, 4(t0)
+	sw x1, 0(t1)
+	sw x2, 4(t1)
+	addi t0, t0, 8
+	addi t1, t1, 8
+	bne  t0, t2, make_state
+
+	j keccak
+
+xor5:
+	lw t0, 0(t2)
+	lw t1, 4(t2)
+	acc t0, t1
+	lw t0, 40(t2)
+	lw t1, 44(t2)
+	acc t0, t1
+	lw t0, 80(t2)
+	lw t1, 84(t2)
+	acc t0, t1
+	lw t0, 120(t2)
+	lw t1, 124(t2)
+	acc t0, t1
+	lw t0, 160(t2)
+	lw t1, 164(t2)
+	acc t0, t1
+	ret
+
+chi:
+	# Chi Function
+	# Save answer in 50
+
+	# x = [], y = 0
+
+	lw  x8,  0(t1) # A[0,0]
+	lw  x9,  4(t1)
+	lw x10,  8(t1) # A[1,0]
+	lw x11, 12(t1)
+	lw x12, 16(t1) # A[2,0]
+	lw x13, 20(t1)
+	lw x14, 24(t1) # A[3,0]
+	lw x15, 28(t1)
+	lw x16, 32(t1) # A[4,0]
+	lw x17, 36(t1)
+
+	# An[0, 0] = A[0, 0] ⊕ ((A[1, 0] ⊕ 1) ⋅ A[2, 0]
+
+	andn x18, x12, x10
+	andn x19, x13, x11
+	xor  x18, x18,  x8
+	xor  x19, x19,  x9
+
+	# An[1, 0] = A[1, 0] ⊕ ((A[2, 0] ⊕ 1) ⋅ A[3, 0]
+	
+	andn x20, x14, x12
+	andn x21, x15, x13
+	xor  x20, x20, x10
+	xor  x21, x21, x11
+
+	# An[2, 0] = A[2, 0] ⊕ ((A[3, 0] ⊕ 1) ⋅ A[4, 0]
+	
+	andn x22, x16, x14
+	andn x23, x17, x15
+	xor  x22, x22, x12
+	xor  x23, x23, x13
+
+	# An[3, 0] = A[3, 0] ⊕ ((A[4, 0] ⊕ 1) ⋅ A[0, 0]
+	
+	andn x24,  x8, x16
+	andn x25,  x9, x17
+	xor  x24, x24, x14
+	xor  x25, x25, x15
+
+	# An[4, 0] = A[4, 0] ⊕ ((A[0, 0] ⊕ 1) ⋅ A[1, 0]
+	
+	andn x26, x10,  x8
+	andn x27, x11,  x9
+	xor  x26, x26, x16
+	xor  x27, x27, x17
+
+	sw x18,  0(t2) # A[0,0]
+	sw x19,  4(t2)
+	sw x20,  8(t2) # A[1,0]
+	sw x21, 12(t2)
+	sw x22, 16(t2) # A[2,0]
+	sw x23, 20(t2)
+	sw x24, 24(t2) # A[3,0]
+	sw x25, 28(t2)
+	sw x26, 32(t2) # A[4,0]
+	sw x27, 36(t2)
+
+
+# Keccak Permutation Function => Input = A State
+
+keccak:
+
+	# Theta Function
+	
+	# Then use t0, t1 as temporaries for loading for accumulator
+	# Then use t2 to save state
+
+	addi t2, x0, 50 # t2 => State
+
+	#C[0]
+	jal  x1, xor5
+	dmpl x8
+	dmph x9
+
+	#C[1]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x10
+	dmph x11
+
+	#C[2]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x12
+	dmph x13
+
+	#C[3]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x14
+	dmph x15
+
+	#C[4]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x16
+	dmph x17
+
+	#D[0] = C[4] + rot(C[1], 1)
+	acc x10, x11
+	rot 1
+	acc x16, x17
+	dmpl x18
+	dmph x19	
+
+	#D[1] = C[0] + rot(C[2], 1)
+	acc x12, x13
+	rot 1
+	acc x8, x9
+	dmpl x20
+	dmph x21	
+
+	#D[2] = C[1] + rot(C[3], 1)
+	acc x14, x15
+	rot 1
+	acc x10, x11
+	dmpl x22
+	dmph x23	
+
+	#D[3] = C[2] + rot(C[4], 1)
+	acc x16, x17
+	rot 1
+	acc x12, x13
+	dmpl x24
+	dmph x25	
+
+	#D[4] = C[3] + rot(C[0], 1)
+	acc x8, x9
+	rot 1
+	acc x14, x15
+	dmpl x26
+	dmph x27
+
+	addi t2, x0, 50 # t2 => State
+
+	#Theta-D Step + Rho Step + Pi Step
+
+	addi t1, x0, 100 # x11 => New State
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 128
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 36
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 56
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 3
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 184
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 41
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 112
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 18
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 80
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 1
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 8
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 44
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 136
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 10
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 64
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 45
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 192
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 2
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 160
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 62
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 88
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 6
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 16
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 43
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 144
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 15
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 72
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 61
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 40
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 28
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 168
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 55
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 96
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 25
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 24
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 21
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 152
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 56
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 120
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 27
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 48
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 20
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 176
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 39
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 104
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 8
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 32
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 14
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	# Chi
+
+	addi  t2, t2, 50
+
+	# y = 0
+
+	jal  x1, chi
+
+	# Iota
+
+	lw   x8, 0(t5)
+	lw   x9, 4(t5)
+	xor x18, x18, x8
+	xor x19, x19, x9
+
+	sw x18,  0(t2) # A[0,0]
+	sw x19,  4(t2)
+
+	# y = 1 
+
+	addi t1, t1, 40
+	addi t2, t2, 40
+
+	jal  x1, chi
+
+	# y = 2 
+
+	addi t1, t1, 40
+	addi t2, t2, 40
+
+	jal  x1, chi
+
+	# y = 3 
+
+	addi t1, t1, 40
+	addi t2, t2, 40
+
+	jal  x1, chi
+
+	# y = 4 
+
+	addi t1, t1, 40
+	addi t2, t2, 40
+
+	jal  x1, chi
+		
+	addi t5, t5, 8
+	addi t3, t3, 1
+	bne  t3, t4, keccak
+
+end_loop:
+	j end_loop

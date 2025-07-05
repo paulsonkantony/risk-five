@@ -1,0 +1,112 @@
+li x8, 0x34567898
+li x9, 0xabcde012
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 1 # 2x + 1 = 3 => x = 1
+sw x2, 816(x0) # Rotation Constant
+jal x1, rotateOne
+
+endloop:
+	j endloop
+
+rotateOne:
+	lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	addi x0, x0, 0 # unzip x2, x2 8f15113
+	addi x0, x0, 0 # unzip x3, x3 8f1d193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x0000FFFF
+    li x5, 0xFFFF0000
+
+    and x2, x2, x4 
+	and x3, x3, x5
+
+	lw x4, 1200(x0) # Low
+	lw x5, 1208(x0) # High
+
+	slli x5, x5, 16
+	or x2, x2, x5 # Low 
+
+	srli x4, x4, 16
+	or x3, x3, x4 # High
+
+	addi x4, x0, 1
+	addi x0, x0, 0 # rol x3, x3, x4 # 604191b3
+
+	addi x0, x0, 0 # zip x2, x2 8f11113
+	addi x0, x0, 0 # zip x3, x3 8f19193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x55555555
+    
+    and x2, x2, x4 
+	and x3, x3, x4
+	slli x2, x2, 1
+    or   x4, x2, x3 # Final Low
+
+    li x5, 0xAAAAAAAA
+
+    lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	and  x2, x2, x5
+	and  x3, x3, x5
+	srli x3, x3, 1
+	or   x5, x2, x3 
+
+
+34568437
+89840413
+abcde4b7
+01248493
+32802023
+32902423
+00100113
+32202823
+008000ef
+0000006f
+32002103
+32802183
+08f15113
+08f1d193
+32202023
+32302423
+00010237
+fff20213
+ffff02b7
+00028293
+00417133
+0051f1b3
+32002203
+32802283
+01029293
+00516133
+01025213
+0041e1b3
+00100213
+604191b3
+08f11113
+08f19193
+32202023
+32302423
+55555237
+55520213
+00417133
+0041f1b3
+00111113
+00316233
+aaaab2b7
+aaa28293
+32002103
+32802183
+00517133
+0051f1b3
+0011d193
+003162b3

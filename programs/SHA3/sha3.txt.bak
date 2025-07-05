@@ -1,0 +1,397 @@
+## Memory
+
+# M => Padded Message
+# A => Initial State (Zero)
+
+mem[0000] = M[0031:0000] 
+mem[0001] = M[0063:0032] 
+mem[0002] = M[0095:0064]
+...
+...
+...
+mem[0032] = M[1055:1024]
+mem[0033] = M[1087:1056]
+
+mem[0050] = A[0,0][31:00]
+mem[0051] = A[0,0][63:32]
+mem[0052] = A[1,0][31:00]
+mem[0053] = A[1,0][63:32]
+...
+...
+...
+mem[0096] = A[3,4][31:00]
+mem[0097] = A[3,4][63:32]
+mem[0098] = A[4,4][31:00]
+mem[0099] = A[4,4][63:32]
+
+
+start:
+	mov t0, 0    # t0 => Message 
+	mov t1, 50   # t1 => State
+	mov t2, 34   # t2 => Message End
+	
+block1_xor:
+	vload  v0, 0(t0) # v0[low] = mem[0+t0] ; v0[high] = mem[1+t0]
+	vstore v0, 0(t1) # mem[0+t1] = v0[low] ; mem[1+t1] = v0[high]
+	addi   t0, 2
+	addi   t1, 2
+	bne    t0, t2, block1_xor
+	
+	# XORed State @ mem[99:50]
+	
+	mov t5, 0	   # t5 => Counter
+	mov t6, 24     # t6 => Counter End
+	jmp keccak
+
+# Supplementary functions
+
+load_column_1:
+	vload  v0,  0(t0)  # v0[low] = mem[ 0+t0] ; v0[high] = mem[ 0+t0]
+	vload  v1, 10(t0)  # v1[low] = mem[10+t0] ; v0[high] = mem[10+t0]
+	vload  v2, 20(t0)  # v2[low] = mem[20+t0] ; v0[high] = mem[20+t0]
+	vload  v3, 30(t0)  # v3[low] = mem[30+t0] ; v0[high] = mem[30+t0]
+	vload  v4, 40(t0)  # v4[low] = mem[40+t0] ; v0[high] = mem[40+t0]
+	ret
+
+load_column_2:
+	vload  v5,  0(t0)  # v5[low] = mem[ 0+t0] ; v5[high] = mem[ 0+t0]
+	vload  v6, 10(t0)  # v6[low] = mem[10+t0] ; v6[high] = mem[10+t0]
+	vload  v7, 20(t0)  # v7[low] = mem[20+t0] ; v7[high] = mem[20+t0]
+	vload  v8, 30(t0)  # v8[low] = mem[30+t0] ; v8[high] = mem[30+t0]
+	vload  v9, 40(t0)  # v9[low] = mem[40+t0] ; v9[high] = mem[40+t0]
+	ret
+	
+load_row_1:
+	vload  v0, 0(t0)  # v0[low] = mem[0+t0] ; v0[high] = mem[0+t0]
+	vload  v1, 2(t0)  # v1[low] = mem[2+t0] ; v0[high] = mem[2+t0]
+	vload  v2, 4(t0)  # v2[low] = mem[4+t0] ; v0[high] = mem[4+t0]
+	vload  v3, 6(t0)  # v3[low] = mem[6+t0] ; v0[high] = mem[6+t0]
+	vload  v4, 8(t0)  # v4[low] = mem[8+t0] ; v0[high] = mem[8+t0]
+	ret
+
+store_column_1:
+	vstore v0,  0(t0)  # v0[low] = mem[ 0+t0] ; v0[high] = mem[ 0+t0]
+	vstore v1, 10(t0)  # v1[low] = mem[10+t0] ; v0[high] = mem[10+t0]
+	vstore v2, 20(t0)  # v2[low] = mem[20+t0] ; v0[high] = mem[20+t0]
+	vstore v3, 30(t0)  # v3[low] = mem[30+t0] ; v0[high] = mem[30+t0]
+	vstore v4, 40(t0)  # v4[low] = mem[40+t0] ; v0[high] = mem[40+t0]
+	ret
+
+store_column_2:
+	vstore v5,  0(t0)  # v5[low] = mem[ 0+t0] ; v5[high] = mem[ 0+t0]
+	vstore v6, 10(t0)  # v6[low] = mem[10+t0] ; v6[high] = mem[10+t0]
+	vstore v7, 20(t0)  # v7[low] = mem[20+t0] ; v7[high] = mem[20+t0]
+	vstore v8, 30(t0)  # v8[low] = mem[30+t0] ; v8[high] = mem[30+t0]
+	vstore v9, 40(t0)  # v9[low] = mem[40+t0] ; v9[high] = mem[40+t0]
+	ret	
+
+store_row_1:
+	vstore v0, 0(t0)  # v0[low] = mem[0+t0] ; v0[high] = mem[0+t0]
+	vstore v1, 2(t0)  # v1[low] = mem[2+t0] ; v0[high] = mem[2+t0]
+	vstore v2, 4(t0)  # v2[low] = mem[4+t0] ; v0[high] = mem[4+t0]
+	vstore v3, 6(t0)  # v3[low] = mem[6+t0] ; v0[high] = mem[6+t0]
+	vstore v4, 8(t0)  # v4[low] = mem[8+t0] ; v0[high] = mem[8+t0]
+	ret
+
+calc_location:     # A[x, y]=S[w(5y+x)]
+	add a3, a3, x0
+	add a3, a3, a1 # res = x
+	add a3, a3, a2 # res = x+y
+	add a3, a3, a2
+	add a3, a3, a2
+	add a3, a3, a2
+	add a3, a3, a2 # res = x+5y
+	add a3, a3, a3 # res = 2(x+5y)
+	ret	
+
+# Keccak Permutation Function => Input = A State
+
+keccak:
+
+	# Theta Function
+	
+	mov t0, 50       # t0 => State
+
+	call  load_column_1
+	vxor5 v5, v0, v4 # v5 = bXOR(v0,v1,v2,v3,v4) = C[0]
+	addi  t0, 10
+	call  load_column_1
+	vxor5 v6, v0, v4 # v6 = bXOR(v0,v1,v2,v3,v4) = C[1]
+	addi  t0, 10
+	call  load_column_1
+	vxor5 v7, v0, v4 # v7 = bXOR(v0,v1,v2,v3,v4) = C[2]
+	addi  t0, 10
+	call  load_column_1
+	vxor5 v8, v0, v4 # v8 = bXOR(v0,v1,v2,v3,v4) = C[3]
+	addi  t0, 10
+	call  load_column_1
+	vxor5 v9, v0, v4 # v9 = bXOR(v0,v1,v2,v3,v4) = C[4]
+	addi  t0, 10
+	
+	vrolx v0, v9, v6 # v0 = v9 + rol(v6, 1) = D[0] = C[4] + rol(C[1], 1)
+	vrolx v1, v5, v7 # v1 = v5 + rol(v7, 1) = D[1] = C[0] + rol(C[2], 1)
+	vrolx v2, v6, v8 # v2 = v6 + rol(v8, 1) = D[2] = C[1] + rol(C[3], 1)
+	vrolx v3, v7, v9 # v3 = v7 + rol(v9, 1) = D[3] = C[2] + rol(C[4], 1)
+	vrolx v4, v8, v5 # v4 = v8 + rol(v5, 1) = D[4] = C[3] + rol(C[0], 1)
+	
+	mov   t0, 50     # t0 => State
+
+	call  load_column_2
+	vxor  v5, v5, v0
+	vxor  v6, v6, v0
+	vxor  v7, v7, v0
+	vxor  v8, v8, v0
+	vxor  v9, v9, v0
+	call  store_column_2
+	
+	addi  t0, 10
+	call  load_column_2
+	vxor  v5, v5, v1
+	vxor  v6, v6, v1
+	vxor  v7, v7, v1
+	vxor  v8, v8, v1
+	vxor  v9, v9, v1
+	call  store_column_2
+	
+	addi  t0, 10
+	call  load_column_2
+	vxor  v5, v5, v2
+	vxor  v6, v6, v2
+	vxor  v7, v7, v2
+	vxor  v8, v8, v2
+	vxor  v9, v9, v2
+	call  store_column_2
+	
+	addi  t0, 10
+	call  load_column_2
+	vxor  v5, v5, v3
+	vxor  v6, v6, v3
+	vxor  v7, v7, v3
+	vxor  v8, v8, v3
+	vxor  v9, v9, v3
+	call  store_column_2
+	
+	addi  t0, 10
+	call  load_column_2
+	vxor  v5, v5, v4
+	vxor  v6, v6, v4
+	vxor  v7, v7, v4
+	vxor  v8, v8, v4
+	vxor  v9, v9, v4
+	call  store_column_2
+	
+	# Pi and Rho Function
+	
+	mov   t0, 50     # t0 => State
+	mov   t1, 100    # t1 => New State
+	
+	call   load_row_1
+	vroli  v0, v0, 0
+	vroli  v1, v1, 36
+	vroli  v2, v2, 3
+	vroli  v3, v3, 41
+	vroli  v4, v4, 18
+	
+	vstore v0, 0(t1)      # B[0, 0] = rot(A[0, 0], r[0, 0])
+	
+	mov    a1, 1          # mov a1, x 
+	mov    a2, 3	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v1, 0(t4) 	  # B[1, 3] = rot(A[0, 1], r[0, 1])
+	
+	mov    a1, 2          # mov a1, x 
+	mov    a2, 1	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v2, 0(t4)      # B[2, 1] = rot(A[0, 2], r[0, 2])
+	
+	mov    a1, 3          # mov a1, x 
+	mov    a2, 4	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v3, 0(t4)      # B[3, 4] = rot(A[0, 3], r[0, 3])
+	
+	mov    a1, 4          # mov a1, x 
+	mov    a2, 2	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v4, 0(t4)      # B[4, 2] = rot(A[0, 4], r[0, 4])
+	
+	addi  t0, 10
+	addi  t1, 10
+	call  load_row_1
+	vroli v0, v0, 1
+	vroli v1, v1, 44
+	vroli v2, v2, 10
+	vroli v3, v3, 45
+	vroli v4, v4, 2
+	
+	mov    a1, 0          # mov a1, x 
+	mov    a2, 2	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v0, 0(t4) 	  # B[0, 2] = rot(A[1, 0], r[1, 0])
+	
+	mov    a1, 1          # mov a1, x 
+	mov    a2, 0	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v1, 0(t4) 	  # B[1, 0] = rot(A[1, 1], r[1, 1])
+	
+	mov    a1, 2          # mov a1, x 
+	mov    a2, 3	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v2, 0(t4)      # B[2, 3] = rot(A[1, 2], r[1, 2])
+	
+	mov    a1, 3          # mov a1, x 
+	mov    a2, 1	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v3, 0(t4)      # B[3, 1] = rot(A[1, 3], r[1, 3])
+	
+	mov    a1, 4          # mov a1, x 
+	mov    a2, 4	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v4, 0(t4)      # B[4, 4] = rot(A[1, 4], r[1, 4])
+    
+    addi  t0, 10
+	addi  t1, 10
+	call  load_row_1
+	vroli v0, v0, 62
+	vroli v1, v1, 6
+	vroli v2, v2, 43
+	vroli v3, v3, 15
+	vroli v4, v4, 61
+
+	mov    a1, 0          # mov a1, x 
+	mov    a2, 4	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v0, 0(t4) 	  # B[0, 4] = rot(A[2, 0], r[2, 0])
+	
+	mov    a1, 1          # mov a1, x 
+	mov    a2, 2	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v1, 0(t4) 	  # B[1, 2] = rot(A[2, 1], r[2, 1])
+	
+	mov    a1, 2          # mov a1, x 
+	mov    a2, 0	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v2, 0(t4)      # B[2, 0] = rot(A[2, 2], r[2, 2])
+	
+	mov    a1, 3          # mov a1, x 
+	mov    a2, 3	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v3, 0(t4)      # B[3, 3] = rot(A[2, 3], r[2, 3])
+	
+	mov    a1, 4          # mov a1, x 
+	mov    a2, 1	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v4, 0(t4)      # B[4, 1] = rot(A[2, 4], r[2, 4])
+	
+	addi  t0, 10
+	addi  t1, 10
+	call  load_row_1
+	vroli v0, v0, 28
+	vroli v1, v1, 55
+	vroli v2, v2, 25
+	vroli v3, v3, 21
+	vroli v4, v4, 56
+	
+	mov    a1, 0          # mov a1, x 
+	mov    a2, 1	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v0, 0(t4) 	  # B[0, 1] = rot(A[3, 0], r[3, 0])
+	
+	mov    a1, 1          # mov a1, x 
+	mov    a2, 4	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v1, 0(t4) 	  # B[1, 4] = rot(A[3, 1], r[3, 1])
+	
+	mov    a1, 2          # mov a1, x 
+	mov    a2, 2	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v2, 0(t4)      # B[2, 2] = rot(A[3, 2], r[3, 2])
+	
+	mov    a1, 3          # mov a1, x 
+	mov    a2, 0	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v3, 0(t4)      # B[3, 0] = rot(A[3, 3], r[3, 3])
+	
+	mov    a1, 4          # mov a1, x 
+	mov    a2, 3	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v4, 0(t4)      # B[4, 3] = rot(A[3, 4], r[3, 4])
+	
+	addi  t0, 10
+	addi  t1, 10
+	call  load_row_1
+	vroli v0, v0, 27
+	vroli v1, v1, 20
+	vroli v2, v2, 39
+	vroli v3, v3, 8
+	vroli v4, v4, 14
+	
+	mov    a1, 0          # mov a1, x 
+	mov    a2, 3	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v0, 0(t4) 	  # B[0, 3] = rot(A[4, 0], r[4, 0])
+	
+	mov    a1, 1          # mov a1, x 
+	mov    a2, 1	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v1, 0(t4) 	  # B[1, 1] = rot(A[4, 1], r[4, 1])
+	
+	mov    a1, 2          # mov a1, x 
+	mov    a2, 4	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v2, 0(t4)      # B[2, 4] = rot(A[4, 2], r[4, 2])
+	
+	mov    a1, 3          # mov a1, x 
+	mov    a2, 2	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v3, 0(t4)      # B[3, 2] = rot(A[4, 3], r[4, 3])
+	
+	mov    a1, 4          # mov a1, x 
+	mov    a2, 0	      # mov a2, y
+	call   calc_location
+	add    t4, t1, a3 
+	vstore v4, 0(t4)      # B[4, 0] = rot(A[4, 4], r[4, 4])
+	
+	# Chi Function
+	
+		# Save answer in 50
+	
+	# Iota Function
+	
+		# XOR A[0,0] with Round Constant and save in the same place
+	
+
+	addi t5, t5, 1
+	bne  t5, t6, keccak
+	
+loop:
+	jmp loop
+	
+	
+	
+	
+	
+	
+	

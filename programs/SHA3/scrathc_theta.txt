@@ -1,0 +1,531 @@
+addi t5, x0, 800   # Round Constants 200*4
+addi t0, x0, 0     # Counter
+addi t3, x0, 24    # Counter End
+
+keccak:
+
+addi t2, x0, 0     # t2 => State
+
+#C[0]
+jal  x1, xor5
+addi x0, x0, 0     # dmpl x8 # 00000247f # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff # 0000034ff
+
+#C[1]
+addi t2, t2, 8
+jal  x1, xor5
+addi x0, x0, 0     # dmpl x10 # 00000257f
+addi x0, x0, 0     # dmph x11 # 0000035ff
+
+#C[2]
+addi t2, t2, 8
+jal  x1, xor5
+addi x0, x0, 0     # dmpl x12 # 00000267f
+addi x0, x0, 0     # dmph x13 # 0000036ff
+
+#C[3]
+addi t2, t2, 8
+jal  x1, xor5
+addi x0, x0, 0     # dmpl x14 # 00000277f
+addi x0, x0, 0     # dmph x15 # 0000037ff
+
+#C[4]
+addi t2, t2, 8
+jal  x1, xor5
+addi x0, x0, 0     # dmpl x16 # 00000287f
+addi x0, x0, 0     # dmph x17 # 0000038ff
+
+#D[0] = C[4] + rot(C[1], 1)
+addi x0, x0, 0     # acc x10, x11 # 00b5007f
+addi x0, x0, 0     # rot 1 # 0200107f
+addi x0, x0, 0     # acc x16, x17 # 0118007f
+addi x0, x0, 0     # dmpl x18 # 00000297f
+addi x0, x0, 0     # dmph x19 # 0000039ff
+
+#D[1] = C[0] + rot(C[2], 1)
+addi x0, x0, 0     # acc x12, x13 # 00d6007f
+addi x0, x0, 0     # rot 1 # 0200107f
+addi x0, x0, 0     # acc x8, x9  # 0094007f # 0094007f
+addi x0, x0, 0     # dmpl x20 # 000002a7f
+addi x0, x0, 0     # dmph x21 # 000003aff
+
+#D[2] = C[1] + rot(C[3], 1)
+addi x0, x0, 0     # acc x14, x15 # 00f7007f
+addi x0, x0, 0     # rot 1 # 0200107f
+addi x0, x0, 0     # acc x10, x11 # 00b5007f
+addi x0, x0, 0     # dmpl x22 # 000002b7f
+addi x0, x0, 0     # dmph x23 # 000003bff
+
+#D[3] = C[2] + rot(C[4], 1)
+addi x0, x0, 0     # acc x16, x17 # 0118007f
+addi x0, x0, 0     # rot 1 # 0200107f
+addi x0, x0, 0     # acc x12, x13 # 00d6007f
+addi x0, x0, 0     # dmpl x24 # 000002c7f
+addi x0, x0, 0     # dmph x25 # 000003cff
+
+#D[4] = C[3] + rot(C[0], 1)
+addi x0, x0, 0     # acc x8, x9  # 0094007f # 0094007f
+addi x0, x0, 0     # rot 1 # 0200107f
+addi x0, x0, 0     # acc x14, x15 # 00f7007f
+addi x0, x0, 0     # dmpl x26 # 000002d7f
+addi x0, x0, 0     # dmph x27 # 000003dff
+
+addi t2, x0, 0 # t2 => State
+
+#Theta-D Step + Rho Step + Pi Step
+
+addi t1, x0, 400 # 100*4 # Start New state
+addi x10, x0, 400 # 100*4 # Start New state
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f # 0094007f
+addi x0, x0, 0     # acc x18, x19 # 0139007f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 80
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x20, x21 # 015a007f
+addi x0, x0, 0     # rot 1 # 200107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 160
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x22, x23 # 017b007f
+addi x0, x0, 0     # rot 62 # 7c00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 40
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x24, x25 # 019c007f
+addi x0, x0, 0     # rot 28 # 3800107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 120
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x26, x27 # 01bd007f
+addi x0, x0, 0     # rot 27 # 3600107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 128
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x18, x19 # 0139007f
+addi x0, x0, 0     # rot 36 # 4800107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 8
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x20, x21 # 015a007f
+addi x0, x0, 0     # rot 44 # 5800107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 88
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x22, x23 # 017b007f
+addi x0, x0, 0     # rot 6 # c00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 168
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x24, x25 # 019c007f
+addi x0, x0, 0     # rot 55 # 6e00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 48
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x26, x27 # 01bd007f
+addi x0, x0, 0     # rot 20 # 2800107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 56
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x18, x19 # 0139007f
+addi x0, x0, 0     # rot 3 # 600107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 136
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x20, x21 # 015a007f
+addi x0, x0, 0     # rot 10 # 1400107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 16
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x22, x23 # 017b007f
+addi x0, x0, 0     # rot 43 # 5600107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 96
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x24, x25 # 019c007f
+addi x0, x0, 0     # rot 25 # 3200107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 176
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x26, x27 # 01bd007f
+addi x0, x0, 0     # rot 39 # 4e00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 184
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x18, x19 # 0139007f
+addi x0, x0, 0     # rot 41 # 5200107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 64
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x20, x21 # 015a007f
+addi x0, x0, 0     # rot 45 # 5a00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 144
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x22, x23 # 017b007f
+addi x0, x0, 0     # rot 15 # 1e00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 24
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x24, x25 # 019c007f
+addi x0, x0, 0     # rot 21 # 2a00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 104
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x26, x27 # 01bd007f
+addi x0, x0, 0     # rot 8 # 1000107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 112
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x18, x19 # 0139007f
+addi x0, x0, 0     # rot 18 # 2400107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 192
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x20, x21 # 015a007f
+addi x0, x0, 0     # rot 2 # 400107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 72
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x22, x23 # 017b007f
+addi x0, x0, 0     # rot 61 # 7a00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 152
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x24, x25 # 019c007f
+addi x0, x0, 0     # rot 56 # 7000107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 32
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+addi x0, x0, 0     # acc x8, x9  # 0094007f
+addi x0, x0, 0     # acc x26, x27 # 01bd007f
+addi x0, x0, 0     # rot 14 # 1c00107f
+addi x0, x0, 0     # dmpl x8 # 00000247f
+addi x0, x0, 0     # dmph x9 # 0000034ff
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, x0, 0    # Destination
+
+jal  x1, chi
+
+# Iota
+
+lw   x8, 0(t5)
+lw   x9, 4(t5)
+xor x18, x18, x8
+xor x19, x19, x9
+
+sw x18,  0(t2) # A[0,0]
+sw x19,  4(t2)
+
+# y = 1 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+# y = 2 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+# y = 3 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+# y = 4 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+addi t5, t5, 8
+addi t0, t0, 1
+bne  t0, t3, keccak
+
+end_loop:
+	j end_loop
+
+xor5:
+	lw t0, 0(t2)
+	lw t1, 4(t2)
+	addi x0, x0, 0     # acc t0, t1 # 0062807f
+	lw t0, 40(t2)
+	lw t1, 44(t2)
+	addi x0, x0, 0     # acc t0, t1 # 0062807f
+	lw t0, 80(t2)
+	lw t1, 84(t2)
+	addi x0, x0, 0     # acc t0, t1 # 0062807f
+	lw t0, 120(t2)
+	lw t1, 124(t2)
+	addi x0, x0, 0     # acc t0, t1 # 0062807f
+	lw t0, 160(t2)
+	lw t1, 164(t2)
+	addi x0, x0, 0     # acc t0, t1 # 0062807f
+	ret
+
+chi:
+	# Chi Function
+	# Save answer in 50
+
+	# x = [], y = 0
+
+	lw  x8,  0(t1) # A[0,0]
+	lw  x9,  4(t1)
+	lw x10,  8(t1) # A[1,0]
+	lw x11, 12(t1)
+	lw x12, 16(t1) # A[2,0]
+	lw x13, 20(t1)
+	lw x14, 24(t1) # A[3,0]
+	lw x15, 28(t1)
+	lw x16, 32(t1) # A[4,0]
+	lw x17, 36(t1)
+
+	# An[0, 0] = A[0, 0] ⊕ ((A[1, 0] ⊕ 1) ⋅ A[2, 0]
+
+	addi x0, x0, 0 # andn x18, x12, x10 # 40a67933
+	addi x0, x0, 0 # andn x19, x13, x11 # 40b6f9b3
+	xor  x18, x18,  x8
+	xor  x19, x19,  x9
+
+	# An[1, 0] = A[1, 0] ⊕ ((A[2, 0] ⊕ 1) ⋅ A[3, 0]
+	
+	addi x0, x0, 0 # andn x20, x14, x12 # 40c77a33
+	addi x0, x0, 0 # andn x21, x15, x13 # 40d7fab3
+	xor  x20, x20, x10
+	xor  x21, x21, x11
+
+	# An[2, 0] = A[2, 0] ⊕ ((A[3, 0] ⊕ 1) ⋅ A[4, 0]
+	
+	addi x0, x0, 0 # andn x22, x16, x14 # 40e87b33
+	addi x0, x0, 0 # andn x23, x17, x15 # 40f8fbb3
+	xor  x22, x22, x12
+	xor  x23, x23, x13
+
+	# An[3, 0] = A[3, 0] ⊕ ((A[4, 0] ⊕ 1) ⋅ A[0, 0]
+	
+	addi x0, x0, 0 # andn x24,  x8, x16 # 41047c33
+	addi x0, x0, 0 # andn x25,  x9, x17 # 4114fcb3
+	xor  x24, x24, x14
+	xor  x25, x25, x15
+
+	# An[4, 0] = A[4, 0] ⊕ ((A[0, 0] ⊕ 1) ⋅ A[1, 0]
+	
+	addi x0, x0, 0 # andn x26, x10,  x8 # 40857d33
+	addi x0, x0, 0 # andn x27, x11,  x9 # 4095fdb3
+	xor  x26, x26, x16
+	xor  x27, x27, x17
+
+	sw x18,  0(t2) # A[0,0]
+	sw x19,  4(t2)
+	sw x20,  8(t2) # A[1,0]
+	sw x21, 12(t2)
+	sw x22, 16(t2) # A[2,0]
+	sw x23, 20(t2)
+	sw x24, 24(t2) # A[3,0]
+	sw x25, 28(t2)
+	sw x26, 32(t2) # A[4,0]
+	sw x27, 36(t2)
+
+	ret

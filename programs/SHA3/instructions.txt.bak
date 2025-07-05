@@ -1,0 +1,20 @@
+Custom Instruction
+
+# vload vx, offset(rx)
+
+vx[low] = mem[offset+rx]
+vx[high] = mem[offset+rx+1]
+
+# vstore vx, offset(rx)
+
+mem[offset+rx]   = vx[low]
+mem[offset+rx+1] = vx[high]
+
+# vxor5 vd, vs1, vs2
+
+vd = XOR(vs1:vs2)
+
+# vrolx vd, vs1, vs2 
+
+vd = vs1 + rol(vs2,1)
+ 

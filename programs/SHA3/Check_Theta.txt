@@ -1,0 +1,415 @@
+	addi t2, x0, 0 # t2 => State
+
+	#C[0]
+	jal  x1, xor5
+	dmpl x8
+	dmph x9
+
+	#C[1]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x10
+	dmph x11
+
+	#C[2]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x12
+	dmph x13
+
+	#C[3]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x14
+	dmph x15
+
+	#C[4]
+	addi t2, t2, 8
+	jal  x1, xor5
+	dmpl x16
+	dmph x17
+
+	#D[0] = C[4] + rot(C[1], 1)
+	acc x10, x11
+	rot 1
+	acc x16, x17
+	dmpl x18
+	dmph x19	
+
+	#D[1] = C[0] + rot(C[2], 1)
+	acc x12, x13
+	rot 1
+	acc x8, x9
+	dmpl x20
+	dmph x21	
+
+	#D[2] = C[1] + rot(C[3], 1)
+	acc x14, x15
+	rot 1
+	acc x10, x11
+	dmpl x22
+	dmph x23	
+
+	#D[3] = C[2] + rot(C[4], 1)
+	acc x16, x17
+	rot 1
+	acc x12, x13
+	dmpl x24
+	dmph x25	
+
+	#D[4] = C[3] + rot(C[0], 1)
+	acc x8, x9
+	rot 1
+	acc x14, x15
+	dmpl x26
+	dmph x27
+
+	addi t2, x0, 0 # t2 => State
+
+	#Theta-D Step + Rho Step + Pi Step
+
+	addi t1, x0, 100 # x11 => New State
+	addi x10, x0, 100
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 128*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 36
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 56*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 3
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 184*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 41
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 112*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 18
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 80*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 1
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 8*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 44
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 136*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 10
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 64*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 45
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 192*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 2
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 160*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 62
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 88*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 6
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 16*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 43
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 144*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 15
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 72*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 61
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 40*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 28
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 168*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 55
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 96*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 25
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 24*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 21
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 152*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 56
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 120*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 27
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 48*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 20
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 176*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 39
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 104*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 8
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+	addi  t2, t2, 8
+	addi x10, t1, 32*4
+
+	lw x8, 0(t2)
+	lw x9, 4(t2)
+	acc x8, t9
+	acc x18, x19
+	rot 14
+	dmpl x8
+	dmph x9
+	sw x8, 0(x10)
+	sw x9, 4(x10)
+
+
+end_loop:
+	j loop
+
+xor5:
+	lw t0, 0(t2)
+	lw t1, 4(t2)
+	acc t0, t1
+	lw t0, 40(t2)
+	lw t1, 44(t2)
+	acc t0, t1
+	lw t0, 80(t2)
+	lw t1, 84(t2)
+	acc t0, t1
+	lw t0, 120(t2)
+	lw t1, 124(t2)
+	acc t0, t1
+	lw t0, 160(t2)
+	lw t1, 164(t2)
+	acc t0, t1
+	ret

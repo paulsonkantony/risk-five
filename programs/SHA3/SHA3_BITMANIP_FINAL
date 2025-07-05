@@ -1,0 +1,1725 @@
+addi t5, x0, 800   # Round Constants 200*4
+addi t6, x0, 0     # Counter
+addi t3, x0, 24    # Counter End
+
+keccak:
+
+addi t2, x0, 0     # t2 => State
+
+#C[0]
+lw x8, 0(t2)
+lw x9, 4(t2)
+lw t0, 40(t2)
+lw t1, 44(t2)
+xor x8, x8, t0     # acc t0, t1 # 0062807f
+xor x9, x9, t1     # acc t0, t1 # 0062807f
+lw t0, 80(t2)
+lw t1, 84(t2)
+xor x8, x8, t0     # acc t0, t1 # 0062807f
+xor x9, x9, t1     # acc t0, t1 # 0062807f
+lw t0, 120(t2)
+lw t1, 124(t2)
+xor x8, x8, t0     # acc t0, t1 # 0062807f
+xor x9, x9, t1     # acc t0, t1 # 0062807f
+lw t0, 160(t2)
+lw t1, 164(t2)
+xor x8, x8, t0     # acc t0, t1 # 0062807f
+xor x9, x9, t1     # acc t0, t1 # 0062807f
+
+#C[1]
+addi t2, t2, 8
+lw x10, 0(t2)
+lw x11, 4(t2)
+lw t0, 40(t2)
+lw t1, 44(t2)
+xor x10, x10, t0     # acc t0, t1 # 0062807f
+xor x11, x11, t1     # acc t0, t1 # 0062807f
+lw t0, 80(t2)
+lw t1, 84(t2)
+xor x10, x10, t0     # acc t0, t1 # 0062807f
+xor x11, x11, t1     # acc t0, t1 # 0062807f
+lw t0, 120(t2)
+lw t1, 124(t2)
+xor x10, x10, t0     # acc t0, t1 # 0062807f
+xor x11, x11, t1     # acc t0, t1 # 0062807f
+lw t0, 160(t2)
+lw t1, 164(t2)
+xor x10, x10, t0     # acc t0, t1 # 0062807f
+xor x11, x11, t1     # acc t0, t1 # 0062807f
+
+#C[2]
+addi t2, t2, 8
+lw x12, 0(t2)
+lw x13, 4(t2)
+lw t0, 40(t2)
+lw t1, 44(t2)
+xor x12, x12, t0     # acc t0, t1 # 0062807f
+xor x13, x13, t1     # acc t0, t1 # 0062807f
+lw t0, 80(t2)
+lw t1, 84(t2)
+xor x12, x12, t0     # acc t0, t1 # 0062807f
+xor x13, x13, t1     # acc t0, t1 # 0062807f
+lw t0, 120(t2)
+lw t1, 124(t2)
+xor x12, x12, t0     # acc t0, t1 # 0062807f
+xor x13, x13, t1     # acc t0, t1 # 0062807f
+lw t0, 160(t2)
+lw t1, 164(t2)
+xor x12, x12, t0     # acc t0, t1 # 0062807f
+xor x13, x13, t1     # acc t0, t1 # 0062807f
+
+#C[3]
+addi t2, t2, 8
+lw x14, 0(t2)
+lw x15, 4(t2)
+lw t0, 40(t2)
+lw t1, 44(t2)
+xor x14, x14, t0     # acc t0, t1 # 0062807f
+xor x15, x15, t1     # acc t0, t1 # 0062807f
+lw t0, 80(t2)
+lw t1, 84(t2)
+xor x14, x14, t0     # acc t0, t1 # 0062807f
+xor x15, x15, t1     # acc t0, t1 # 0062807f
+lw t0, 120(t2)
+lw t1, 124(t2)
+xor x14, x14, t0     # acc t0, t1 # 0062807f
+xor x15, x15, t1     # acc t0, t1 # 0062807f
+lw t0, 160(t2)
+lw t1, 164(t2)
+xor x14, x14, t0     # acc t0, t1 # 0062807f
+xor x15, x15, t1     # acc t0, t1 # 0062807f
+
+
+#C[4]
+addi t2, t2, 8
+lw x16, 0(t2)
+lw x17, 4(t2)
+lw t0, 40(t2)
+lw t1, 44(t2)
+xor x16, x16, t0     # acc t0, t1 # 0062807f
+xor x17, x17, t1     # acc t0, t1 # 0062807f
+lw t0, 80(t2)
+lw t1, 84(t2)
+xor x16, x16, t0     # acc t0, t1 # 0062807f
+xor x17, x17, t1     # acc t0, t1 # 0062807f
+lw t0, 120(t2)
+lw t1, 124(t2)
+xor x16, x16, t0     # acc t0, t1 # 0062807f
+xor x17, x17, t1     # acc t0, t1 # 0062807f
+lw t0, 160(t2)
+lw t1, 164(t2)
+xor x16, x16, t0     # acc t0, t1 # 0062807f
+xor x17, x17, t1     # acc t0, t1 # 0062807f
+
+#D[0] = C[4] + rot(C[1], 1)
+
+sw x10, 1200(x0) # Low
+sw x11, 1208(x0) # High
+jal x1, rotateOne
+
+# addi x0, x0, 0     # acc x10, x11 # 00b5007f
+# addi x0, x0, 0     # rot 1 # 0200107f
+
+xor x18, x4, x16
+xor x19, x5, x17
+
+# addi x0, x0, 0     # acc x16, x17 # 0118007f
+# addi x0, x0, 0     # dmpl x18 # 00000297f
+# addi x0, x0, 0     # dmph x19 # 0000039ff
+
+#D[1] = C[0] + rot(C[2], 1)
+
+sw x12, 1200(x0) # Low
+sw x13, 1208(x0) # High
+jal x1, rotateOne
+
+# addi x0, x0, 0     # acc x12, x13 # 00d6007f
+# addi x0, x0, 0     # rot 1 # 0200107f
+
+xor x20, x4, x8
+xor x21, x5, x9
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f # 0094007f
+# addi x0, x0, 0     # dmpl x20 # 000002a7f
+# addi x0, x0, 0     # dmph x21 # 000003aff
+
+#D[2] = C[1] + rot(C[3], 1)
+
+sw x14, 1200(x0) # Low
+sw x15, 1208(x0) # High
+jal x1, rotateOne
+
+# addi x0, x0, 0     # acc x14, x15 # 00f7007f
+# addi x0, x0, 0     # rot 1 # 0200107f
+
+xor x22, x4, x10
+xor x23, x5, x11
+
+# addi x0, x0, 0     # acc x10, x11 # 00b5007f
+# addi x0, x0, 0     # dmpl x22 # 000002b7f
+# addi x0, x0, 0     # dmph x23 # 000003bff
+
+#D[3] = C[2] + rot(C[4], 1)
+
+sw x16, 1200(x0) # Low
+sw x17, 1208(x0) # High
+jal x1, rotateOne
+
+# addi x0, x0, 0     # acc x16, x17 # 0118007f
+# addi x0, x0, 0     # rot 1 # 0200107f
+
+xor x24, x4, x12
+xor x25, x5, x13
+
+# addi x0, x0, 0     # acc x12, x13 # 00d6007f
+# addi x0, x0, 0     # dmpl x24 # 000002c7f
+# addi x0, x0, 0     # dmph x25 # 000003cff
+
+#D[4] = C[3] + rot(C[0], 1)
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+jal x1, rotateOne
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f # 0094007f
+# addi x0, x0, 0     # rot 1 # 0200107f
+
+xor x26, x4, x14
+xor x27, x5, x15
+
+# addi x0, x0, 0     # acc x14, x15 # 00f7007f
+# addi x0, x0, 0     # dmpl x26 # 000002d7f
+# addi x0, x0, 0     # dmph x27 # 000003dff
+
+addi t2, x0, 0 # t2 => State
+
+#Theta-D Step + Rho Step + Pi Step
+
+addi t1, x0, 400 # 100*4 # Start New state
+addi x10, x0, 400 # 100*4 # Start New state
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x18
+xor x9, x9, x19
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f # 0094007f
+# addi x0, x0, 0     # acc x18, x19 # 0139007f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x8, 0(x10)
+sw x9, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 80
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x20
+xor x9, x9, x21
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x20, x21 # 015a007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+jal x1, rotateOne
+
+# addi x0, x0, 0     # rot 1 # 200107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 160
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x22
+xor x9, x9, x23
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x22, x23 # 017b007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 31 # 62/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 62 # 7c00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 40
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x24
+xor x9, x25
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x24, x25 # 019c007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 14 # 28/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 28 # 3800107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 120
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x26
+xor x9, x27
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x26, x27 # 01bd007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 13 # 2*x + 1 = 27 => 2*x = 26 => x = 13
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 27 # 3600107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 128
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x18
+xor x9, x19
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x18, x19 # 0139007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 18 # 36/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 36 # 4800107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 8
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x20
+xor x9, x21
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x20, x21 # 015a007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 22 # 44/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 44 # 5800107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 88
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x22
+xor x9, x9, x23
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x22, x23 # 017b007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 3 # 6/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 6 # c00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 168
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x24
+xor x9, x9, x25
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x24, x25 # 019c007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 27 # 2*x + 1 = 55 => 2*x = 54 => x = 27
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 55 # 6e00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 48
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x26
+xor x9, x9, x27
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x26, x27 # 01bd007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 10 # 20/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 20 # 2800107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 56
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x18
+xor x9, x9, x19
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x18, x19 # 0139007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 1 # 2*x + 1 = 3 => 2*x = 2 => x = 1
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 3 # 600107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 136
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x20
+xor x9, x9, x21
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x20, x21 # 015a007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 5 # 10/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 10 # 1400107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 16
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x22
+xor x9, x9, x23
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x22, x23 # 017b007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 21 # 2*x + 1 = 43 => 2*x = 42 => x = 21
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 43 # 5600107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 96
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x24
+xor x9, x9, x25
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x24, x25 # 019c007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 12 # 2*x + 1 = 25 => 2*x = 24 => x = 12
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 25 # 3200107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 176
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x26
+xor x9, x9, x27
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x26, x27 # 01bd007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 19 # 2*x + 1 = 39 => 2*x = 38 => x = 19
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 39 # 4e00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 184
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x18
+xor x9, x9, x19
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x18, x19 # 0139007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 20 # 2*x + 1 = 41 => 2*x = 40 => x = 20
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 41 # 5200107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 64
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x20
+xor x9, x9, x21
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x20, x21 # 015a007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 22 # 2*x + 1 = 45 => 2*x = 44 => x = 22
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 45 # 5a00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 144
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x22
+xor x9, x9, x23
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x22, x23 # 017b007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 7 # 2*x + 1 = 15 => 2*x = 14 => x = 7
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 15 # 1e00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 24
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x24
+xor x9, x9, x25
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x24, x25 # 019c007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 10 # 2*x + 1 = 21 => 2*x = 20 => x = 10
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 21 # 2a00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 104
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x26
+xor x9, x9, x27
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x26, x27 # 01bd007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 4 # 8/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 8 # 1000107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 112
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x18
+xor x9, x9, x19
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x18, x19 # 0139007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 9 # 18/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 18 # 2400107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 192
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x20
+xor x9, x9, x21
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x20, x21 # 015a007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 1 # 2/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 2 # 400107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 72
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x22
+xor x9, x9, x23
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x22, x23 # 017b007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 30 # 2*x + 1 = 61 => 2*x = 60 => x = 30
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateOdd
+
+# addi x0, x0, 0     # rot 61 # 7a00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 152
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x24
+xor x9, x9, x25
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x24, x25 # 019c007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 28 # 56/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 56 # 7000107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, t2, 8
+addi x10, t1, 32
+
+lw x8, 0(t2)
+lw x9, 4(t2)
+
+xor x8, x8, x26
+xor x9, x9, x27
+
+# addi x0, x0, 0     # acc x8, x9  # 0094007f
+# addi x0, x0, 0     # acc x26, x27 # 01bd007f
+
+sw x8, 1200(x0) # Low
+sw x9, 1208(x0) # High
+addi x2, x0, 7 # 14/2
+sw x2, 1216(x0) # Rotation Constant
+jal x1, rotateEven
+
+# addi x0, x0, 0     # rot 14 # 1c00107f
+# addi x0, x0, 0     # dmpl x8 # 00000247f
+# addi x0, x0, 0     # dmph x9 # 0000034ff
+
+sw x4, 0(x10)
+sw x5, 4(x10)
+
+addi  t2, x0, 0    # Destination
+
+jal  x1, chi
+
+# Iota
+
+lw   x8, 0(t5)
+lw   x9, 4(t5)
+xor x18, x18, x8
+xor x19, x19, x9
+
+sw x18,  0(t2) # A[0,0]
+sw x19,  4(t2)
+
+# y = 1 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+# y = 2 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+# y = 3 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+# y = 4 
+
+addi t1, t1, 40
+addi t2, t2, 40
+
+jal  x1, chi
+
+addi t5, t5, 8
+addi t6, t6, 1
+bne  t6, t3, keccak
+
+end_loop:
+	j end_loop
+
+rotateOne:
+	lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	addi x0, x0, 0 # unzip x2, x2 8f15113
+	addi x0, x0, 0 # unzip x3, x3 8f1d193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x0000FFFF
+    li x5, 0xFFFF0000
+
+
+
+
+    and x2, x2, x4 
+	and x3, x3, x5
+
+	lw x4, 1200(x0) # Low
+	lw x5, 1208(x0) # High
+
+	slli x5, x5, 16
+	or x2, x2, x5 # Low 
+
+	srli x4, x4, 16
+	or x3, x3, x4 # High
+
+	addi x4, x0, 1
+	addi x0, x0, 0 # rol x3, x3, x4 # 604191b3
+
+	addi x0, x0, 0 # zip x2, x2 8f11113
+	addi x0, x0, 0 # zip x3, x3 8f19193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x55555555
+    
+    
+    and x2, x2, x4 
+	and x3, x3, x4
+	slli x2, x2, 1
+    or   x4, x2, x3 # Final Low
+
+    li x5, 0xAAAAAAAA
+
+
+    lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	and  x2, x2, x5
+	and  x3, x3, x5
+	srli x3, x3, 1
+	or   x5, x2, x3 
+
+	ret
+
+rotateEven:
+	lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	addi x0, x0, 0 # unzip x2, x2 8f15113
+	addi x0, x0, 0 # unzip x3, x3 8f1d193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x0000FFFF
+    li x5, 0xFFFF0000
+
+    
+
+	and x2, x2, x4 
+	and x3, x3, x5
+
+	lw x4, 1200(x0) # Low
+	lw x5, 1208(x0) # High
+
+	slli x5, x5, 16
+	or x2, x2, x5 # Low 
+
+	srli x4, x4, 16
+	or x3, x3, x4 # High
+
+	lw x4, 1216(x0) 
+	# Rotation offset 2*9 = 18
+	addi x0, x0, 0 # rol x2, x2, x4 # 60411133
+	addi x0, x0, 0 # rol x3, x3, x4 # 604191b3
+
+	addi x0, x0, 0 # zip x2, x2 8f11113
+	addi x0, x0, 0 # zip x3, x3 8f19193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x55555555
+    
+    and x2, x2, x4 
+	and x3, x3, x4
+	slli x3, x3, 1
+    or   x4, x2, x3 # Final Low
+
+    li x5, 0xAAAAAAAA
+
+    lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	and  x2, x2, x5
+	and  x3, x3, x5
+	srli x2, x2, 1
+	or   x5, x2, x3 
+
+	ret
+
+rotateOdd:
+	lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	addi x0, x0, 0 # unzip x2, x2 8f15113
+	addi x0, x0, 0 # unzip x3, x3 8f1d193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x0000FFFF
+    li x5, 0xFFFF0000
+
+    and x2, x2, x4 
+	and x3, x3, x5
+
+	lw x4, 1200(x0) # Low
+	lw x5, 1208(x0) # High
+
+	slli x5, x5, 16
+	or x2, x2, x5 # Low 
+
+	srli x4, x4, 16
+	or x3, x3, x4 # High
+
+	lw x4, 1216(x0) 
+	# Rotation offset 2*9 = 18
+	addi x0, x0, 0 # rol x2, x2, x4 # 60411133
+	addi x4, x4, 1
+	addi x0, x0, 0 # rol x3, x3, x4 # 604191b3
+
+	addi x0, x0, 0 # zip x2, x2 8f11113
+	addi x0, x0, 0 # zip x3, x3 8f19193
+
+	sw x2, 1200(x0) # Low
+	sw x3, 1208(x0) # High
+
+	li x4, 0x55555555
+    
+    and x2, x2, x4 
+	and x3, x3, x4
+	slli x2, x2, 1
+    or   x4, x2, x3 # Final Low
+
+    li x5, 0xAAAAAAAA
+
+    lw x2, 1200(x0) # Low
+	lw x3, 1208(x0) # High
+
+	and  x2, x2, x5
+	and  x3, x3, x5
+	srli x3, x3, 1
+	or   x5, x2, x3
+
+	ret
+
+chi:
+	# Chi Function
+	# Save answer in 50
+
+	# x = [], y = 0
+
+	lw  x8,  0(t1) # A[0,0]
+	lw  x9,  4(t1)
+	lw x10,  8(t1) # A[1,0]
+	lw x11, 12(t1)
+	lw x12, 16(t1) # A[2,0]
+	lw x13, 20(t1)
+	lw x14, 24(t1) # A[3,0]
+	lw x15, 28(t1)
+	lw x16, 32(t1) # A[4,0]
+	lw x17, 36(t1)
+
+	# An[0, 0] = A[0, 0] ⊕ ((A[1, 0] ⊕ 1) ⋅ A[2, 0]
+
+	addi x0, x0, 0 # andn x18, x12, x10 # 40a67933
+	addi x0, x0, 0 # andn x19, x13, x11 # 40b6f9b3
+	xor  x18, x18,  x8
+	xor  x19, x19,  x9
+
+	# An[1, 0] = A[1, 0] ⊕ ((A[2, 0] ⊕ 1) ⋅ A[3, 0]
+	
+	addi x0, x0, 0 # andn x20, x14, x12 # 40c77a33
+	addi x0, x0, 0 # andn x21, x15, x13 # 40d7fab3
+	xor  x20, x20, x10
+	xor  x21, x21, x11
+
+	# An[2, 0] = A[2, 0] ⊕ ((A[3, 0] ⊕ 1) ⋅ A[4, 0]
+	
+	addi x0, x0, 0 # andn x22, x16, x14 # 40e87b33
+	addi x0, x0, 0 # andn x23, x17, x15 # 40f8fbb3
+	xor  x22, x22, x12
+	xor  x23, x23, x13
+
+	# An[3, 0] = A[3, 0] ⊕ ((A[4, 0] ⊕ 1) ⋅ A[0, 0]
+	
+	addi x0, x0, 0 # andn x24,  x8, x16 # 41047c33
+	addi x0, x0, 0 # andn x25,  x9, x17 # 4114fcb3
+	xor  x24, x24, x14
+	xor  x25, x25, x15
+
+	# An[4, 0] = A[4, 0] ⊕ ((A[0, 0] ⊕ 1) ⋅ A[1, 0]
+	
+	addi x0, x0, 0 # andn x26, x10,  x8 # 40857d33
+	addi x0, x0, 0 # andn x27, x11,  x9 # 4095fdb3
+	xor  x26, x26, x16
+	xor  x27, x27, x17
+
+	sw x18,  0(t2) # A[0,0]
+	sw x19,  4(t2)
+	sw x20,  8(t2) # A[1,0]
+	sw x21, 12(t2)
+	sw x22, 16(t2) # A[2,0]
+	sw x23, 20(t2)
+	sw x24, 24(t2) # A[3,0]
+	sw x25, 28(t2)
+	sw x26, 32(t2) # A[4,0]
+	sw x27, 36(t2)
+
+	ret
+
+
+32000f13
+00000f93
+01800e13
+00000393
+0003a403
+0043a483
+0283a283
+02c3a303
+00544433
+0064c4b3
+0503a283
+0543a303
+00544433
+0064c4b3
+0783a283
+07c3a303
+00544433
+0064c4b3
+0a03a283
+0a43a303
+00544433
+0064c4b3
+00838393
+0003a503
+0043a583
+0283a283
+02c3a303
+00554533
+0065c5b3
+0503a283
+0543a303
+00554533
+0065c5b3
+0783a283
+07c3a303
+00554533
+0065c5b3
+0a03a283
+0a43a303
+00554533
+0065c5b3
+00838393
+0003a603
+0043a683
+0283a283
+02c3a303
+00564633
+0066c6b3
+0503a283
+0543a303
+00564633
+0066c6b3
+0783a283
+07c3a303
+00564633
+0066c6b3
+0a03a283
+0a43a303
+00564633
+0066c6b3
+00838393
+0003a703
+0043a783
+0283a283
+02c3a303
+00574733
+0067c7b3
+0503a283
+0543a303
+00574733
+0067c7b3
+0783a283
+07c3a303
+00574733
+0067c7b3
+0a03a283
+0a43a303
+00574733
+0067c7b3
+00838393
+0003a803
+0043a883
+0283a283
+02c3a303
+00584833
+0068c8b3
+0503a283
+0543a303
+00584833
+0068c8b3
+0783a283
+07c3a303
+00584833
+0068c8b3
+0a03a283
+0a43a303
+00584833
+0068c8b3
+4aa02823
+4ab02c23
+5b8000ef
+01024933
+0112c9b3
+4ac02823
+4ad02c23
+5a4000ef
+00824a33
+0092cab3
+4ae02823
+4af02c23
+590000ef
+00a24b33
+00b2cbb3
+4b002823
+4b102c23
+57c000ef
+00c24c33
+00d2ccb3
+4a802823
+4a902c23
+568000ef
+00e24d33
+00f2cdb3
+00000393
+19000313
+19000513
+0003a403
+0043a483
+01244433
+0134c4b3
+00852023
+00952223
+00838393
+05030513
+0003a403
+0043a483
+01444433
+0154c4b3
+4a802823
+4a902c23
+518000ef
+00452023
+00552223
+00838393
+0a030513
+0003a403
+0043a483
+01644433
+0174c4b3
+4a802823
+4a902c23
+01f00113
+4c202023
+580000ef
+00452023
+00552223
+00838393
+02830513
+0003a403
+0043a483
+01844433
+0194c4b3
+4a802823
+4a902c23
+00e00113
+4c202023
+54c000ef
+00452023
+00552223
+00838393
+07830513
+0003a403
+0043a483
+01a44433
+01b4c4b3
+4a802823
+4a902c23
+00d00113
+4c202023
+5b8000ef
+00452023
+00552223
+00838393
+08030513
+0003a403
+0043a483
+01244433
+0134c4b3
+4a802823
+4a902c23
+01200113
+4c202023
+4e4000ef
+00452023
+00552223
+00838393
+00830513
+0003a403
+0043a483
+01444433
+0154c4b3
+4a802823
+4a902c23
+01600113
+4c202023
+4b0000ef
+00452023
+00552223
+00838393
+05830513
+0003a403
+0043a483
+01644433
+0174c4b3
+4a802823
+4a902c23
+00300113
+4c202023
+47c000ef
+00452023
+00552223
+00838393
+0a830513
+0003a403
+0043a483
+01844433
+0194c4b3
+4a802823
+4a902c23
+01b00113
+4c202023
+4e8000ef
+00452023
+00552223
+00838393
+03030513
+0003a403
+0043a483
+01a44433
+01b4c4b3
+4a802823
+4a902c23
+00a00113
+4c202023
+414000ef
+00452023
+00552223
+00838393
+03830513
+0003a403
+0043a483
+01244433
+0134c4b3
+4a802823
+4a902c23
+00100113
+4c202023
+480000ef
+00452023
+00552223
+00838393
+08830513
+0003a403
+0043a483
+01444433
+0154c4b3
+4a802823
+4a902c23
+00500113
+4c202023
+3ac000ef
+00452023
+00552223
+00838393
+01030513
+0003a403
+0043a483
+01644433
+0174c4b3
+4a802823
+4a902c23
+01500113
+4c202023
+418000ef
+00452023
+00552223
+00838393
+06030513
+0003a403
+0043a483
+01844433
+0194c4b3
+4a802823
+4a902c23
+00c00113
+4c202023
+3e4000ef
+00452023
+00552223
+00838393
+0b030513
+0003a403
+0043a483
+01a44433
+01b4c4b3
+4a802823
+4a902c23
+01300113
+4c202023
+3b0000ef
+00452023
+00552223
+00838393
+0b830513
+0003a403
+0043a483
+01244433
+0134c4b3
+4a802823
+4a902c23
+01400113
+4c202023
+37c000ef
+00452023
+00552223
+00838393
+04030513
+0003a403
+0043a483
+01444433
+0154c4b3
+4a802823
+4a902c23
+01600113
+4c202023
+348000ef
+00452023
+00552223
+00838393
+09030513
+0003a403
+0043a483
+01644433
+0174c4b3
+4a802823
+4a902c23
+00700113
+4c202023
+314000ef
+00452023
+00552223
+00838393
+01830513
+0003a403
+0043a483
+01844433
+0194c4b3
+4a802823
+4a902c23
+00a00113
+4c202023
+2e0000ef
+00452023
+00552223
+00838393
+06830513
+0003a403
+0043a483
+01a44433
+01b4c4b3
+4a802823
+4a902c23
+00400113
+4c202023
+20c000ef
+00452023
+00552223
+00838393
+07030513
+0003a403
+0043a483
+01244433
+0134c4b3
+4a802823
+4a902c23
+00900113
+4c202023
+1d8000ef
+00452023
+00552223
+00838393
+0c030513
+0003a403
+0043a483
+01444433
+0154c4b3
+4a802823
+4a902c23
+00100113
+4c202023
+1a4000ef
+00452023
+00552223
+00838393
+04830513
+0003a403
+0043a483
+01644433
+0174c4b3
+4a802823
+4a902c23
+01e00113
+4c202023
+210000ef
+00452023
+00552223
+00838393
+09830513
+0003a403
+0043a483
+01844433
+0194c4b3
+4a802823
+4a902c23
+01c00113
+4c202023
+13c000ef
+00452023
+00552223
+00838393
+02030513
+0003a403
+0043a483
+01a44433
+01b4c4b3
+4a802823
+4a902c23
+00700113
+4c202023
+108000ef
+00452023
+00552223
+00000393
+23c000ef
+000f2403
+004f2483
+00894933
+0099c9b3
+0123a023
+0133a223
+02830313
+02838393
+218000ef
+02830313
+02838393
+20c000ef
+02830313
+02838393
+200000ef
+02830313
+02838393
+1f4000ef
+008f0f13
+001f8f93
+8dcf96e3
+0000006f
+4b002103
+4b802183
+08f15113
+08f1d193
+4a202823
+4a302c23
+00010237
+fff20213
+ffff02b7
+00028293
+00417133
+0051f1b3
+4b002203
+4b802283
+01029293
+00516133
+01025213
+0041e1b3
+00100213
+604191b3
+08f11113
+08f19193
+4a202823
+4a302c23
+55555237
+55520213
+00417133
+0041f1b3
+00111113
+00316233
+aaaab2b7
+aaa28293
+4b002103
+4b802183
+00517133
+0051f1b3
+0011d193
+003162b3
+00008067
+4b002103
+4b802183
+08f15113
+08f1d193
+4a202823
+4a302c23
+00010237
+fff20213
+ffff02b7
+00028293
+00417133
+0051f1b3
+4b002203
+4b802283
+01029293
+00516133
+01025213
+0041e1b3
+4c002203
+60411133
+604191b3
+08f11113
+08f19193
+4a202823
+4a302c23
+55555237
+55520213
+00417133
+0041f1b3
+00119193
+00316233
+aaaab2b7
+aaa28293
+4b002103
+4b802183
+00517133
+0051f1b3
+00115113
+003162b3
+00008067
+4b002103
+4b802183
+08f15113
+08f1d193
+4a202823
+4a302c23
+00010237
+fff20213
+ffff02b7
+00028293
+00417133
+0051f1b3
+4b002203
+4b802283
+01029293
+00516133
+01025213
+0041e1b3
+4c002203
+60411133
+00120213
+604191b3
+08f11113
+08f19193
+4a202823
+4a302c23
+55555237
+55520213
+00417133
+0041f1b3
+00111113
+00316233
+aaaab2b7
+aaa28293
+4b002103
+4b802183
+00517133
+0051f1b3
+0011d193
+003162b3
+00008067
+00032403
+00432483
+00832503
+00c32583
+01032603
+01432683
+01832703
+01c32783
+02032803
+02432883
+40a67933
+40b6f9b3
+00894933
+0099c9b3
+40c77a33
+40d7fab3
+00aa4a33
+00bacab3
+40e87b33
+40f8fbb3
+00cb4b33
+00dbcbb3
+41047c33
+4114fcb3
+00ec4c33
+00fcccb3
+40857d33
+4095fdb3
+010d4d33
+011dcdb3
+0123a023
+0133a223
+0143a423
+0153a623
+0163a823
+0173aa23
+0183ac23
+0193ae23
+03a3a023
+03b3a223
+00008067
